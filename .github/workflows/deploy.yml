@@ -28,7 +28,7 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           # Full history, not the default shallow clone. build_seo.py derives each sitemap
           # <lastmod> from `git log -1` on that file; with depth 1 every page reports the HEAD
@@ -36,7 +36,7 @@ jobs:
           # is not actually wrong.
           fetch-depth: 0
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
 
@@ -71,23 +71,23 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # enablement: true turns Pages on for the repository if it is not already,
       # so a fresh clone of this repo deploys without anyone visiting Settings.
       # It cannot override the plan: Pages on a PRIVATE repo needs Pro/Team/
       # Enterprise, and on a free plan this fails with HTTP 422 until the
       # repository is made public.
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
         with:
           enablement: true
 
       # The repository root IS the site: no generated output directory, so the
       # whole checkout is uploaded. tools/ and .github/ ride along harmlessly —
       # they are a few KB and Pages will not execute them.
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: .
 
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
