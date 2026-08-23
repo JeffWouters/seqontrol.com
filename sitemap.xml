@@ -145,8 +145,26 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://seqontrol.com/products/coming.html</loc>
-    <lastmod>2026-08-21</lastmod>
+    <loc>https://seqontrol.com/products/conditionalaccessportal.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://seqontrol.com/products/complianceportal.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://seqontrol.com/products/postureportal.html</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://seqontrol.com/products/dredd.html</loc>
+    <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

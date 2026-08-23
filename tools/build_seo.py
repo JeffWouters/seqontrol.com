@@ -143,11 +143,26 @@ META = {
         "Continuous Microsoft 365 and Entra security posture on a ladder you climb with scan "
         "evidence, every finding tagged to the control it proves.",
         "SecurityPortal"),
-    "products/coming.html": (
-        "SeQontrol - What is coming - Four products you cannot buy yet",
-        "ConditionalAccessPortal and CompliancePortal are built and close; Dredd and PosturePortal are "
-        "still being written. What each will do, and what none does yet.",
-        "What is coming"),
+    "products/conditionalaccessportal.html": (
+        "SeQontrol - ConditionalAccessPortal - Coming soon",
+        "What your Conditional Access policies actually let through: every policy inventoried, the "
+        "access paths mapped, each edge labelled by the authority behind it.",
+        "ConditionalAccessPortal"),
+    "products/complianceportal.html": (
+        "SeQontrol - CompliancePortal - Coming soon",
+        "Controls proven by scans, not screenshots: findings your other products already produce, "
+        "mapped onto the frameworks you are assessed against and kept current.",
+        "CompliancePortal"),
+    "products/postureportal.html": (
+        "SeQontrol - PosturePortal - In development",
+        "The read-only board that answers \u201chow are we doing\u201d without opening five products: "
+        "findings, risk and coverage per tenant and across a whole fleet.",
+        "PosturePortal"),
+    "products/dredd.html": (
+        "SeQontrol - Dredd - In development",
+        "Configuration governance rather than posture scoring: not \u201cthis is unwise\u201d but "
+        "\u201cthis is not what you approved\u201d, with two answers \u2014 revert it, or ratify it.",
+        "Dredd"),
     "products/webscan.html": (
         "SeQontrol - WebScan - What your attacker sees first",
         "Grade the public face of every domain you own — TLS, headers, cookies, DNS, content and "

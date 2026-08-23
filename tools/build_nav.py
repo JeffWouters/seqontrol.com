@@ -29,12 +29,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PRODUCTS = [
     ("sharecare.html",         "ShareCare",         "--t-sharecare",  None),
     ("securityportal.html",    "SecurityPortal",    "--t-security",   None),
-    ("coming.html#conditionalaccessportal", "ConditionalAccessPortal", "--t-condaccess", "Soon"),
+    ("conditionalaccessportal.html", "ConditionalAccessPortal", "--t-condaccess", "Soon"),
     ("webscan.html",           "WebScan",           "--t-webscan",    None),
-    ("coming.html#complianceportal",  "CompliancePortal",  "--t-compliance", "Soon"),
-    ("coming.html#postureportal",     "PosturePortal",     "--t-posture",    "In dev"),
+    ("complianceportal.html",  "CompliancePortal",  "--t-compliance", "Soon"),
+    ("postureportal.html",     "PosturePortal",     "--t-posture",    "In dev"),
     ("mailtrust.html",         "MailTrust",         "--t-mailtrust",  None),
-    ("coming.html#dredd",             "Dredd",             "--t-dredd",      "In dev"),
+    ("dredd.html",             "Dredd",             "--t-dredd",      "In dev"),
 ]
 
 # The footer's Company column carries the three free assessments — one per
@@ -99,14 +99,21 @@ NAV = [
 # submenu existed only to bridge a split that no longer exists, so Pricing is a plain entry again.
 PRICING_SUB = []
 
-# A product's availability was being stated in five places: the nav badge (here), the Status line on its
-# own page, two counts on index.html, a sentence on products/index.html and the pricing panel. Three of
-# them were wrong simultaneously on 2026-08-19. The badge and the Status line are now the same fact
-# rendered twice from this list; the prose counts still are not, and remain the drift risk.
+# A product's availability was being stated in five places: the nav badge (here), the Status line on
+# its own page, two counts on index.html, a sentence on products/index.html and the pricing panel.
+# Three were wrong simultaneously on 2026-08-19. Four of those five are now rendered from this one
+# list — nav badge, Status line, card badge and, since the split, the state-note banner. Prose counts
+# still are not, and remain the drift risk check_availability exists to bound.
+#
+# The badge here now matches CARD_STATUS. It used to print a green "Built" for a "Soon" product and
+# lean on the sentence beside it to explain that you still cannot have it — the same green-badge-on-
+# an-unreleased-product pattern that made four cards wrong on products/index.html. Since 2026-08-23
+# these products have their own pages, where the sidebar badge sits inches from a banner saying the
+# opposite, so the two are now the same three states throughout: green only for something shipped.
 STATUS = {
-    None:       ("built", "Built",          "Running today"),
-    "Soon":     ("built", "Built",          "Coming soon &mdash; not yet released"),
-    "In dev":   ("soon",  "In development", "Not yet available"),
+    None:       ("built", "Built",             "Running today"),
+    "Soon":     ("early", "Coming soon",       "Built and running &mdash; not released yet"),
+    "In dev":   ("soon",  "Under development", "Not yet available"),
 }
 
 # products/index.html shows the same eight products as cards, and each card's availability badge was
@@ -152,6 +159,43 @@ def card_badge(m: "re.Match") -> str:
         return m.group(0)
     css, text = CARD_STATUS[TONE_LABEL[key]]
     return f'{m.group(1)}<span class="status {css}">{text}</span>'
+
+
+# THE STATE OF A PRODUCT, SAID AT THE TOP OF ITS OWN PAGE. The four unreleased products shared one
+# page until 2026-08-23 and now have four of their own. A page per product is a better read, but it
+# reintroduces the risk the shared page removed: a product page that looks exactly like a page for
+# something you can buy. So each unreleased product's page opens with this notice, and like the nav
+# badge, the card badge and the Status line it is DERIVED from PRODUCTS rather than typed - four
+# statements of the same fact, none of which can drift from the others.
+#
+# Shipped products carry no notice. The page for something you can buy does not need a banner saying
+# so, and adding one would make the notice ordinary rather than a warning.
+STATE_NOTE = {
+    "Soon": (
+        "Built, but you cannot buy it yet",
+        "This one is built and running, and it is close. You still cannot buy it, and nothing on "
+        "this page is an invitation to try. Its price is published so the number is settled before "
+        "it ships rather than negotiated after."),
+    "In dev": (
+        "Still being written",
+        "Real work is still happening on this one. It is not available, it carries no list price, "
+        "and there is no date &mdash; a date invented to fill this space would be the first thing on this "
+        "site you could catch us out on. Ask, and you will get an honest read on where it is."),
+}
+
+STATE_RE = re.compile(r'( *)<div class="state-note[^"]*">.*?</div>', re.S)
+
+
+def state_note(pad: str, label: str | None, tone: str) -> str:
+    """The availability banner for one product page, or nothing for a shipped product."""
+    if label is None:
+        return f'{pad}<div class="state-note"></div>'
+    title, body = STATE_NOTE[label]
+    css, badge = CARD_STATUS[label]
+    return (f'{pad}<div class="state-note tone-{tone[4:]}">\n'
+            f'{pad}  <p class="state-head"><span class="status {css}">{badge}</span> {title}</p>\n'
+            f'{pad}  <p class="mb0">{body}</p>\n'
+            f'{pad}</div>')
 
 
 # The skip link is the first thing a keyboard user needs and the easiest thing to forget. The 22
@@ -368,12 +412,15 @@ def main() -> None:
             out = NAVLINKS.sub(lambda m: navlinks(m.group(1), pre, up), src)
 
             # A product page's Status line is the same fact as its nav badge, so it is rendered from
-            # the same row rather than kept in step by hand. Only the shipped products still have
-            # their own page; the rest share products/coming.html and carry no Status block.
+            # the same row rather than kept in step by hand. Since 2026-08-23 all eight products have
+            # a page, unreleased ones included, so this fires for every one of them — and the four
+            # that cannot be bought also get the state-note banner below, from the same row.
             if rel.startswith("products/"):
                 label = next((lab for href, _n, _t, lab in PRODUCTS if rel == f"products/{href}"), "__none__")
                 if label != "__none__":
                     out = STATUS_RE.sub(lambda m: status_block(m.group(1), label), out)
+                    tone = next(t for h, _n, t, _l in PRODUCTS if rel == f"products/{h}")
+                    out = STATE_RE.sub(lambda m: state_note(m.group(1), label, tone), out)
             out = add_skip(out)
             out = CONTACT_FORM_RE.sub(stamp_contact, out)
             out = lazy_footer(out)

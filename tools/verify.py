@@ -264,7 +264,15 @@ SEO_EXEMPT = {"404.html"}
 # Redirect stubs are not pages: they exist so an obvious URL resolves. They are
 # noindex, canonical to their target, and carry no chrome — so the page-shaped
 # checks below would only ever produce noise.
-REDIRECT_STUBS = set()
+# Pages kept only to redirect. They are exempt from the a11y, SEO and content checks because they
+# are not pages anyone should read - they must simply carry a refresh and a noindex, which is what
+# is checked instead.
+#
+# products/coming.html held all four unreleased products behind anchors until 2026-08-23. Each has
+# its own page now, but that URL was in the sitemap and half the site linked to its anchors, so it
+# redirects rather than 404s. A meta refresh is the only option available: GitHub Pages serves no
+# custom headers, so there is no 301.
+REDIRECT_STUBS = {"products/coming.html"}
 
 # 60 is the usual guidance, but the real constraint is pixel width (~600px), so
 # a character or two either side is noise. The cap exists to catch titles that

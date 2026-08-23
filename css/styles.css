@@ -1028,6 +1028,31 @@ a[href^="https://jeffops.com"]:hover,
 .tone-soon { --tone: var(--t-soon); }
 
 
+/* --------------------------------------------------- unreleased-state note
+
+   Sits directly under the lede on the four product pages you cannot buy yet, and is written by
+   build_nav.py from the PRODUCTS list. It has to read as a warning rather than as a feature box:
+   a page per unreleased product is a better read than the shared roadmap page it replaced, but it
+   also looks exactly like a page for something you can order, which is the risk this closes.
+
+   Tone-coloured left edge rather than a filled panel — loud enough to stop the eye, quiet enough
+   that it does not read as an advertisement for the thing it is warning you about. */
+.state-note {
+  margin: 1.4rem 0 0;
+  padding: .95rem 1.15rem;
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--tone, var(--accent));
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  max-width: 62ch;
+}
+.state-note:empty { display: none; }
+.state-note .state-head {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .55rem;
+  margin: 0 0 .45rem; font-weight: 620; color: var(--text);
+}
+.state-note p { color: var(--muted); font-size: .93rem; }
+
 /* ----------------------------------------------------------------- print */
 
 /* site.js collapses the pricing page into tabs by setting [hidden] on every panel but one, and

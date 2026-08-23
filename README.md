@@ -25,8 +25,11 @@ vs-cipp.html  vs-grc-platforms.html  vs-m365-governance.html  vs-secure-score.ht
 products/
   index.html        Product overview + at-a-glance comparison table
   sharecare.html  securityportal.html  webscan.html  mailtrust.html    the four shipped products
-  coming.html       The four unreleased ones share one page, anchored per product, so the
-                    catalogue never implies you can buy something you cannot
+  conditionalaccessportal.html  complianceportal.html                    coming soon
+  postureportal.html  dredd.html                                         in development
+  coming.html       A redirect stub. The four unreleased products shared this page behind
+                    anchors until 2026-08-23; it was in the sitemap and half the site linked
+                    to it, so it redirects rather than 404s.
 guides/
   index.html  dmarc-without-breaking-mail.html  evidence-auditors-accept.html
   what-copilot-can-reach.html
@@ -373,3 +376,10 @@ What that involved, and why, so it does not get undone:
 
   `verify.py` enforces the part prose cannot: `check_availability` fails when a product card's
   generated badge disagrees with the availability heading it sits under.
+
+  Every product has its own page, including the four you cannot buy. Those four open with a
+  **state note** — a banner under the lede saying plainly that the product is not for sale — and
+  `build_nav.py` writes it from `PRODUCTS`, so it is the same fact as the nav badge and the Status
+  line rather than a fourth copy someone has to remember. A page per product reads better than the
+  shared roadmap page it replaced, but it also looks exactly like a page for something orderable,
+  which is the risk that banner exists to close. Do not hand-write availability copy into it.
