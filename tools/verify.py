@@ -552,6 +552,42 @@ def check_form(page: str, src: str) -> None:
         fail(page, "data-contact does not look like an email address")
 
 
+# ------------------------------------------------------------------- sitemap
+
+# The CI reproducibility check cannot police sitemap.xml, because its <lastmod> values come from
+# `git log -1` per file and therefore differ either side of a commit: generated before committing
+# they carry the PREVIOUS commit's date, and regenerated in CI they carry the new one. That only
+# agrees when both happen on the same calendar day, which is why it passed all through 21 August and
+# would have failed on the 23rd. deploy.yml excludes the file from that diff for exactly that reason.
+#
+# So the sitemap needs its own check, and the date is not the part worth checking anyway. The part
+# that can genuinely go wrong is COVERAGE: a page added to META and missing from the sitemap, or a
+# sitemap entry for a page that no longer exists. That is checked here, once, against the same META
+# the generator builds it from.
+def check_sitemap() -> None:
+    path = os.path.join(ROOT, "sitemap.xml")
+    if not os.path.exists(path):
+        fail("sitemap.xml", "missing")
+        return
+    with open(path, encoding="utf-8") as fh:
+        xml = fh.read()
+
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    from build_seo import META, canonical_for  # noqa: E402
+
+    listed = set(re.findall(r"<loc>(.*?)</loc>", xml))
+    expected = {canonical_for(rel) for rel in META}
+
+    for url in sorted(expected - listed):
+        fail("sitemap.xml", f"page is in build_seo.META but not in the sitemap: {url}")
+    for url in sorted(listed - expected):
+        fail("sitemap.xml", f"sitemap lists a URL that build_seo.META does not cover: {url}")
+
+    for rel in sorted(META):
+        if not os.path.exists(os.path.join(ROOT, rel.replace("/", os.sep))):
+            fail("sitemap.xml", f"build_seo.META names a page that does not exist: {rel}")
+
+
 # --------------------------------------------------------------------- main
 
 def main() -> int:
@@ -579,6 +615,7 @@ def main() -> int:
         check_availability(page, src)
 
     check_scripts()
+    check_sitemap()
 
     print(f"checked {len(PAGES)} pages")
     if failures:

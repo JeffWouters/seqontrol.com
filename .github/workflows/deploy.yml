@@ -60,7 +60,13 @@ jobs:
           python tools/build_licensing.py
           python tools/build_nav.py
           python tools/build_seo.py
-          git diff --exit-code
+          # sitemap.xml is excluded, and only sitemap.xml. Its <lastmod> values come from
+          # `git log -1` per file, so they differ either side of a commit: generated locally they
+          # carry the previous commit's date, regenerated here they carry this one. Those agree only
+          # when both happen on the same day, so this check would flake across any midnight. The
+          # sitemap is not left unchecked — verify.py's check_sitemap compares its URL set against
+          # build_seo.META, which is the part that can actually drift.
+          git diff --exit-code -- . ':!sitemap.xml'
 
   deploy:
     # Pull requests are verified but never published.
