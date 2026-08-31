@@ -8,12 +8,24 @@ two brand colours rather than thresholding.
 
 Run: python tools/make_logo_variants.py
 
-RUN THIS BEFORE make_icons.py. Both scripts write favicon-32.png,
-apple-touch-icon.png and icon-512.png and disagree about what belongs in them:
-this one centres the on-dark symbol, make_icons emits a white shield on a dark
-tile. Whichever runs last wins. make_icons is the treatment the site actually
-links, so it must run second — which also means the three icons written here are
-overwritten in the normal flow and exist only for a run of this script alone.
+THIS NO LONGER WRITES ICONS, and the order it runs in no longer matters. Until
+2026-08-31 it emitted favicon-32.png, apple-touch-icon.png and icon-512.png,
+which make_icons.py also writes — from the same source symbol, recoloured
+differently. Whichever ran last decided what the site shipped, and the committed
+icons were make_icons.py's treatment, so the ordering was a contract nobody had
+written down and nothing enforced.
+
+The two disagreed on three things. This script lifted the navy shield to --text
+(#e5e7eb) so the icon matched the body text beside it; make_icons.py lifts it to
+pure white for contrast against a browser tab strip it does not control. The
+insets differed, 92% against 94%. And the apple-touch icon here was transparent,
+which iOS composites onto black and does not pad — make_icons.py puts it on an
+opaque #0b0f17 tile at 74% so it gets the site's own background and some room.
+
+make_icons.py won on merit, not seniority: it is the only one that reasons about
+light browser chrome, and the only one that writes favicon.ico and the navy
+favicon-32-light.png that sits behind prefers-color-scheme: light. A white shield
+disappears on a light strip, and this script had no answer for that.
 
 It only runs when invoked directly. At import scope, `import make_logo_variants`
 regenerated every logo variant as a side effect — and being last alphabetically,
@@ -112,16 +124,10 @@ def main() -> None:
     resize(word_d, "seqontrol-wordmark-on-dark-320.png", 320)
     resize(tag_d, "seqontrol-tagline-on-dark-320.png", 320)
 
-    # icons: square canvas, symbol centred, keeps transparency. Overwritten by make_icons.py in
-    # the normal flow — see the module docstring.
-    for size, name in ((32, "favicon-32.png"), (180, "apple-touch-icon.png"), (512, "icon-512.png")):
-        canvas = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-        s = sym_d.copy()
-        s.thumbnail((int(size * 0.92), int(size * 0.92)), Image.LANCZOS)
-        canvas.paste(s, ((size - s.width) // 2, (size - s.height) // 2), s)
-        canvas.save(os.path.join(OUT, name), "PNG", optimize=True)
-        print(f"{name}: {size}x{size}  {os.path.getsize(os.path.join(OUT, name))//1024} KB")
-
+    # No icons are written here. This used to emit favicon-32.png, apple-touch-icon.png and
+    # icon-512.png, which make_icons.py also writes with a different treatment, so whichever script
+    # ran last decided what the site shipped. The collision is gone rather than documented: see the
+    # module docstring for why make_icons.py's treatment is the one that survives.
     og_card(sym_d, word_d, tag_d)
     preview(sym_d, word_d)
 

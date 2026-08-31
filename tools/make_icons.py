@@ -14,12 +14,18 @@ white shield needs a dark ground to read against anyway.
 
 Run: python tools/make_icons.py
 
-RUN THIS AFTER make_logo_variants.py, NOT BEFORE. Both scripts write
-favicon-32.png, apple-touch-icon.png and icon-512.png, and they disagree about
-what those should contain: make_logo_variants centres the on-dark symbol, this
-one emits the white shield described above. Whichever runs last wins, so the
-committed icons are whatever the last invocation happened to be. That collision
-is worth resolving properly one day; until then the order is the contract.
+This is the only script that writes icons. make_logo_variants.py used to write
+favicon-32.png, apple-touch-icon.png and icon-512.png as well, with the shield
+lifted to --text rather than white and a transparent apple-touch icon, so
+whichever script ran last decided what shipped. Its icon loop was removed on
+2026-08-31 rather than the order being documented — the treatment here is the
+one the site links, and it is the only one that answers for light browser chrome
+or produces favicon.ico at all.
+
+It depends on extract_logo.py, not on make_logo_variants.py: the only input is
+assets/seqontrol-symbol.png, which extract_logo.py produces and which this script
+recolours itself. With the icon loop gone from make_logo_variants.py, the two
+scripts no longer touch a single file in common.
 
 It only runs when invoked directly. At import scope it regenerated the icons as
 a side effect of `import make_icons`, which is how sixteen tracked binaries were

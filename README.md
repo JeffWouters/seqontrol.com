@@ -83,19 +83,26 @@ crop_screenshots.py  redact_screenshots.py   Raw capture -> publishable crop
 Only `build_images.py` needs anything installed (`pip install Pillow`), and only when a screenshot
 changes — the WebP files are committed, so CI never runs it.
 
-The three artwork scripts need Pillow too, and they have an order of their own:
+The three artwork scripts need Pillow too. `extract_logo.py` has to run first because the other
+two read what it produces; after that the order does not matter.
 
 ```powershell
 python tools/extract_logo.py        # supplied JPEG -> transparent symbol/wordmark/tagline
 python tools/make_logo_variants.py  # on-dark variants, sized copies, OG card
-python tools/make_icons.py          # favicon.ico and the icon set   <- must run last
+python tools/make_icons.py          # favicon.ico and the icon set
 ```
 
-`make_logo_variants.py` and `make_icons.py` both write `favicon-32.png`,
-`apple-touch-icon.png` and `icon-512.png`, and they disagree about what those should hold: the
-first centres the on-dark symbol, the second emits the white shield the site actually links.
-Whichever runs last wins, and the committed icons are the `make_icons.py` treatment — verified
-byte-for-byte. Run them out of order and three icons change silently.
+Until 2026-08-31 the last two both wrote `favicon-32.png`, `apple-touch-icon.png` and
+`icon-512.png` from the same source symbol, recoloured differently — so whichever ran last decided
+what the site shipped, and the order was a contract nothing enforced. `make_logo_variants.py` no
+longer writes icons at all. The two scripts now have no output file in common.
+
+`make_icons.py` kept the job because its treatment is the one the site links and the only one that
+answers for a light browser strip: it lifts the navy shield to pure white for contrast against
+chrome it does not control, puts the apple-touch icon on an opaque `#0b0f17` tile because iOS
+composites transparency onto black and does not pad, and writes both `favicon.ico` and the navy
+`favicon-32-light.png` that sits behind `prefers-color-scheme: light`. A white shield disappears on
+a light strip, and the other script had no answer for that.
 
 None of the three runs in CI, and none of them run at import: they rewrite tracked binaries, so
 they only act when invoked directly. `extract_logo.py` reads artwork that is deliberately not in
