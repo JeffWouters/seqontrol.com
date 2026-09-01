@@ -6,12 +6,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Read-only by default. pages: write and id-token: write are granted on the deploy job alone,
+# because that is the only job that needs them — and the verify job runs on pull_request, so it
+# would otherwise hold deploy credentials while building a contributor's branch. A public repository
+# already hands a fork PR a read-only token, so this closes nothing that was open; it removes the
+# question.
 permissions:
   contents: read
-  pages: write
-  id-token: write
-  # deploy-pages v4 and later fetch the artifact by ID and need this.
-  actions: read
 
 # One deploy at a time. Queued runs wait rather than racing each other, but a run
 # already in progress finishes, so a deploy is never half-applied.
@@ -27,6 +28,8 @@ jobs:
   # framework names, no re-consent overclaim). See tools/verify.py.
   verify:
     runs-on: ubuntu-latest
+    # A hung step otherwise holds a runner for six hours. This job finishes in about thirty seconds.
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
         with:
@@ -73,6 +76,13 @@ jobs:
     if: github.event_name != 'pull_request'
     needs: verify
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+      # deploy-pages v4 and later fetch the artifact by ID and need this.
+      actions: read
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
