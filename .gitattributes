@@ -1,0 +1,8 @@
+# Shell scripts must keep LF. tools/smoke_test.sh runs on ubuntu-latest, and a CRLF checkout makes
+# bash read the carriage return as part of each command — the failure is "$'\r': command not found"
+# on a line that looks perfectly fine in an editor.
+#
+# Deliberately narrow. A repository-wide `* text=auto eol=lf` would renormalise every tracked file
+# here in one commit, which is a large diff for a problem this site does not have: the generators
+# already write with newline="\n", so nothing else is at risk.
+*.sh text eol=lf

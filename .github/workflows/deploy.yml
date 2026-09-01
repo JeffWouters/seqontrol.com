@@ -111,3 +111,21 @@ jobs:
 
       - id: deployment
         uses: actions/deploy-pages@v5
+
+  # Everything above this point reads the repository. Nothing had ever read the deployed site, which
+  # is how /.well-known/security.txt stayed a 404 from launch with every build green: the file was
+  # present and valid in the source tree the whole time, so verify.py had nothing to complain about.
+  #
+  # This job is the only thing in the pipeline that can see the gap between what was committed and
+  # what is served. It runs after the deploy, against the live origin, and fails the run if they
+  # disagree — the deploy has already happened by then, so this reports rather than prevents, which
+  # is the most that is available without a staging origin.
+  smoke:
+    needs: deploy
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check the live site serves what was built
+        run: bash tools/smoke_test.sh https://seqontrol.com
