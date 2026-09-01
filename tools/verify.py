@@ -15,6 +15,7 @@ Run: python tools/verify.py
 """
 from __future__ import annotations
 
+import datetime
 import html
 import json
 import os
@@ -588,6 +589,81 @@ def check_sitemap() -> None:
             fail("sitemap.xml", f"build_seo.META names a page that does not exist: {rel}")
 
 
+# ------------------------------------------------------------ security.txt
+
+# RFC 9116 section 2.5. Anything outside this set is an extension field, which the spec permits and
+# no consumer understands, so in practice it is a typo.
+SECURITY_FIELDS = {"acknowledgments", "canonical", "contact", "encryption",
+                   "expires", "hiring", "policy", "preferred-languages"}
+
+# How close to Expires this is still willing to ship. An expired security.txt is worse than none:
+# RFC 9116 tells a researcher not to trust one. The failure is silent — nothing about the file
+# changes on the day it dies — so the build has to be what notices.
+SECURITY_RENEW_DAYS = 30
+
+
+def check_security_txt() -> None:
+    """The file exists, parses, and has not quietly expired.
+
+    verify.py globs *.html, so until now it had never opened this file at all — which is how the
+    site came to serve a 404 at the one path RFC 9116 names without anything going red. The deploy
+    half of that was upload-pages-artifact dropping dotfiles; this half is that nothing was reading
+    the file even locally.
+
+    Worth more here than on most sites: WebScan sells a scan that checks for security.txt, and
+    seqontrol.com failing its own product's check is the kind of thing a prospect finds first.
+    """
+    rel = os.path.join(".well-known", "security.txt")
+    path = os.path.join(ROOT, rel)
+    if not os.path.exists(path):
+        fail(rel, "missing — RFC 9116 names this exact path")
+        return
+
+    with open(path, encoding="utf-8") as fh:
+        text = fh.read()
+
+    fields: dict[str, str] = {}
+    for number, line in enumerate(text.splitlines(), start=1):
+        if not line.strip() or line.startswith("#"):
+            continue
+        if ":" not in line:
+            fail(rel, f"line {number} is neither blank, a comment, nor a field: {line!r}")
+            continue
+        name, _, value = line.partition(":")
+        # The grammar is "field-name ':' SP value" — exactly one space, nothing leading. Parsers
+        # that follow it literally drop anything else.
+        if name != name.strip() or not value.startswith(" ") or value.startswith("  "):
+            fail(rel, f"line {number} does not match the RFC 9116 grammar: {line!r}")
+        key = name.strip().lower()
+        if key not in SECURITY_FIELDS:
+            fail(rel, f'unrecognised field "{key}"')
+        fields[key] = value.strip()
+
+    for required in ("contact", "expires"):
+        if required not in fields:
+            fail(rel, f"has no {required.title()} field, which RFC 9116 requires")
+
+    canonical = fields.get("canonical")
+    if canonical and not canonical.endswith("/.well-known/security.txt"):
+        fail(rel, f"Canonical points at {canonical}, not the path this file is served from")
+
+    raw = fields.get("expires")
+    if raw:
+        try:
+            when = datetime.datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        except ValueError:
+            fail(rel, f"Expires is not an ISO 8601 timestamp: {raw!r}")
+            return
+        now = datetime.datetime.now(datetime.timezone.utc)
+        days = (when - now).days
+        if days < 0:
+            fail(rel, f"expired {abs(days)} days ago; RFC 9116 tells researchers not to trust it")
+        elif days < SECURITY_RENEW_DAYS:
+            fail(rel, f"expires in {days} days — renew it before it stops being trusted")
+        elif days > 366:
+            fail(rel, f"expires in {days} days; RFC 9116 recommends under a year")
+
+
 # --------------------------------------------------------------------- main
 
 def main() -> int:
@@ -616,6 +692,7 @@ def main() -> int:
 
     check_scripts()
     check_sitemap()
+    check_security_txt()
 
     print(f"checked {len(PAGES)} pages")
     if failures:

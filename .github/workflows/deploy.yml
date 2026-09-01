@@ -94,6 +94,20 @@ jobs:
       - uses: actions/upload-pages-artifact@v5
         with:
           path: .
+          # Without this the deploy silently drops every dotfile, and the build still goes green.
+          # v4 of this action began excluding hidden files by default; v5 added this input to turn
+          # that back off. It cost this site both of the ones it has:
+          #
+          #   /.well-known/security.txt   404 — the exact path RFC 9116 names, so a researcher
+          #                               looking for how to report a vulnerability found nothing.
+          #                               There is no root-level copy to fall back to.
+          #   /.nojekyll                  404 — so Pages was running Jekyll over the checkout,
+          #                               which discards paths beginning with an underscore.
+          #
+          # Quoted deliberately. The action compares this input against the string 'true', and an
+          # unquoted YAML boolean is one of the few things that reaches a composite action as
+          # something other than the string you wrote.
+          include-hidden-files: 'true'
 
       - id: deployment
         uses: actions/deploy-pages@v5
