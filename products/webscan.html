@@ -107,6 +107,19 @@
   </section>
 
   <section>
+    <div class="wrap wrap-narrow">
+      <h2>Why it matters</h2>
+      <p>The outside is the only half of your posture an attacker can assess without credentials — and the
+          only half a prospective customer can check before they sign anything. It is also the half that
+          usually gets looked at once a year, by a different tool, and filed as a PDF that is wrong within
+          the month.</p>
+        <p>Nothing here is exotic. Weak TLS, a missing CAA record, a cookie without <code>Secure</code> — every
+          one is a known standard, publicly specified, and trivially checkable from outside. Which is exactly
+          why being wrong about them is hard to explain afterwards.</p>
+    </div>
+  </section>
+
+  <section>
     <div class="wrap split">
       <div>
         <h2>What it does</h2>
@@ -135,16 +148,6 @@
           <li><strong>Free on every tenant</strong> — one URL at a time, fire and forget. Every check, at no
             cost and with no expiry date. You pay when you want the answer kept.</li>
         </ul>
-
-        <h2 style="margin-top:2.8rem">Why it matters</h2>
-        <p>The outside is the only half of your posture an attacker can assess without credentials — and the
-          only half a prospective customer can check before they sign anything. It is also the half that
-          usually gets looked at once a year, by a different tool, and filed as a PDF that is wrong within
-          the month.</p>
-        <p>Nothing here is exotic. Weak TLS, a missing CAA record, a cookie without <code>Secure</code> — every
-          one is a known standard, publicly specified, and trivially checkable from outside. Which is exactly
-          why being wrong about them is hard to explain afterwards.</p>
-
         <div class="note honest">
           <h3>How it runs, and why free is free</h3>
           <p class="mb0">Each scan is a short-lived Azure Function. Nothing is installed, nothing runs inside
@@ -169,7 +172,7 @@
         </div>
       </div>
 
-      <aside class="aside">
+<aside class="aside">
         <h3>Status</h3>
         <ul><li><span class="status built">Built</span> Running today</li></ul>
         <h3>Metered on</h3>
@@ -205,11 +208,14 @@
   <section class="band">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">In the product</span>
-        <h2>A grade you can take apart</h2>
-        <p>Not a letter and a list of red crosses. Every failure carries the standard it breaks, why that
-          matters, the fix, and — if you are not going to fix it — somewhere to say so.</p>
+        <span class="eyebrow">Inside WebScan</span>
+        <h2>What&rsquo;s in the product</h2>
+        <p>The screen you will actually work in.</p>
       </div>
+
+      <h3>A grade you can take apart</h3>
+      <p class="lede" style="max-width:730px">Not a letter and a list of red crosses. Every failure carries the standard it breaks, why that
+          matters, the fix, and — if you are not going to fix it — somewhere to say so.</p>
 
       <div class="shot-feature">
         <figure class="shot">
@@ -228,7 +234,7 @@
         </figure>
 
         <div>
-          <h3>Four states, because three would be a lie</h3>
+          <h4>Four states, because three would be a lie</h4>
           <p>Passed, failed, not assessed and not applicable are kept apart. A check that could not run is
             never folded into either column — a grade that hides its own gaps is worse than no grade.</p>
           <ol class="notes">
@@ -243,6 +249,70 @@
           <p class="small dim" style="margin:.7rem 0 0">Domain replaced in the screenshot. The findings are
             the real ones.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Capability and what you get from it</h2>
+      <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="Capability and what you get from it">
+        <table>
+          <thead><tr><th scope="col">Capability</th><th scope="col">What it means for you</th></tr></thead>
+          <tbody>
+            <tr><td>Unauthenticated, from outside</td><td>No consent to arrange; a licensed site can be one you do not own yet</td></tr>
+            <tr><td>Standard references on every check</td><td>The finding is a specification, not an opinion</td></tr>
+            <tr><td>Four result states, kept apart</td><td>An unreadable check never becomes a quiet pass</td></tr>
+            <tr><td>Scheduled scans and retained history</td><td>Proof the configuration held between audits</td></tr>
+            <tr><td>Waivers with mandatory expiry</td><td>Accepting a risk is recorded and re-surfaces, not buried</td></tr>
+            <tr><td>Control tags into CompliancePortal</td><td>The external surface becomes evidence with no second integration</td></tr>
+            <tr><td>Fleet view across domains and tenants</td><td>Rank a client book by public exposure in one screen</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Objections, answered straight</h2>
+      <div class="grid grid-2">
+        <article class="card">
+          <h3>"Free tools already grade my TLS."</h3>
+          <p>They do, well. Then they forget, and the result lives in a browser tab. WebScan's difference is
+            not the check — it is that the result is kept, tagged to a control, and sits next to the rest of
+            your posture instead of in someone's bookmarks.</p>
+        </article>
+        <article class="card">
+          <h3>"We had a penetration test in March."</h3>
+          <p>A penetration test is a date. Certificates expire, headers get dropped in a deploy, a new
+            subdomain appears. This is the part of that report that should have been a schedule.</p>
+        </article>
+        <article class="card">
+          <h3>"Is the free tier crippled?"</h3>
+          <p>Not in what it checks — the check set is identical and so is the result. It is capped in reach:
+            one URL at a time, and it forgets. Nothing is held back to make the paid version look cleverer;
+            what you buy is the memory.</p>
+        </article>
+        <article class="card">
+          <h3>"Can it break my site?"</h3>
+          <p>It requests pages and reads DNS the way any visitor does. No exploitation, no fuzzing, no load.
+            If a scan could take your site down, an ordinary crawler already would have. Should active
+            testing ever ship — it is <a href="#roadmap">on the roadmap</a> — it will be a separate,
+            explicitly consented mode, never something the default scan starts doing.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <h2>Pick a domain and find out</h2>
+      <p>Your own, free, three times a day. You will see exactly what the licensed version would have
+        recorded — the difference is what happens to it afterwards.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="../surface-report.html">Scan my site, free</a>
+        <a class="btn btn-ghost" href="index.html">All products</a>
       </div>
     </div>
   </section>
@@ -293,50 +363,6 @@
           nobody actually makes: a saved site nobody re-scans is a stale record, and a schedule that keeps
           nothing is a cron job with no output. Pro grants both, and there is nothing between them worth
           charging for.</p>
-      </div>
-
-      <h2 style="margin-top:3rem">Capability and what you get from it</h2>
-      <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="Capability and what you get from it">
-        <table>
-          <thead><tr><th scope="col">Capability</th><th scope="col">What it means for you</th></tr></thead>
-          <tbody>
-            <tr><td>Unauthenticated, from outside</td><td>No consent to arrange; a licensed site can be one you do not own yet</td></tr>
-            <tr><td>Standard references on every check</td><td>The finding is a specification, not an opinion</td></tr>
-            <tr><td>Four result states, kept apart</td><td>An unreadable check never becomes a quiet pass</td></tr>
-            <tr><td>Scheduled scans and retained history</td><td>Proof the configuration held between audits</td></tr>
-            <tr><td>Waivers with mandatory expiry</td><td>Accepting a risk is recorded and re-surfaces, not buried</td></tr>
-            <tr><td>Control tags into CompliancePortal</td><td>The external surface becomes evidence with no second integration</td></tr>
-            <tr><td>Fleet view across domains and tenants</td><td>Rank a client book by public exposure in one screen</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h2 style="margin-top:3rem">Objections, answered straight</h2>
-      <div class="grid grid-2">
-        <article class="card">
-          <h3>"Free tools already grade my TLS."</h3>
-          <p>They do, well. Then they forget, and the result lives in a browser tab. WebScan's difference is
-            not the check — it is that the result is kept, tagged to a control, and sits next to the rest of
-            your posture instead of in someone's bookmarks.</p>
-        </article>
-        <article class="card">
-          <h3>"We had a penetration test in March."</h3>
-          <p>A penetration test is a date. Certificates expire, headers get dropped in a deploy, a new
-            subdomain appears. This is the part of that report that should have been a schedule.</p>
-        </article>
-        <article class="card">
-          <h3>"Is the free tier crippled?"</h3>
-          <p>Not in what it checks — the check set is identical and so is the result. It is capped in reach:
-            one URL at a time, and it forgets. Nothing is held back to make the paid version look cleverer;
-            what you buy is the memory.</p>
-        </article>
-        <article class="card">
-          <h3>"Can it break my site?"</h3>
-          <p>It requests pages and reads DNS the way any visitor does. No exploitation, no fuzzing, no load.
-            If a scan could take your site down, an ordinary crawler already would have. Should active
-            testing ever ship — it is <a href="#roadmap">on the roadmap</a> — it will be a separate,
-            explicitly consented mode, never something the default scan starts doing.</p>
-        </article>
       </div>
     </div>
   </section>
@@ -396,18 +422,6 @@
         <p class="mb0">Comparison tables will show WebScan missing SPF, DKIM and DMARC. That is deliberate
           and permanent: mail authentication is <a href="mailtrust.html">MailTrust</a>, on the same domains,
           feeding the same findings store. It is not absent from the platform — only from this product.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="cta">
-    <div class="wrap">
-      <h2>Pick a domain and find out</h2>
-      <p>Your own, free, three times a day. You will see exactly what the licensed version would have
-        recorded — the difference is what happens to it afterwards.</p>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="../surface-report.html">Scan my site, free</a>
-        <a class="btn btn-ghost" href="index.html">All products</a>
       </div>
     </div>
   </section>
