@@ -330,6 +330,28 @@ def absolutise(src: str) -> str:
     return _URL_RE.sub(one, src)
 
 
+# The comparison table on products/index.html names every product in a cell of its own, and those
+# cells carried a hand-typed availability badge — one of them, wrong: PosturePortal was tagged "Soon"
+# when PRODUCTS has it "In dev", while three equally unreleased products carried nothing at all. This
+# is the span PCARD_RE goes out of its way not to overwrite, so it was the one badge on the page with
+# nothing keeping it true. Now it is derived from the same row as the nav badge, the card badge and
+# the Status line.
+#
+# Only the unreleased ones are badged. A "Built" tag on four of eight rows is noise; the absence of a
+# badge is the signal, and the paragraph under the table says so.
+TCELL_RE = re.compile(
+    r'(<td><a href="([a-z]+\.html)">[A-Za-z]+</a>)(?:\s*<span class="status [a-z]+">[^<]*</span>)?</td>')
+
+
+def table_status(m: "re.Match") -> str:
+    """Stamp the availability badge into a comparison-table product cell."""
+    label = next((lab for href, _n, _t, lab in PRODUCTS if m.group(2) == href), None)
+    if label is None:
+        return f'{m.group(1)}</td>'
+    css, badge = CARD_STATUS[label]
+    return f'{m.group(1)} <span class="status {css}">{badge}</span></td>'
+
+
 def prefix(rel: str) -> str:
     """How a page at `rel` reaches products/."""
     d = os.path.dirname(rel)
@@ -448,6 +470,9 @@ def main() -> None:
             out = lazy_footer(out)
             out = name_tables(out)
             out = PCARD_RE.sub(card_badge, out)
+
+            if rel == "products/index.html":
+                out = TCELL_RE.sub(table_status, out)
             out = FOOTER.sub(lambda m: footer(m.group(1), pre), out)
             out = COMPANY_RE.sub(lambda m: company(m.group(1), up), out)
             out = COMPARE_RE.sub(lambda m: compare(m.group(1), up), out)

@@ -78,10 +78,77 @@
       <h1>All products stand alone, and share one platform</h1>
       <p class="lede">
         One console, one findings store, one audit trail, one onboarding flow. Consent is the part that is
-        <strong>not</strong> shared: each product has its own Entra application and asks for its own grant,
-        scoped to what that product needs. So adding a product is a second consent — but it is never a second
-        integration project, and no product carries permissions it has no use for.
+        <strong>not</strong> shared: each product that reads your tenant has its own Entra application and
+        asks for its own grant, scoped to what that product needs. So adding a product is a second consent
+        — but it is never a second integration project, and no product carries permissions it has no use
+        for. Two products need no grant at all: WebScan works entirely from outside, and PosturePortal reads
+        what the others already wrote.
       </p>
+    </div>
+  </section>
+
+  <!-- comparison -->
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">At a glance</span>
+        <h2>Which product answers which question</h2>
+      </div>
+      <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="Which product answers which question">
+        <table>
+          <thead>
+            <tr><th scope="col">Product</th><th scope="col">The question it answers</th><th scope="col">Writes to your tenant?</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href="sharecare.html">ShareCare</a></td>
+              <td>What is over-shared, and what can Copilot reach?</td>
+              <td>Yes — on the Automation tier, where the plane allows it</td>
+            </tr>
+            <tr>
+              <td><a href="securityportal.html">SecurityPortal</a></td>
+              <td>Is the tenant configured safely?</td>
+              <td>No — assessment and evidence only</td>
+            </tr>
+            <tr>
+              <td><a href="webscan.html">WebScan</a></td>
+              <td>What does our public surface look like to an attacker?</td>
+              <td>No — it never writes anywhere</td>
+            </tr>
+            <tr>
+              <td><a href="complianceportal.html">CompliancePortal</a> <span class="status early">Coming soon</span></td>
+              <td>Can we prove the technical controls held, continuously?</td>
+              <td>No — it maps, scores, evidences and attests</td>
+            </tr>
+            <tr>
+              <td><a href="postureportal.html">PosturePortal</a> <span class="status soon">Under development</span></td>
+              <td>So what? What do I show the client or the board?</td>
+              <td>No — read-only by design</td>
+            </tr>
+            <tr>
+              <td><a href="mailtrust.html">MailTrust</a></td>
+              <td>Can someone spoof us, and how do we stop it safely?</td>
+              <td>Yes — DNS write-back on the Automation tier</td>
+            </tr>
+            <tr>
+              <td><a href="dredd.html">Dredd</a> <span class="status soon">Under development</span></td>
+              <td>What changed since we approved this, and who ratified it?</td>
+              <td>Yes — approval-gated restore of the approved state</td>
+            </tr>
+            <tr>
+              <td><a href="conditionalaccessportal.html">ConditionalAccessPortal</a> <span class="status early">Coming soon</span></td>
+              <td>Do our Conditional Access policies actually cover what we think?</td>
+              <td>Yes — approval-gated policy write-back</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small dim" style="margin-top:1rem">“Built” means the capability exists and runs today, and four of the eight
+        are: ShareCare, SecurityPortal, WebScan and MailTrust. “Coming soon” means built and running
+        but not on sale. “Under development” means not yet available. Where a plane is detected but
+        not yet remediable, the product’s own page says so — and
+        <a href="../limits.html">the limits page</a> collects every one of these in one place, because we would
+        rather label it plainly than let you find out in month two.</p>
     </div>
   </section>
 
@@ -90,9 +157,11 @@
     <div class="wrap">
       <div class="suite">
         <div class="suite-head">
-          <h2>Three products. <span class="sep">·</span> One platform. <span class="sep">·</span> Zero compromise.</h2>
+          <h2>Three products, one loop</h2>
           <p>SecurityPortal finds the weaknesses. CompliancePortal turns them into evidence. PosturePortal
-            puts the whole picture on one board. Each is sold on its own; together they close the loop from
+            puts the whole picture on one board. Two of the three are not released yet — the badges below say
+            which is which, and the loop is not closed until they ship. Each is sold on its own; together they
+            close the loop from
             "what is wrong" to "here is the proof" without a single manual hand-off.</p>
         </div>
         <div class="grid grid-3">
@@ -176,73 +245,9 @@
           <h3><a href="conditionalaccessportal.html">ConditionalAccessPortal</a> <span class="status early">Coming soon</span></h3>
           <p>Conditional Access policy inventory and metering, baseline coverage gaps, and approval-gated policy
             write-back — on the Visibility / Governance / Automation ladder. Its Entra app asks
-            for read scope only until write-back is consented separately. Not released yet; its own page on this
-            site is still being written.</p>
+            for read scope only until write-back is consented separately. Not released yet.</p>
         </article>
       </div>
-    </div>
-  </section>
-
-  <!-- comparison -->
-  <section>
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">At a glance</span>
-        <h2>Which product answers which question</h2>
-      </div>
-      <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="Which product answers which question">
-        <table>
-          <thead>
-            <tr><th scope="col">Product</th><th scope="col">The question it answers</th><th scope="col">Writes to your tenant?</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><a href="sharecare.html">ShareCare</a></td>
-              <td>What is over-shared, and what can Copilot reach?</td>
-              <td>Yes — on the Automation tier, where the plane allows it</td>
-            </tr>
-            <tr>
-              <td><a href="securityportal.html">SecurityPortal</a></td>
-              <td>Is the tenant configured safely?</td>
-              <td>No — assessment and evidence only</td>
-            </tr>
-            <tr>
-              <td><a href="webscan.html">WebScan</a></td>
-              <td>What does our public surface look like to an attacker?</td>
-              <td>No — it never writes anywhere</td>
-            </tr>
-            <tr>
-              <td><a href="complianceportal.html">CompliancePortal</a></td>
-              <td>Can we prove the technical controls held, continuously?</td>
-              <td>No — it maps, scores, evidences and attests</td>
-            </tr>
-            <tr>
-              <td><a href="postureportal.html">PosturePortal</a> <span class="status soon">Soon</span></td>
-              <td>So what? What do I show the client or the board?</td>
-              <td>No — read-only by design</td>
-            </tr>
-            <tr>
-              <td><a href="mailtrust.html">MailTrust</a></td>
-              <td>Can someone spoof us, and how do we stop it safely?</td>
-              <td>Yes — DNS write-back on the Automation tier</td>
-            </tr>
-            <tr>
-              <td><a href="dredd.html">Dredd</a></td>
-              <td>What changed since we approved this, and who ratified it?</td>
-              <td>Yes — approval-gated restore of the approved state</td>
-            </tr>
-            <tr>
-              <td>ConditionalAccessPortal</td>
-              <td>Do our Conditional Access policies actually cover what we think?</td>
-              <td>Yes — approval-gated policy write-back</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="small dim" style="margin-top:1rem">"Built" means the capability exists and runs today. Every
-        product on this page is built. Where a product is younger than the others, or a plane is detected but
-        not yet remediable, its own page says so — we would rather label that plainly than let you find out in
-        month two.</p>
     </div>
   </section>
 
