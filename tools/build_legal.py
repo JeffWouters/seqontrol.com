@@ -939,51 +939,106 @@ PAGES = {
 
 <div class="note honest">
         <h2>Every product asks for its own consent</h2>
-        <p class="mb0">There is no single grant that switches the platform on. Each product has its own Entra
-          application and its own admin consent, scoped to that product's permissions — so adding a product
-          means going back to an administrator, not flipping a switch. The upside is real: nothing inherits
-          permissions it has no use for, and revoking one product revokes exactly one. But if you were told
-          this was a one-consent platform, it is not, and you would have found out during onboarding. On top
-          of that, write-back is a separate opt-in again, and Exchange admin, Power Platform, Azure and DNS
-          each need their own one-time setup. The
-          <a href="platform.html">platform page lists every step</a>.</p>
+        <p>There is no single grant that switches the platform on. Each product that reads your tenant has
+          its own Entra application and its own admin consent, scoped to that product's permissions &mdash; so
+          adding a product means going back to an administrator, not flipping a switch. The upside is real:
+          nothing inherits permissions it has no use for. But if you were told this was a one-consent
+          platform, it is not, and you would have found out during onboarding.</p>
+        <p>Two products sit outside that shape. <a href="products/webscan.html">WebScan</a> asks for nothing
+          at all &mdash; no tenant, no consent, no agent &mdash; because it works from outside.
+          <a href="products/postureportal.html">PosturePortal</a> connects to nothing of its own; it reads
+          what the other products already wrote.</p>
+        <p class="mb0">Revoking a product's admin consent revokes exactly one product's Graph access. It does
+          not touch the grants sitting beside it: the Exchange management role, the Azure reader assignment,
+          the Power Platform service principal registration and each DNS provider's OAuth authorisation are
+          separate authorities and have to be removed separately. Write-back is a separate opt-in again, and
+          Exchange admin, Power Platform, Azure and DNS each need their own one-time setup &mdash; and for
+          DNS, in-product write-back is live for Azure DNS and DNSimple only, with every other provider
+          getting guided manual steps. The <a href="platform.html">platform page lists every step</a>.</p>
       </div>
 
 <div class="note honest">
         <h2>Some planes detect but do not (yet?) fix</h2>
-        <p class="mb0">Where a plane can be remediated app-only, it is. Where it cannot — Exchange, SharePoint
-          site roles, Power Platform and delegated-admin relationships today — the product says so, with the
-          precise reason, rather than guessing or quietly failing.</p>
+        <p>Where one of our products remediates a plane app-only, it does. Exchange forwarding, SharePoint
+          site roles, Power Platform and delegated-admin relationships are detected and reported rather than
+          written back.</p>
+        <p class="mb0">That is our gap, not Microsoft's, and this page used to say otherwise. Each of those
+          planes has a documented application-only write path &mdash; certificate-based Exchange Online
+          PowerShell, Sites.FullControl.All on the SharePoint admin APIs, a Power Platform service principal,
+          DelegatedAdminRelationship.ReadWrite.All on Graph. In some cases we have not built the connector;
+          in others we are unwilling to ask you for permission that broad in order to ship it. Either way the
+          limit is ours to lift. When a product cannot safely act, it gives the precise reason rather than
+          guessing or quietly failing.</p>
+      </div>
+
+<div class="note honest">
+        <h2>Half the catalogue is not on sale yet</h2>
+        <p>Four of the eight products run today: <a href="products/sharecare.html">ShareCare</a>,
+          <a href="products/securityportal.html">SecurityPortal</a>,
+          <a href="products/webscan.html">WebScan</a> and <a href="products/mailtrust.html">MailTrust</a>.
+          <a href="products/conditionalaccessportal.html">ConditionalAccessPortal</a> and
+          <a href="products/complianceportal.html">CompliancePortal</a> are built and running but not
+          released. <a href="products/postureportal.html">PosturePortal</a> and
+          <a href="products/dredd.html">Dredd</a> are still being written.</p>
+        <p class="mb0">Two of them have no price. Dredd is quoted rather than listed, because its licence
+          unit is still being set; PosturePortal carries no number at all. And nothing unreleased has a date
+          &mdash; ask, and you get an honest read on where it stands rather than a quarter.</p>
       </div>
 
 <div class="note honest">
         <h2>Subdomain discovery is not a complete estate</h2>
         <p>WebScan finds hostnames two ways, and only one of them is immediate. The names carried on the
-          certificate your site already served are read on its first scan. The rest come from public
-          certificate transparency logs, which we follow ourselves — so we hold nothing logged before we
-          started watching, and a certificate renewed on a ninety-day cycle can take that long to appear.</p>
+          certificate your site serves at scan time are read straight away &mdash; though a wildcard
+          certificate names a shape rather than hosts and yields nothing to enumerate, and a shared CDN or
+          load-balancer certificate can carry names that are not yours.</p>
+        <p>The rest come from public certificate transparency logs. We tail those logs from the day we add
+          them rather than replaying their history, so we hold nothing logged before we started watching.
+          That is our design and not a property of CT &mdash; the logs are append-only and can be read from
+          their first entry &mdash; and it is a limit we could lift.</p>
+        <p>Certificates reach the logs within hours of issuance, so the delay is not the log's, it is ours. A
+          name we never saw reaches us at its next renewal: about ninety days on a Let's Encrypt default, and
+          potentially the better part of a year on a longer-lived commercial certificate.</p>
         <p>We also do not follow every log that exists, and the set we do follow changes as the public logs
-          themselves do — they are retired and replaced on a schedule the whole industry runs on. More to the
-          point: <strong>a log starts counting for us on the day we add it.</strong> Adding one widens what we
-          will see from that day forward. It does not fill in what that log recorded before, and no amount of
-          following will ever recover it.</p>
+          themselves do &mdash; they are retired and replaced on a schedule the whole industry runs on. More
+          to the point: <strong>a log starts counting for us on the day we add it.</strong> Adding one widens
+          what we will see from that day forward; we do not go back and replay what it recorded before.</p>
         <p class="mb0">Which means an empty or short list is a statement about our coverage, not about your
-          estate, and nothing in the product will present it as one. Read it as “what we have seen so
-          far” and it is useful. Read it as “what exists” and it is wrong.</p>
+          estate, and nothing in the product will present it as one. Read it as &ldquo;what we have seen so
+          far&rdquo; and it is useful. Read it as &ldquo;what exists&rdquo; and it is wrong.</p>
+      </div>
+
+<div class="note honest">
+        <h2>WebScan is not a penetration test</h2>
+        <p class="mb0">It grades configuration against published standards, from outside, as any visitor
+          would. It attempts no exploitation, runs no fuzzing, and sees nothing behind a login. Active
+          testing and authenticated scanning are on the roadmap; until they ship, a clean grade says the
+          outside is configured well, not that the application is safe.</p>
       </div>
 
 <div class="note honest">
         <h2>We are Microsoft-first</h2>
-        <p class="mb0">Microsoft 365 and Entra are the deep estate. Box and Slack sharing planes ship today, and
-          CompliancePortal covers Google Cloud and AWS through read-only connectors. Everything else is roadmap,
-          and we will not pretend otherwise on a sales call.</p>
+        <p class="mb0">Microsoft 365 and Entra are the deep estate. Box sharing ships today with app-only
+          revoke; Slack Connect is detect-only until the admin APIs exist to act on. Google Cloud and AWS are
+          read-only connectors in CompliancePortal, which is built and running but not released yet.
+          Everything else is roadmap, and we will not pretend otherwise on a sales call.</p>
       </div>
 
 <div class="note honest">
         <h2>Readiness is not an audit opinion</h2>
-        <p class="mb0">CompliancePortal produces continuous evidence and readiness for the technical controls on
-          the platforms we support. Your auditor still signs the opinion, and the controls that live in people and
-          process are still yours to run.</p>
+        <p class="mb0">CompliancePortal &mdash; built and running, not released yet &mdash; turns the
+          continuous evidence the scanning products already produce into readiness for the technical controls
+          on the platforms we support. The evidence underneath is continuous; the assessments themselves run
+          when you raise one, not on a schedule. Your auditor still signs the opinion, and the controls that
+          live in people and process are still yours to run.</p>
+      </div>
+
+<div class="note honest">
+        <h2>We have not written down our own assurance yet</h2>
+        <p class="mb0">Product data lives in <a href="privacy.html">Microsoft Azure, West Europe</a>, and that
+          much is published. What is not: a subprocessor list, retention defaults per data class, and whatever
+          certifications we do or do not hold. If your procurement needs those before you can buy, ask early
+          &mdash; the honest answer today is that they are not written down, and we would rather say so here
+          than have you discover it in a security questionnaire.</p>
       </div>
 
       <h2>Why this page exists</h2>

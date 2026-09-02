@@ -100,8 +100,8 @@ META = {
         "Free exposure report"),
     "limits.html": (
         "SeQontrol - Limits - What this does not do",
-        "The planes that detect but cannot (yet?) fix, where the Microsoft-first scope ends, and why "
-        "readiness is not an audit opinion. Written down before you ask.",
+        "The planes we detect but do not fix yet, what is not on sale yet, where the "
+        "Microsoft-first scope ends, and why readiness is not an audit opinion.",
         "Limits"),
     "about.html": (
         "SeQontrol - About - Why this exists",
