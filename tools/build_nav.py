@@ -308,6 +308,28 @@ def status_block(pad: str, label: str | None) -> str:
             f'{pad}<ul><li><span class="status {css}">{badge}</span> {text}</li></ul>')
 
 
+# GitHub Pages serves 404.html for a miss at any depth, so it is the one page whose own URL is not
+# fixed. Every link on it was relative, which is correct for a root page and wrong for this one: at
+# /products/typo the browser resolved css/styles.css against /products/ and the branded 404 arrived
+# unstyled, with every nav link pointing one directory too deep. Root-absolute URLs are depth-proof.
+#
+# Done as a pass over the finished page rather than by special-casing root() and prefix(), because
+# the head, the body, the nav and the footer are written by four different things and this catches
+# all four. Anything already absolute, a fragment, a mail link or a data URI is left alone.
+ABSOLUTE = ("http://", "https://", "//", "#", "mailto:", "tel:", "data:", "/")
+_URL_RE = re.compile(r'(\b(?:href|src)=")([^"]+)"')
+
+
+def absolutise(src: str) -> str:
+    """Rewrite every relative href/src to a root-absolute one."""
+    def one(m):
+        url = m.group(2)
+        if url.startswith(ABSOLUTE):
+            return m.group(0)
+        return f'{m.group(1)}/{url}"'
+    return _URL_RE.sub(one, src)
+
+
 def prefix(rel: str) -> str:
     """How a page at `rel` reaches products/."""
     d = os.path.dirname(rel)
@@ -431,6 +453,9 @@ def main() -> None:
             out = COMPARE_RE.sub(lambda m: compare(m.group(1), up), out)
             out = TRUST_RE.sub(lambda m: trust(m.group(1), up), out)
             out = ELSEWHERE_RE.sub(lambda m: elsewhere(m.group(1)), out)
+
+            if rel == "404.html":
+                out = absolutise(out)
 
             if out != src:
                 open(path, "w", encoding="utf-8", newline="\n").write(out)

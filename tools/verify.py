@@ -42,9 +42,16 @@ def fail(page: str, msg: str) -> None:
 
 def check_links(page: str, src: str) -> None:
     for url in re.findall(r'(?:href|src)="([^"]+)"', src):
-        if url.startswith(("http://", "https://", "mailto:", "//", "#", "data:")):
+        if url.startswith(("http://", "https://", "mailto:", "tel:", "//", "#", "data:")):
             continue
-        target = os.path.join(os.path.dirname(page), url.split("#")[0])
+        # A root-absolute link resolves from the site root, not the page's directory. Joining it onto
+        # the page directory instead would resolve against the current drive root on Windows and find
+        # nothing, so these have to be split out rather than skipped — skipping is how 404.html
+        # shipped sixty relative links that only worked at one depth.
+        if url.startswith("/"):
+            target = url.lstrip("/").split("#")[0]
+        else:
+            target = os.path.join(os.path.dirname(page), url.split("#")[0])
         if not os.path.exists(target):
             fail(page, f"broken link -> {url}")
 
@@ -54,6 +61,22 @@ def check_links(page: str, src: str) -> None:
 PAIRED = ("div", "table", "section", "article", "ul", "ol", "li", "button", "nav",
           "th", "td", "tr", "thead", "tbody", "aside", "form", "main", "header",
           "footer", "p", "span", "a", "h1", "h2", "h3", "h4", "picture")
+
+
+def check_404_is_depth_proof(rel: str, src: str) -> None:
+    """404.html is served at every depth, so none of its URLs may be relative.
+
+    Pages returns this one page for a miss anywhere in the site. A relative href on it resolves
+    against whatever directory the visitor happened to mistype, so /products/typo asked for
+    /products/css/styles.css and got a 404 inside a 404 — the page rendered unstyled, with every nav
+    link one level too deep. It looked correct at the root, which is the only place anyone tests it.
+    """
+    if rel != "404.html":
+        return
+    bad = [u for u in re.findall(r'(?:href|src)="([^"]+)"', src)
+           if not u.startswith(("http://", "https://", "//", "#", "mailto:", "tel:", "data:", "/"))]
+    if bad:
+        fail(rel, f"{len(bad)} relative URL(s) on a page served at every depth: {bad[:4]}")
 
 
 def check_markup(page: str, src: str) -> None:
@@ -676,6 +699,7 @@ def main() -> int:
             src = fh.read()
         rel = os.path.relpath(page, ROOT).replace(os.sep, "/")
         check_links(page, src)
+        check_404_is_depth_proof(rel, src)
         check_markup(page, src)
         if rel in REDIRECT_STUBS:
             if 'http-equiv="refresh"' not in src or "noindex" not in src:
