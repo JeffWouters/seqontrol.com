@@ -950,7 +950,7 @@ PAGES = {
       </div>
 
 <div class="note honest">
-        <h2>Some planes detect but do not yet fix</h2>
+        <h2>Some planes detect but do not (yet?) fix</h2>
         <p class="mb0">Where a plane can be remediated app-only, it is. Where it cannot — Exchange, SharePoint
           site roles, Power Platform and delegated-admin relationships today — the product says so, with the
           precise reason, rather than guessing or quietly failing.</p>
