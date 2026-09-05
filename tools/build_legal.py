@@ -59,6 +59,42 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OPERATOR = 'JeffOps'
 CONTACT = 'jeff@jeffops.com'
 
+# The product support address, kept beside CONTACT for the same reason CONTACT exists: an address
+# typed into body copy is an address nobody can grep for when it changes. This one arrived hard-coded
+# inside the limits page's call-to-action and bypassed every mechanism on the site that keeps the
+# other one true.
+SUPPORT = 'support@seqontrol.com'
+
+
+def mailto(to: str, cc: str = '', subject: str = '', body: str = '') -> str:
+    """An href for a pre-filled mail, encoded so it survives both the URL and the HTML.
+
+    Three encodings that each fail silently if you skip them:
+      * '+' in a query value is the legacy encoding for a space, so an address containing one has to
+        carry %2B or the recipient is quietly wrong.
+      * A raw newline inside an href is collapsed to a space by the HTML parser, so line breaks in a
+        body have to be %0D%0A.
+      * '&' separates the hfields, so in HTML source it has to be &amp;.
+    """
+    from urllib.parse import quote
+    parts = []
+    if cc:
+        parts.append('cc=' + quote(cc, safe=''))
+    if subject:
+        parts.append('subject=' + quote(subject, safe=''))
+    if body:
+        parts.append('body=' + quote(body, safe=''))
+    return f'mailto:{to}' + ('?' + '&amp;'.join(parts) if parts else '')
+
+
+AWKWARD_QUESTION = mailto(
+    SUPPORT,
+    cc='jeff+seqontrol@jeffops.com',
+    subject='Feature request',
+    body="Hello,\r\n\r\nI have a question about something <ProductName> doesn't do that's a deal "
+         "breaker for us, because we need that functionality.")
+
+
 # The registered entity. Named in full on privacy and terms because both are
 # agreements with somebody — a policy that will not say who is bound by it is
 # not one — and because the GDPR requires a controller's identity and address.
@@ -1046,7 +1082,7 @@ PAGES = {
         the first call, because every one of these limits is something you would eventually hit —
         and finding out late costs you more than it costs us.</p>
       <p>If one of them is a dealbreaker, tell us and we will say so plainly rather than sell around
-        it. <a href="mailto:support@seqontrol.com?cc=jeff%2Bseqontrol%40jeffops.com&amp;subject=Feature%20request&amp;body=Hello%2C%0D%0A%0D%0AI%20have%20a%20question%20about%20something%20%3CProductName%3E%20doesn%27t%20do%20that%27s%20a%20deal%20breaker%20for%20us%2C%20because%20we%20need%20that%20functionality.">Ask the awkward question</a>.</p>
+        it. <a href="{awkward_question}">Ask the awkward question</a>.</p>
 """),
 
     "about.html": dict(
@@ -1285,7 +1321,8 @@ def build(name: str, spec: dict) -> None:
     # literal text "SeQontrol is built by {operator}" to every visitor who opened it. A placeholder
     # is only substituted on the fields somebody remembered to substitute, which is not a property
     # worth relying on; both prose fields now go through the same substitution.
-    fields = dict(contact=CONTACT, operator=OPERATOR, entity=ENTITY,
+    fields = dict(contact=CONTACT, support=SUPPORT, awkward_question=AWKWARD_QUESTION,
+                  operator=OPERATOR, entity=ENTITY,
                   kvk=KVK, address=ADDRESS_INLINE,
                   address_html='<br>'.join(ADDRESS_LINES),
                   others=OTHER_FRAMEWORKS)

@@ -251,16 +251,20 @@
       <div class="note honest">
         <p>You are being asked to grant read access across every tenant you manage, so the limits belong on this
           page rather than in a footnote on call three.</p>
-        <p><strong>Microsoft-first.</strong> Microsoft 365 and Entra are the deep estate. Box and Slack sharing
-          planes ship today, and CompliancePortal reaches Google Cloud and AWS through read-only connectors.
-          Everything beyond that is roadmap.</p>
-        <p><strong>Not every plane can be fixed app-only.</strong> Exchange forwarding, SharePoint site roles,
-          Power Platform and delegated-admin relationships are detected but not remediated today — and the product
-          names the reason instead of guessing.</p>
+        <p><strong>Microsoft-first.</strong> Microsoft 365 and Entra are the deep estate. Box sharing ships
+        today with app-only revoke; Slack Connect is detect-only until the admin APIs exist to act on.
+        Google Cloud and AWS are read-only connectors in CompliancePortal, which is built and running but
+        not released yet. Everything beyond that is roadmap.</p>
+        <p><strong>Not every plane is remediated app-only yet.</strong> Exchange forwarding, SharePoint site
+        roles, Power Platform and delegated-admin relationships are detected and reported, not written back.
+        Microsoft documents an application-only write path for all four; the gap is ours, not the
+        platform’s, and the product names the reason instead of guessing.</p>
         <p class="mb0"><strong>Every product is a separate consent.</strong> There is no single grant that turns
           the platform on for a client: each product has its own Entra app and its own admin consent. For a book
           of clients that is real onboarding work, and it is worth quoting for. What you get back is that no
-          product holds permissions it has no use for, and dropping one from a client revokes exactly one.</p>
+          product holds permissions it has no use for. Dropping one from a client revokes exactly one
+          product’s Graph access — the Exchange management role, the Azure reader assignment, the
+          Power Platform registration and each DNS authorisation are separate, and come off separately.</p>
       </div>
     </div>
   </section>

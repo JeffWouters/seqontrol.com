@@ -79,6 +79,38 @@ def check_404_is_depth_proof(rel: str, src: str) -> None:
         fail(rel, f"{len(bad)} relative URL(s) on a page served at every depth: {bad[:4]}")
 
 
+# Every address the site is allowed to publish. A new one is a deliberate act, not something that
+# appears because a page was copied.
+KNOWN_ADDRESSES = {"jeff@jeffops.com", "support@seqontrol.com"}
+
+
+def check_mailto(page: str, src: str) -> None:
+    """mailto links had no coverage at all, which is how a wrong one would ship.
+
+    check_links skips the scheme outright and check_content strips tags before scanning, so until now
+    no rule on this site ever looked at a mailto href. The pre-filled link on the limits page carries
+    a cc address containing a '+', and '+' in a query value decodes to a space: unencoded, the copy
+    would have gone to "jeff seqontrol@jeffops.com" with no bounce and nothing to notice.
+    """
+    for href in re.findall(r'href="(mailto:[^"]*)"', src):
+        addr = href[len("mailto:"):].split("?")[0]
+        if addr not in KNOWN_ADDRESSES:
+            fail(page, f"mailto to an unknown address: {addr}")
+        query = href.split("?", 1)[1] if "?" in href else ""
+        if "\n" in href or "\r" in href:
+            fail(page, "raw newline in a mailto href; the HTML parser collapses it to a space")
+        # Strip the correct form first: testing for the mere PRESENCE of &amp; passes a link that
+        # encodes one separator and not the next, which is exactly the half-right case worth catching.
+        if "&" in query.replace("&amp;", ""):
+            fail(page, "bare & between mailto fields; it must be &amp; in HTML source")
+        for field in query.replace("&amp;", "&").split("&"):
+            if "=" not in field:
+                continue
+            name, value = field.split("=", 1)
+            if name in ("cc", "bcc", "to") and "+" in value:
+                fail(page, f"'+' left unencoded in mailto {name}; it decodes to a space, use %2B")
+
+
 def check_markup(page: str, src: str) -> None:
     for tag in PAIRED:
         opened = len(re.findall(rf"<{tag}[ >]", src))
@@ -700,6 +732,7 @@ def main() -> int:
         rel = os.path.relpath(page, ROOT).replace(os.sep, "/")
         check_links(page, src)
         check_404_is_depth_proof(rel, src)
+        check_mailto(rel, src)
         check_markup(page, src)
         if rel in REDIRECT_STUBS:
             if 'http-equiv="refresh"' not in src or "noindex" not in src:
