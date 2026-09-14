@@ -63,6 +63,58 @@ PAIRED = ("div", "table", "section", "article", "ul", "ol", "li", "button", "nav
           "footer", "p", "span", "a", "h1", "h2", "h3", "h4", "picture")
 
 
+# ------------------------------------------------------ third-party subresources
+
+# Nothing on this site loads from another origin, and the CSP (script-src 'self') enforces that in the
+# browser. But the CSP is one generated line, and build_seo.ANALYTICS exists precisely so that someone
+# pastes a third-party <script> into every page. On the day both of those change, a file from a host
+# this repository does not control would run on a security vendor's domain with nothing pinning its
+# content, and whoever controls or breaks into that host edits the site. Subresource Integrity is the
+# pin: the browser refuses the file unless it hashes to the digest in the page. So anything loaded by
+# absolute URL must carry a sha256/384/512 integrity= and a crossorigin= attribute. SRI needs the second
+# one too: without CORS the response is opaque, and the browser cannot hash it and blocks it.
+SRI_TOKEN_RE = re.compile(r"^sha(?:256|384|512)-[A-Za-z0-9+/]+={0,2}$")
+ABSOLUTE_URL = ("http://", "https://", "//")
+
+
+class Subresources(HTMLParser):
+    """Every <script src> and every <link> that fetches code or styles."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.found: list[tuple[str, str, dict[str, str | None]]] = []
+
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        if tag == "script" and a.get("src"):
+            self.found.append((tag, a["src"], a))
+        elif tag == "link" and a.get("href"):
+            rels = set((a.get("rel") or "").lower().split())
+            if "stylesheet" in rels or "modulepreload" in rels or (
+                    "preload" in rels and (a.get("as") or "").lower() in ("script", "style")):
+                self.found.append((tag, a["href"], a))
+
+    handle_startendtag = handle_starttag
+
+
+def check_subresource_integrity(page: str, src: str) -> None:
+    p = Subresources()
+    p.feed(src)
+    for tag, url, a in p.found:
+        url = url.strip()
+        if not url.lower().startswith(ABSOLUTE_URL):
+            continue
+        what = f"<{tag}> {url}"
+        if url.lower().startswith("http://"):
+            fail(page, f"{what} is loaded over plain http")
+        tokens = (a.get("integrity") or "").split()
+        if not tokens or not all(SRI_TOKEN_RE.match(t) for t in tokens):
+            fail(page, f"{what} is loaded from another origin without a valid integrity= "
+                       "(sha256/384/512); see README 'Third-party code'")
+        if "crossorigin" not in a:
+            fail(page, f"{what} has no crossorigin=, so the browser cannot check its integrity")
+
+
 def check_404_is_depth_proof(rel: str, src: str) -> None:
     """404.html is served at every depth, so none of its URLs may be relative.
 
@@ -734,6 +786,8 @@ def main() -> int:
         check_404_is_depth_proof(rel, src)
         check_mailto(rel, src)
         check_markup(page, src)
+        # Before the redirect-stub exit: a stub or the 404 page can load a script as easily as any page.
+        check_subresource_integrity(page, src)
         if rel in REDIRECT_STUBS:
             if 'http-equiv="refresh"' not in src or "noindex" not in src:
                 fail(page, "redirect stub must carry a refresh and noindex")
