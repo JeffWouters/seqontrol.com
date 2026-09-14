@@ -175,11 +175,15 @@ Then tick **Enforce HTTPS** in Settings → Pages once the certificate is issued
 to an hour). If your DNS provider supports ALIAS/ANAME at the apex, use that instead of the A and AAAA
 records — one record that follows GitHub's changes beats eight that do not.
 
+**Then verify the domain — see [Security](#security).** Pointing a domain at GitHub without verifying
+it leaves it claimable by any GitHub user on the day this repository stops publishing.
+
 **Not using a custom domain?** Delete `CNAME`, and update the absolute URLs in `sitemap.xml`,
 `robots.txt` and the `og:image` meta tag to your Pages URL. Every internal link in the site is
 *relative* (no leading `/` anywhere — `tools/verify.py` would flag one), so a project site served from
 `https://<owner>.github.io/<repo>/` works without further changes. Those three absolute URLs are the
-only place the domain is hard-coded.
+only place the domain is hard-coded. Delete the DNS records above in the same change: a domain left
+pointing at GitHub with no repository claiming it is exactly the takeover described under Security.
 
 ### Notes
 
@@ -188,7 +192,125 @@ only place the domain is hard-coded.
 - `tools/` and `.github/` are uploaded with the site. They are a few KB, are never executed by Pages,
   and keeping them in the artifact means the deployed tree matches the repository exactly.
 - The site makes no external requests at runtime, so there is no CDN, font host or analytics endpoint
-  to allow-list, and nothing to break when a third party changes.
+  to allow-list, and nothing to break when a third party changes. If that ever changes, read
+  [Third-party code](#third-party-code) first.
+
+## Security
+
+### The domain: verify it with GitHub, or anyone can take it over
+
+The apex points at GitHub's *shared* Pages addresses and `www` is a CNAME to `jeffwouters.github.io`.
+Those records say "GitHub, serve this domain". They do not say *which repository*. While this
+repository publishes with `CNAME` set, it holds the claim. The claim ends the moment publishing stops:
+Pages switched off, the repository renamed, transferred or deleted, made private on the free plan (the
+HTTP 422 case under One-time setup), or the plan downgraded. The DNS records still point at GitHub, and
+nothing claims the domain. Unless the domain is **verified** on the owning account, any GitHub user can
+then add `seqontrol.com` to a repository of their own, and GitHub will issue them a valid certificate.
+On a security vendor's domain that is a phishing page with a padlock: a copy of `exposure-report.html`
+asking an MSP admin for Entra consent, or a `/.well-known/security.txt` that sends vulnerability reports
+to someone else.
+
+Verification is an account setting plus one DNS record, so only the account owner can do it. **State on
+2026-09-14: not verified.** The Pages API reports `protected_domain_state: null`, and the challenge
+record below does not exist.
+
+#### 1. Verify the domain on the account (TXT record)
+
+Verification belongs to the account that owns the repository (`JeffWouters`, a personal account), not
+to the repository.
+
+1. GitHub → profile picture → **Settings** → **Pages** (under "Code, planning, and automation").
+2. **Add a domain** → enter `seqontrol.com` (the apex, not `www`) → **Add domain**.
+3. GitHub shows a TXT record. Create it in the zone exactly as shown. The zone is hosted by Microsoft 365
+   (`ns1.bdm.microsoftonline.com`).
+
+   | Record | Name | Value |
+   |---|---|---|
+   | TXT | `_github-pages-challenge-JeffWouters` | the code GitHub shows (unique to the account, so it cannot be written here) |
+
+   Some DNS panels want the full name, `_github-pages-challenge-JeffWouters.seqontrol.com`. Others
+   append the zone themselves. Enter the zone once, not twice.
+4. Wait until the record resolves, then click **Verify**:
+
+   ```bash
+   dig +short TXT _github-pages-challenge-jeffwouters.seqontrol.com @1.1.1.1
+   ```
+   ```powershell
+   Resolve-DnsName -Type TXT _github-pages-challenge-jeffwouters.seqontrol.com -Server 1.1.1.1
+   ```
+5. **Leave the TXT record in place permanently.** It is the proof of ownership, not a one-time token.
+   Do not tidy it away once the page says Verified.
+
+Confirm it took. GitHub's Settings → Pages lists the domain as Verified, and the repository's Pages API
+should agree:
+
+```bash
+gh api repos/JeffWouters/seqontrol.com/pages --jq .protected_domain_state   # want: verified
+```
+
+Verification protects the domain and its immediate subdomains, so `www.seqontrol.com` is covered by the
+same record. Deeper names such as `a.b.seqontrol.com` are not. Verification is per account or
+organisation: if this repository ever moves to an organisation, verify the domain there as well.
+
+#### 2. Keep the CNAME
+
+- The `CNAME` file stays in the repository, containing `seqontrol.com`. Every deploy re-asserts the claim
+  from it. Deleting it releases the domain on the next publish while DNS still points at GitHub.
+- The repository's Settings → Pages → Custom domain stays `seqontrol.com`, with **Enforce HTTPS** on.
+- The DNS `www` record stays a CNAME to `jeffwouters.github.io`: this account's own Pages host, never
+  another account's.
+
+#### 3. Remove stale DNS, and remove it *first* when Pages is going away
+
+- **Audit the zone for records that point at GitHub for a site nobody publishes.** That means A/AAAA
+  records to `185.199.108.153`–`185.199.111.153` or `2606:50c0:8000::153`–`2606:50c0:8003::153`, the
+  retired Pages addresses `192.30.252.153` and `192.30.252.154`, and any CNAME to a `*.github.io` host.
+  Delete every one that no repository on this account currently serves.
+- **Never add a wildcard.** No `*.seqontrol.com` record may point at GitHub. GitHub's own documentation
+  warns that a wildcard record is an immediate takeover risk even when the domain is verified. There is
+  none today (a random subdomain returns NXDOMAIN), so keep it that way.
+- **Before** any change that stops this site publishing, delete the four A records, the four AAAA
+  records and the `www` CNAME. Only then make the change. That covers switching Pages off, making the
+  repository private without a paid plan, renaming, transferring or deleting it, and downgrading the
+  plan. Put the records back only once a site is publishing again. Keep the TXT record throughout.
+
+#### 4. Optional: CAA
+
+A CAA record limits which certificate authorities may issue certificates for the domain. It is **not** a
+takeover fix, because GitHub would issue a hijacker's certificate from the same CA it uses for this
+site. It is defence in depth against mis-issuance by every other CA. GitHub Pages certificates come from
+Let's Encrypt:
+
+| Record | Name | Value |
+|---|---|---|
+| CAA | `@` | `0 issue "letsencrypt.org"` |
+
+CAA applies to every name below it too. Before adding it, list every other host in the zone that serves
+TLS on a `seqontrol.com` name, and add an `issue` line for each of their CAs, or that host's next renewal
+fails. If the DNS host does not offer the CAA record type, skip this step. It is not worth moving the
+zone for.
+
+### Third-party code
+
+Nothing is loaded from another origin today, and the CSP written by `build_seo.py` (`script-src 'self'`)
+enforces that in the browser. If that ever changes (the `ANALYTICS` hook in `build_seo.py` exists for
+exactly that), every script or stylesheet loaded by absolute URL must carry Subresource Integrity.
+`tools/verify.py` (`check_subresource_integrity`) fails the build when one does not:
+
+```html
+<script defer src="https://cdn.example/lib@1.2.3/lib.min.js"
+        integrity="sha384-..." crossorigin="anonymous"></script>
+```
+
+- **Pin a versioned URL.** SRI on a URL whose content changes in place (`/latest/`, `/js/script.js`)
+  breaks the day the vendor ships. If a vendor only serves a moving URL, self-host the file under `js/`
+  instead, and it stops being third-party.
+- **Hash the exact file you reviewed:**
+  `curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A`.
+- **`crossorigin="anonymous"` is required.** Without it the browser cannot check a cross-origin file
+  against its hash, and it blocks the file.
+- **Allow the host in the CSP in the same commit.** `script-src` (or `style-src`) in `build_seo.py`
+  still has to name it, or the browser refuses the file regardless of its hash.
 
 ## Brand and theme
 
