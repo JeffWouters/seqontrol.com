@@ -184,7 +184,16 @@ META = {
 # filled in. Use something cookieless (Plausible, Fathom, GoatCounter) so the
 # privacy notice stays short and no consent banner is needed. Example:
 #
-#   ANALYTICS = '<script defer data-domain="seqontrol.com" ' #               'src="https://plausible.io/js/script.js"></script>'
+#   ANALYTICS = ('<script defer data-domain="seqontrol.com" '
+#                'src="https://cdn.example/analytics@1.2.3/script.js" '
+#                'integrity="sha384-<digest of that exact file>" '
+#                'crossorigin="anonymous"></script>')
+#
+# A script from another host must carry integrity= and crossorigin=, and
+# tools/verify.py fails the build when it does not (README, "Third-party
+# code"). That rules out a URL whose content changes in place: self-host such a
+# script under js/ instead. The CSP below also has to allow the host, or the
+# browser refuses the script whatever its hash.
 #
 # If you add a script here, update privacy.html — it currently states that no
 # third-party analytics run.

@@ -94,6 +94,13 @@ jobs:
       # It cannot override the plan: Pages on a PRIVATE repo needs Pro/Team/
       # Enterprise, and on a free plan this fails with HTTP 422 until the
       # repository is made public.
+      #
+      # That is also one of the ways this site stops publishing, along with
+      # Pages switched off, or the repo renamed or deleted. When it happens the
+      # apex A/AAAA records and the www CNAME still point at GitHub, with no
+      # repository claiming seqontrol.com. Unless the domain is verified on the
+      # owning account, any GitHub user can then claim it. Nothing in this
+      # workflow can prevent that: README "Security" has the owner's steps.
       - uses: actions/configure-pages@v6
         with:
           enablement: true
