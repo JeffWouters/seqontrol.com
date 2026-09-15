@@ -211,8 +211,9 @@ asking an MSP admin for Entra consent, or a `/.well-known/security.txt` that sen
 to someone else.
 
 Verification is an account setting plus one DNS record, so only the account owner can do it. **State on
-2026-09-14: not verified.** The Pages API reports `protected_domain_state: null`, and the challenge
-record below does not exist.
+2026-09-15: verified.** The owner added the domain on the `JeffWouters` account and the challenge TXT record in the
+Microsoft 365 zone; the Pages API reports `protected_domain_state: verified`. The steps below stay as the record of how,
+and for re-verifying if the repository ever moves to another account or organisation.
 
 #### 1. Verify the domain on the account (TXT record)
 
@@ -284,6 +285,11 @@ Let's Encrypt:
 | Record | Name | Value |
 |---|---|---|
 | CAA | `@` | `0 issue "letsencrypt.org"` |
+| CAA | `@` | `0 issue "digicert.com"` |
+
+The second line is required as soon as the app is live: `app.seqontrol.com`, `api.seqontrol.com` and the portal
+subdomains (`*.app.seqontrol.com`) run on Azure Static Web Apps and Container Apps, whose managed certificates come from
+DigiCert. Without it their next renewal fails.
 
 CAA applies to every name below it too. Before adding it, list every other host in the zone that serves
 TLS on a `seqontrol.com` name, and add an `issue` line for each of their CAs, or that host's next renewal
