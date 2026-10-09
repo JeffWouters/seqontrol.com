@@ -42,19 +42,38 @@
   }
 
   // --- current page ---------------------------------------------------------
-  // Marks the nav entry for the page you are on. Product pages live one level
-  // down, so compare the last path segment and treat /products/* as "Products".
-  var path = window.location.pathname.replace(/\/+$/, '');
-  var file = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
-  var inProducts = /\/products(\/|$)/.test(path);
+  // Marks the nav entry for the page you are on, by comparing whole resolved
+  // paths. The previous version compared only the last path segment, which is
+  // how the home page came to light up Guides: "/" resolves to index.html, and
+  // the Guides link is guides/index.html, whose last segment is index.html too.
+  // Products escaped that only because of a string test for "products/" - and
+  // the same shortcut meant /guides/ never marked itself, since there the last
+  // segment is "guides" and no nav href ends in it.
+  //
+  // a.pathname is the href already resolved against this page, so a link one
+  // directory down is compared the way the browser would follow it.
+
+  // One spelling per page: a directory index is the directory, a directory
+  // carries its trailing slash, and a page keeps its .html.
+  function canon(p) {
+    p = p.replace(/\/index\.html$/, '/');
+    var last = p.substring(p.lastIndexOf('/') + 1);
+    if (last && last.indexOf('.') === -1) p += '/';
+    return p || '/';
+  }
+
+  var here = canon(window.location.pathname);
 
   Array.prototype.forEach.call(document.querySelectorAll('.nav-links a'), function (a) {
     if (a.classList.contains('btn')) return;
-    var href = a.getAttribute('href') || '';
-    var target = href.substring(href.lastIndexOf('/') + 1);
-    var isProductsLink = href.indexOf('products/') !== -1;
+    var target = canon(a.pathname);
+    // A section index owns the pages beneath it, so a product page marks
+    // Products and a guide marks Guides. Excluding '/' stops a home link, if
+    // one is ever added, from owning the whole site.
+    var owns = target !== '/' && target.charAt(target.length - 1) === '/' &&
+               here.indexOf(target) === 0;
 
-    if ((inProducts && isProductsLink) || (!inProducts && target === file && !isProductsLink)) {
+    if (here === target || owns) {
       a.setAttribute('aria-current', 'page');
     }
   });
