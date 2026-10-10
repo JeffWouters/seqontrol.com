@@ -120,10 +120,8 @@ ADDRESS_INLINE = ', '.join(ADDRESS_LINES)
 # rather than being pasted into the HTML, because this script regenerates those
 # files — anything added to the output by hand is wiped on the next run.
 FORM = '''
-      <!-- FORM ENDPOINT: paste the URL into BOTH action and data-endpoint.
-           With it set the form posts normally and works without JavaScript;
-           left empty it falls back to composing a mailto, which can fail
-           silently on webmail — see README. -->
+      <!-- The form composes an email: site.js builds it from the fields, and without
+           JavaScript the mailto action that build_nav.py stamps does the same. -->
       <form id="contact-form" method="post" action="" data-endpoint="" novalidate>
         <input type="hidden" id="cf-topic" name="topic" value="{topic}">
         <div class="field">

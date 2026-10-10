@@ -282,6 +282,14 @@ CONTACT_FORM_RE = re.compile(r'<form id="contact-form"([^>]*)>')
 def stamp_contact(m: "re.Match") -> str:
     # strip any previous stamp first so a second run is a no-op rather than an append
     attrs = re.sub(r'\s*data-contact="[^"]*"', "", m.group(1))
+    # With no endpoint the forms compose an email, and site.js does that when JavaScript runs.
+    # Without JavaScript the browser used to post to the static page itself and get a 405 from
+    # Pages, losing the message; a mailto action with text/plain hands it to the mail client instead.
+    endpoint = re.search(r'data-endpoint="([^"]*)"', attrs)
+    if not (endpoint and endpoint.group(1)):
+        attrs = re.sub(r'\s*(?:action|enctype)="[^"]*"', "", attrs)
+        attrs = attrs.replace(' method="post"', ' method="post" action="mailto:%s" enctype="text/plain"'
+                              % CONTACT, 1)
     return '<form id="contact-form"%s data-contact="%s">' % (attrs, CONTACT)
 
 

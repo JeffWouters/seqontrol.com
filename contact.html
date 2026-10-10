@@ -92,11 +92,9 @@
         <p class="muted">Straight to a person. We reply to everything, usually the same working day, and we
           will tell you if this is not a fit for you.</p>
 
-        <!-- FORM ENDPOINT: paste the URL into BOTH action and data-endpoint below.
-             With it set, the form posts normally (works without JavaScript) and
-             site.js upgrades it to an inline thank-you. Left empty, it falls back
-             to composing a mailto, which can fail silently on webmail — see README. -->
-        <form id="contact-form" method="post" action="" data-endpoint="" novalidate data-contact="jeff@jeffops.com">
+        <!-- The form composes an email: site.js builds it from the fields, and without
+             JavaScript the mailto action that build_nav.py stamps does the same. -->
+        <form id="contact-form" method="post" action="mailto:jeff@jeffops.com" enctype="text/plain" data-endpoint="" novalidate data-contact="jeff@jeffops.com">
           <div class="field">
             <label for="cf-name">Name</label>
             <input id="cf-name" name="name" type="text" autocomplete="name" required>

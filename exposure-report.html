@@ -130,11 +130,9 @@
       <p>Tell us the tenant size and we will come back with a scope and a date. A person replies,
         usually the same working day.</p>
 
-      <!-- FORM ENDPOINT: paste the URL into BOTH action and data-endpoint.
-           With it set the form posts normally and works without JavaScript;
-           left empty it falls back to composing a mailto, which can fail
-           silently on webmail — see README. -->
-      <form id="contact-form" method="post" action="" data-endpoint="" novalidate data-contact="jeff@jeffops.com">
+      <!-- The form composes an email: site.js builds it from the fields, and without
+           JavaScript the mailto action that build_nav.py stamps does the same. -->
+      <form id="contact-form" method="post" action="mailto:jeff@jeffops.com" enctype="text/plain" data-endpoint="" novalidate data-contact="jeff@jeffops.com">
         <input type="hidden" id="cf-topic" name="topic" value="Free exposure report">
         <div class="field">
           <label for="cf-name">Name</label>
