@@ -83,6 +83,41 @@
     el.textContent = String(new Date().getFullYear());
   });
 
+  // --- audience doors (home page) -------------------------------------------
+  // Progressive, like the tabs below. The markup ships two plain links (#estate, #fleet) and both
+  // audience sections visible, so without JavaScript each door is an in-page jump and nothing is
+  // hidden. Here they become a switch: the chosen door is marked aria-current and every element
+  // carrying the other door's data-door-panel is hidden - the section under the hero and the
+  // closing call-to-action alike. [data-doors-ready] goes on <html> because the panels are not
+  // inside the doors' container, and print CSS keys off it to show both on paper.
+  var doorRoot = document.querySelector('[data-doors]');
+  if (doorRoot) {
+    var doors = [].slice.call(doorRoot.querySelectorAll('[data-door]'));
+    var doorPanels = [].slice.call(document.querySelectorAll('[data-door-panel]'));
+    var pickDoor = function (name) {
+      doors.forEach(function (d) {
+        d.setAttribute('aria-current', d.getAttribute('data-door') === name ? 'true' : 'false');
+      });
+      doorPanels.forEach(function (p) { p.hidden = p.getAttribute('data-door-panel') !== name; });
+    };
+    doors.forEach(function (d) {
+      d.addEventListener('click', function (e) {
+        // A modified click opens a new tab; leave that to the browser.
+        if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        var name = d.getAttribute('data-door');
+        pickDoor(name);
+        // Keep the choice in the address so a shared link opens the same door. replaceState, not a
+        // hash assignment, because assigning the hash would jump the page to the section.
+        if (window.history && history.replaceState) history.replaceState(null, '', '#' + name);
+      });
+    });
+    document.documentElement.setAttribute('data-doors-ready', '');
+    var wantDoor = window.location.hash.replace('#', '');
+    pickDoor(doors.some(function (d) { return d.getAttribute('data-door') === wantDoor; })
+      ? wantDoor : doors[0].getAttribute('data-door'));
+  }
+
   // --- tabs -----------------------------------------------------------------
   // Progressive: the markup ships with every panel visible and the tab strip
   // hidden by CSS. Only once this runs does the container get

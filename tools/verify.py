@@ -340,9 +340,15 @@ CONTENT_RULES = [
 ]
 
 
-# The ONE page allowed to carry figures. licensing.html used to be the second;
-# it was merged into pricing on 2026-08-19, which is one fewer place to drift.
+# The pages allowed to carry figures. pricing.html is the maintained one. Since 2026-10-10 the
+# products index and the product pages carry a price beside each product too - but only inside the
+# blocks build_prices.py renders from tools/prices.py, and check_prices below fails the build if any
+# figure in those blocks is missing from pricing.html. A product page with a hand-typed figure
+# outside a generated block still fails check_content, because PRICE_PAGES is checked against the
+# text OUTSIDE those blocks for these pages (see check_content).
 PRICE_PAGES = {"pricing.html"}
+GENERATED_PRICE_PAGES = {"products/index.html", "products/sharecare.html"}
+PRICE_BLOCK_RE = re.compile(r"<!--PRICE(?:-TIERS)?:[a-z]+-->.*?<!--/PRICE(?:-TIERS)?-->", re.S)
 
 # Which CONTENT_RULES state a FIGURE rather than a claim, and are therefore
 # allowed on those two pages. Held as indexes rather than sniffed from the
@@ -354,6 +360,10 @@ PRICE_RULES = {1, 2}   # the $-figure rule and the discount-percentage rule
 
 def check_content(page: str, src: str) -> None:
     rel = os.path.relpath(page, ROOT).replace(os.sep, "/")
+    if rel in GENERATED_PRICE_PAGES:
+        # Figures are allowed here only inside the generated price blocks; cut those out before
+        # applying the price rules to the rest of the page.
+        src = PRICE_BLOCK_RE.sub(" ", src)
     text = re.sub(r"<[^>]+>", " ", src)
     for i, (pattern, why) in enumerate(CONTENT_RULES):
         if i in PRICE_RULES and rel in PRICE_PAGES:
@@ -389,6 +399,34 @@ TITLE_MAX = 62
 
 _titles: dict[str, str] = {}
 _descs: dict[str, str] = {}
+
+
+# ------------------------------------------------------------- generated prices
+
+# Every figure inside a generated price block must also appear on pricing.html, so the two can never
+# quote different numbers. pricing.html is still hand-written HTML inside build_legal.py; until it is
+# rendered from tools/prices.py as well, this is the check that keeps them in step. It also fails on a
+# block that is still empty, which means build_prices.py was skipped.
+FIGURE_RE = re.compile(r"\$\s?\d[\d,]*(?:\.\d+)?|\b\d+\s?%")
+
+
+def check_prices() -> None:
+    pricing = open(os.path.join(ROOT, "pricing.html"), encoding="utf-8").read()
+    pricing_text = html.unescape(re.sub(r"<[^>]+>", " ", pricing))
+    for rel in sorted(GENERATED_PRICE_PAGES):
+        src = open(os.path.join(ROOT, rel), encoding="utf-8").read()
+        blocks = PRICE_BLOCK_RE.findall(src)
+        if not blocks:
+            fail(rel, "listed in GENERATED_PRICE_PAGES but carries no generated price block")
+        for block in blocks:
+            body = re.sub(r"<!--.*?-->", "", block, flags=re.S)
+            if not re.sub(r"<[^>]+>", "", body).strip():
+                fail(rel, "an empty price block: build_prices.py was skipped or failed")
+            text = html.unescape(re.sub(r"<[^>]+>", " ", body))
+            for fig in sorted(set(FIGURE_RE.findall(text))):
+                if fig not in pricing_text:
+                    fail(rel, f"price block quotes {fig!r}, which pricing.html does not - "
+                              "change tools/prices.py and build_legal.py together")
 
 
 def check_seo(page: str, src: str) -> None:
@@ -804,6 +842,7 @@ def main() -> int:
     check_scripts()
     check_sitemap()
     check_security_txt()
+    check_prices()
 
     print(f"checked {len(PAGES)} pages")
     if failures:

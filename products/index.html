@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SeQontrol - Products - Each stands alone, all connect</title>
 <meta name="description" content="Eight products on one platform: ShareCare, SecurityPortal, WebScan, CompliancePortal, PosturePortal, MailTrust, Dredd and ConditionalAccessPortal.">
-<meta name="theme-color" content="#0b0f17">
+<meta name="theme-color" content="#151c4f">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="../assets/favicon-32-light.png" sizes="32x32" type="image/png" media="(prefers-color-scheme: light)">
@@ -74,8 +74,8 @@
 
   <section class="hero">
     <div class="wrap">
-      <span class="eyebrow">Products</span>
-      <h1>All products stand alone, and share one platform</h1>
+      <span class="pill">Products &amp; pricing</span>
+      <h1>Every product. Every price. One page.</h1>
       <p class="lede">
         One console, one findings store, one audit trail, one onboarding flow. Consent is the part that is
         <strong>not</strong> shared: each product that reads your tenant has its own Entra application and
@@ -86,59 +86,136 @@
       </p>
     </div>
   </section>
-
   <!-- comparison -->
   <section>
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">At a glance</span>
         <h2>Which product answers which question</h2>
+        <p>What each one is for, whether it ever writes to your tenant, and what it costs. Scans, findings,
+          remediation and evidence exports are never metered.</p>
       </div>
       <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="Which product answers which question">
         <table>
           <thead>
-            <tr><th scope="col">Product</th><th scope="col">The question it answers</th><th scope="col">Writes to your tenant?</th></tr>
+            <tr><th scope="col">Product</th><th scope="col">The question it answers</th><th scope="col">Writes to your tenant?</th><th scope="col">Price</th></tr>
           </thead>
           <tbody>
             <tr>
               <td><a href="sharecare.html">ShareCare</a></td>
               <td>What is over-shared, and what can Copilot reach?</td>
               <td>Yes — on the Automation tier, where the plane allows it</td>
+              <td class="price-cell">
+                <!--PRICE:sharecare-->
+                <span class="unit">per Microsoft 365 user / month</span>
+                <dl>
+                  <dt>Visibility</dt><dd>$2</dd>
+                  <dt>Governance</dt><dd>$4</dd>
+                  <dt>Automation</dt><dd>$6.50</dd>
+                </dl>
+                <span class="note-line">No seat minimum, no platform floor. Volume bands from 100 users.</span>
+                <!--/PRICE-->
+              </td>
             </tr>
             <tr>
               <td><a href="securityportal.html">SecurityPortal</a></td>
               <td>Is the tenant configured safely?</td>
               <td>No — assessment and evidence only</td>
+              <td class="price-cell">
+                <!--PRICE:security-->
+                <span class="unit">per user / month &middot; one tier</span>
+                <dl>
+                  <dt>With any ShareCare tier</dt><dd>$1.50</dd>
+                  <dt>Standalone</dt><dd>$3.50</dd>
+                </dl>
+                <span class="note-line">$50 monthly minimum per tenant, greater-of.</span>
+                <!--/PRICE-->
+              </td>
             </tr>
             <tr>
               <td><a href="webscan.html">WebScan</a></td>
               <td>What does our public surface look like to an attacker?</td>
               <td>No — it never writes anywhere</td>
+              <td class="price-cell">
+                <!--PRICE:webscan-->
+                <span class="unit">per monitored site / month</span>
+                <dl>
+                  <dt>Free, on every tenant</dt><dd>$0</dd>
+                  <dt>Pro</dt><dd>$20</dd>
+                </dl>
+                <span class="note-line">Pro keeps results and history, schedules scans and alerts.</span>
+                <!--/PRICE-->
+              </td>
             </tr>
             <tr>
               <td><a href="complianceportal.html">CompliancePortal</a> <span class="status early">Coming soon</span></td>
               <td>Can we prove the technical controls held, continuously?</td>
               <td>No — it maps, scores, evidences and attests</td>
+              <td class="price-cell">
+                <!--PRICE:compliance-->
+                <span class="unit">per tenant / month &middot; on release</span>
+                <dl>
+                  <dt>1 framework</dt><dd>$300</dd>
+                  <dt>3 frameworks</dt><dd>$600</dd>
+                  <dt>Unlimited</dt><dd>$900</dd>
+                </dl>
+                <span class="note-line">Evidence band. Attested, with sign-off, from $450.</span>
+                <!--/PRICE-->
+              </td>
             </tr>
             <tr>
               <td><a href="postureportal.html">PosturePortal</a> <span class="status soon">Under development</span></td>
               <td>So what? What do I show the client or the board?</td>
               <td>No — read-only by design</td>
+              <td class="price-cell">
+                <!--PRICE:posture-->
+                <span class="unit">in development</span>
+                <span class="note-line">Not priced while it is still being built.</span>
+                <!--/PRICE-->
+              </td>
             </tr>
             <tr>
               <td><a href="mailtrust.html">MailTrust</a></td>
               <td>Can someone spoof us, and how do we stop it safely?</td>
               <td>Yes — DNS write-back on the Automation tier</td>
+              <td class="price-cell">
+                <!--PRICE:mailtrust-->
+                <span class="unit">per sending domain / month</span>
+                <dl>
+                  <dt>Visibility</dt><dd>$15</dd>
+                  <dt>Governance</dt><dd>$30</dd>
+                  <dt>Automation</dt><dd>$40</dd>
+                </dl>
+                <span class="note-line">Five parked domains included per sending domain; more at $3.</span>
+                <!--/PRICE-->
+              </td>
             </tr>
             <tr>
               <td><a href="dredd.html">Dredd</a> <span class="status soon">Under development</span></td>
               <td>What changed since we approved this, and who ratified it?</td>
               <td>Yes — approval-gated restore of the approved state</td>
+              <td class="price-cell">
+                <!--PRICE:dredd-->
+                <span class="unit">in development</span>
+                <span class="note-line">Quoted, not listed, once released.</span>
+                <!--/PRICE-->
+              </td>
             </tr>
             <tr>
               <td><a href="conditionalaccessportal.html">ConditionalAccessPortal</a> <span class="status early">Coming soon</span></td>
               <td>Do our Conditional Access policies actually cover what we think?</td>
               <td>Yes — approval-gated policy write-back</td>
+              <td class="price-cell">
+                <!--PRICE:condaccess-->
+                <span class="unit">per user / month &middot; on release</span>
+                <dl>
+                  <dt>Visibility</dt><dd>$0.60</dd>
+                  <dt>Governance</dt><dd>$1.00</dd>
+                  <dt>Automation</dt><dd>$1.50</dd>
+                </dl>
+                <span class="note-line">$50 monthly minimum per tenant.</span>
+                <!--/PRICE-->
+              </td>
             </tr>
           </tbody>
         </table>
@@ -172,6 +249,28 @@
       </div>
       <p class="coverage-note">Google Workspace is the next plane. What is not here is not scanned —
         <a href="../limits.html">the full list of what we do not do</a>.</p>
+
+      <div class="grid grid-2 spaced">
+        <article class="card on-navy">
+          <span class="eyebrow">Door 2 &middot; Providers</span>
+          <h3>Pricing for MSPs and MSSPs</h3>
+          <p>A partner tenant that runs every product on your own estate, provider rates for MailTrust that
+            pool domains across the book, and pooled CompliancePortal licences that charge once per framework
+            rather than once per client. All of it is published.</p>
+          <p class="mb0"><a class="btn btn-primary" href="../pricing.html">Provider pricing</a></p>
+        </article>
+        <article class="card">
+          <span class="eyebrow">How billing works</span>
+          <h3>No surprises, and no hard stops</h3>
+          <ul class="checklist">
+            <li>Scans, findings, remediation and evidence exports are not metered.</li>
+            <li>Over your units: a warning, then a banner, trued up on the next invoice. A scan is never stopped
+              for a commercial reason.</li>
+            <li>ShareCare&rsquo;s volume bands apply to the whole bill, not just the users past a threshold.</li>
+            <li>No suite discount and no annual-billing discount: the price you see is the price.</li>
+          </ul>
+        </article>
+      </div>
     </div>
   </section>
 

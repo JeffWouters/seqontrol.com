@@ -1,7 +1,8 @@
 # SeQontrol.com
 
 Static marketing site for the SeQontrol platform. Hand-written HTML/CSS/JS — no build step, no
-package manager, no external network requests at runtime (no CDN, no fonts, no analytics).
+package manager, no external network requests at runtime (no CDN, no font host, no analytics). The
+three typefaces are self-hosted under `assets/fonts/`.
 
 Open `index.html` in a browser, or serve the folder:
 
@@ -34,8 +35,9 @@ guides/
   index.html  dmarc-without-breaking-mail.html  evidence-auditors-accept.html
   what-copilot-can-reach.html
 css/styles.css      Single stylesheet
-js/site.js          Mobile nav, current-page marker, footer year, tabs, contact form
+js/site.js          Mobile nav, current-page marker, footer year, audience doors, tabs, contact form
 assets/             Logo extractions, on-dark variants, icons, OG card
+  fonts/            Sora, Manrope and JetBrains Mono (latin + latin-ext WOFF2) with their OFL licences
   Screenshots/      Published crops + their lossless WebP twins. The raw captures live here too
                     and are gitignored — they still carry a real third-party domain.
 favicon.ico         Multi-resolution icon at the root, where browsers look for it
@@ -55,6 +57,7 @@ Order matters — each step depends on the one above it:
 python tools/build_legal.py       # pricing + trust pages; leaves <!--CAPS:key--> markers
 python tools/build_guides.py      # the guides, from the same page chrome
 python tools/build_licensing.py   # fills those markers with capability tabs and matrices
+python tools/build_prices.py      # price blocks on the product pages, from tools/prices.py
 python tools/build_nav.py         # nav, footer, product cards, skip links, contact address
 python tools/build_seo.py         # titles, metadata, canonicals, JSON-LD, CSP, sitemap
 python tools/build_images.py      # lossless WebP twins + <picture> wrappers
@@ -69,6 +72,8 @@ _chrome.py          The page shell, split out of contact.html and shared by the 
 build_legal.py      Pricing and the legal/trust pages; owns CONTACT and the money figures
 build_licensing.py  Per-product capability tabs and matrices, injected into pricing.html
 build_guides.py     The guides section
+prices.py           The list prices quoted OUTSIDE pricing.html, as data (writes nothing)
+build_prices.py     Fills the <!--PRICE:key--> and <!--PRICE-TIERS:key--> blocks from prices.py
 build_nav.py        Everything repeated on every page, derived from one PRODUCTS list
 build_seo.py        Metadata, canonicals, JSON-LD, the CSP meta tag, sitemap.xml
 build_images.py     PNG -> lossless WebP (69% smaller) and the <picture> markup
@@ -326,36 +331,45 @@ exactly that), every script or stylesheet loaded by absolute URL must carry Subr
   SeQontrol purple — the two brands stay visually distinct. The rule matches on the href
   (`a[href^="https://jeffops.com"]`), so a new mention is styled automatically; there is no class to
   remember. Reserve that cyan for JeffOps links and nothing else.
-- **The accent is the SeQontrol purple, not the platform shell's blue.** `#6b4de2` is sampled straight
-  from the logo artwork (the most common fully-opaque violet in the symbol). The *neutrals* still come
-  from the shell's `theme.css` dark variant, so the site and the product UI share a substrate:
+- **Light page, navy chrome (since 2026-10-10).** The body is a cool light grey with white cards;
+  the header, the heroes, the closing call-to-action panel and the footer are navy. This replaced the
+  dark-only theme, whose neutrals came from the platform shell. The palette is SeQontrol's own:
 
-  | Token | Value | Role |
-  |---|---|---|
-  | `--bg` | `#0b0f17` | page background |
-  | `--surface` | `#0f172a` | cards, panels |
-  | `--border` | `#334155` | borders |
-  | `--text` | `#e5e7eb` | body text |
-  | `--muted` | `#94a3b8` | secondary text |
-  | `--brand` | `#6b4de2` | **the logo purple** — solid fills, primary buttons |
-  | `--brand-dark` | `#7658e6` | hover (lifted, not darkened — the page is dark) |
-  | `--brand-deep` | `#5b40c9` | pressed / heavier borders |
-  | `--accent` | `#a78bfa` | links, eyebrows, labels |
-  | `--accent-soft` | `#c4b5fd` | link hover, inline code |
-  | `--focus` | `#a78bfa` | focus ring |
-  | `--ok` / `--warn` / `--danger` | `#4ade80` / `#fbbf24` / `#f87171` | status |
-  | `--jeffops` | `#00d9ff` | **JeffOps' brand cyan** — links back to the parent company only |
+  | Token | Light | Navy chrome | Role |
+  |---|---|---|---|
+  | `--bg` | `#EEEFF5` | `#151C4F` | page / chrome background |
+  | `--bg-deep` | `#E4E5EE` | `#10163F` | `.band`, footer |
+  | `--surface` | `#FFFFFF` | `#1E2660` | cards, panels |
+  | `--text` | `#151C4F` | `#FFFFFF` | body text (Deep Navy on light) |
+  | `--muted` | `#3D4466` | `#D2D4E6` | secondary text |
+  | `--dim` | `#565C7C` | `#A9ADC8` | captions, hints |
+  | `--brand` | `#6C4FDF` | | **Qontrol Purple** — fills and primary buttons |
+  | `--accent` | `#4B33B8` | `#C3B8F5` | links, eyebrows, labels |
+  | `--jeffops` | `#006A80` | `#00D9FF` | JeffOps cyan — links to the parent company only |
 
-  **Why two purples.** White on `--brand` is 5.55:1, so it carries buttons. But `--brand` *as text* on
-  `--bg` is only 3.46:1 — below AA — so links and labels use the lighter `--accent` at 7.05:1. Do not
-  swap one for the other. `--brand-dark` is a deliberate 4.87:1 with white; going brighter for hover
-  drops it under 4.5.
+  **Two token sets, one vocabulary.** `:root` holds the light values; `.on-navy` and everything that is
+  always navy (`.site-header`, `.hero`, `.phero`, `.cta > .wrap`, `.site-footer`, `.navy-panel`)
+  re-declares the same custom properties with navy values. Write a component against the tokens and it
+  works on either ground with no second set of rules.
 
-- **Dark only.** There is deliberately no light theme and no `prefers-color-scheme` block.
-- Product accent tones live in `:root` as `--t-sharecare`, `--t-security`, `--t-compliance`,
-  `--t-posture`, `--t-mailtrust`, `--t-dredd`, `--t-soon`. A card picks one with
-  `style="--tone: var(--t-dredd)"`. `--t-compliance` was moved from `#a78bfa` to `#c084fc` when the
-  brand went purple — it had become the exact same violet as `--accent`.
+  **Contrast, measured.** On light grounds `--text` is 12.77:1 at worst, `--muted` 7.55, `--dim` 5.20,
+  `--accent` 6.79; white on `--brand` is 5.50. In navy chrome `--muted` is 8.44 at worst, `--dim` 5.61,
+  `--accent` 6.78. `--brand` *as text* on `--bg-deep` is only 4.38, so links and labels use `--accent` —
+  do not swap them. The JeffOps cyan is darkened to `#006A80` on light grounds (4.96:1 at worst) and
+  keeps its bright `#00d9ff` in the navy chrome (9.44:1).
+
+- **No green, yellow, red or amber.** A SeQontrol brand rule. Status chips use shape instead of traffic
+  lights: a filled purple chip for something you can buy, an outlined chip for built-but-not-released, a
+  dashed slate chip for still in development. Ticks in the matrices are purple.
+- **Fonts:** Sora (display), Manrope (text), JetBrains Mono (labels, figures). Self-hosted WOFF2 variable
+  fonts, latin and latin-ext subsets, SIL Open Font License 1.1 (licences beside the files). The CSP's
+  `font-src 'self'` already allows them; nothing is fetched from another origin. Arrows (→) fall outside
+  the latin subset and render from the system font, which is intended.
+- Product accent tones live in `:root` as `--t-sharecare`, `--t-security`, `--t-condaccess`,
+  `--t-webscan`, `--t-compliance`, `--t-posture`, `--t-mailtrust`, `--t-dredd`, `--t-soon`, chosen from
+  purples, blues, teal, magenta, plum and slate (see the brand rule above). Each clears 4.5:1 as text on
+  every light ground, because kickers and arrow links use the tone as text colour; the navy set carries
+  lighter versions. A card picks one with a `tone-*` class.
 
 ## Logo assets
 
@@ -413,7 +427,7 @@ vague link text. It currently reports clean across all 12 pages — **keep it th
 What that involved, and why, so it does not get undone:
 
 - **Contrast.** Every text token clears WCAG AA (4.5:1) against all four surfaces it can sit on; the
-  lowest is `--dim` at 4.79:1. `--dim` was `#6b7490`, which measured 3.71–4.22:1 and carried hints,
+  lowest is `--dim` at 5.20:1 (light theme, on `--bg-deep`; see Brand and theme). In the dark theme `--dim` was `#6b7490`, which measured 3.71–4.22:1 and carried hints,
   captions and the footer line — all small text. It was lifted at the same hue to `#7c87a3`. White on
   `--brand` is 5.55:1 and on `--brand-dark` 4.87:1, which is why hover lifts only that far.
   `::placeholder` is set explicitly because the browser default fails here.
@@ -450,14 +464,14 @@ What that involved, and why, so it does not get undone:
   workspace and reader role, DNS its own OAuth2 flow per provider. Write-back is a second consent round trip.
   Only ShareCare, SecurityPortal, CompliancePortal and Dredd are Graph connector products. `platform.html`
   carries the full step-by-step table; do not compress it back into "connect once".
-- **Security stands above compliance.** The key principle, stated in full in the `#principle` section on
-  the home page (directly under the hero), reinforced in the CompliancePortal scope area and on the
+- **Security stands above compliance.** The key principle, stated in the `#principle` section on
+  the home page (the full argument sits in its "Why security comes first" disclosure), reinforced in the CompliancePortal scope area and on the
   platform trust list. The argument: a compliance control can be waived, which turns the report green
   without changing the estate — so the security finding is treated as the fact and compliance as an
   interpretation laid over it. A waived finding stays visible and scored, and its exception expires.
   Do not let later copy imply compliance is the goal or that a green report equals a secure estate.
 - **The three portals are grouped, with no bundle name.** The group headline is the agreed phrase:
-  *"Three products. One platform. Zero compromise."* — on `products/index.html`. The homepage heads the same group differently (*"Sold separately. Built as one. Priced honestly."*) because it sits above the three availability groups rather than a grid of three.
+  *"Three products. One platform. Zero compromise."* — on `products/index.html`. The homepage heads its product section *"One platform. Products you switch on and off."*, above the three availability groups.
 - **CompliancePortal scope.** Every mention says it covers the *technical implementation* of controls on
   the platforms SeQontrol supports — not a whole-company compliance programme, and not an audit opinion.
   The full carve-out (policies, HR process, physical security, vendor management, anything on an
@@ -470,14 +484,18 @@ What that involved, and why, so it does not get undone:
   and no statements about their *absence* either. Where trust needs building, the site does it with
   concrete product limits (which planes are read-only, what Dredd has not shipped, Microsoft-first
   scope) rather than by discussing the customer base. Keep it that way when editing.
-- **Prices live on one page and nowhere else.** `pricing.html` carries the figures,
-  the discount percentages and the worked bills; `verify.py` refuses both on every other page
-  (`PRICE_PAGES` is the allowlist, `PRICE_RULES` picks which rules it covers). This used to read "no
-  prices anywhere", which stopped being true when the model was published — and the stale half of it
-  did damage: the discount rule was never added to the allowlist, so the volume bands were written as
-  "less 10 per cent" to slip past it, phrasing that reads just as easily as "less *than* 10 per cent".
-  A figure on a product page or the home hero is still a leak: it ages badly and contradicts the two
-  page that is maintained.
+- **Prices live on pricing.html, and are quoted beside each product from one data file.**
+  `pricing.html` carries every figure, the discount bands and the worked bills. Since 2026-10-10 the
+  products index table and the ShareCare page also show prices, because that is where a buyer reading
+  about a product asks what it costs. Those figures are never typed into the page: `build_prices.py`
+  renders them from `tools/prices.py` into `<!--PRICE:key-->` / `<!--PRICE-TIERS:key-->` blocks.
+  `verify.py` enforces both halves: `check_prices` fails if any figure in a generated block is missing
+  from `pricing.html`, and the content rule still refuses a `$` figure or a discount percentage anywhere
+  else on those pages (`GENERATED_PRICE_PAGES`), and anywhere at all on every other page. So a price
+  change is two edits in one commit — `build_legal.py` and `prices.py` — and CI fails if you make only
+  one. The next step is rendering `pricing.html`'s own tables from `prices.py` too, which would remove
+  the second edit. To add a tier block to another product page: an entry in `prices.TIERS`, the marker
+  on the page, and the page in `GENERATED_PRICE_PAGES`.
 - **There is no suite discount, and that is a decision rather than an omission.** Each product is
   priced on its own. Volume bands on the buyer's own estate are a different thing and are published.
 - **The licensing matrices are a commitment, so keep them true to the catalog.** The per-product tables

@@ -2,113 +2,167 @@
    SeQontrol — static marketing site
    Single stylesheet, no build step, no external requests.
 
-   Neutrals are lifted from the platform shell's theme.css (dark variant) so the
-   site and the product UI read as one system:
-     --bg #0b0f17 · --surface #0f172a · --border #334155
-     --text #e5e7eb · --muted #94a3b8
-     --danger #f87171 · --warn #fbbf24 · --ok #4ade80
+   THEME, SINCE 2026-10-10: light page, navy chrome. The body is a cool light grey with white
+   cards; the header, the heroes, the closing call-to-action panel and the footer are navy. This replaced
+   the dark-only theme that borrowed its neutrals from the platform shell. The decision and its
+   reasons are in README "Brand and theme".
 
-   The accent is NOT the shell's blue: SeQontrol's colour is the logo purple,
-   #6b4de2, sampled straight from the artwork. White on it is 5.55:1, so it
-   carries buttons; as text on --bg it is only 3.46:1, so links and labels use
-   the lighter --accent (#a78bfa, 7.05:1) instead.
-   Dark only, by design. No light theme.
+   Two token sets, one vocabulary. :root holds the light set. `.on-navy` (and the chrome that is
+   always navy: .site-header, .hero, .phero, .cta > .wrap, .site-footer) re-declares the SAME custom
+   properties with navy values, so every component written against --text, --muted, --surface and
+   friends renders correctly on either ground without a second set of rules. Write components
+   against the tokens, never against a literal colour, and they work in both places.
+
+   Contrast, measured rather than eyeballed (WCAG 2.x relative luminance):
+     light  --text #151C4F 13.96:1 on --bg, --muted 8.25, --dim 5.20 worst case (on --bg-deep),
+            --accent #4B33B8 6.79 worst case. White on --brand #6C4FDF 5.50.
+     navy   --text #fff 16.02 on navy, --muted 9.52 worst, --dim 5.61 worst, --accent 6.78 worst.
+   --brand is a FILL colour on light grounds; as text it is 4.38:1 on --bg-deep, so links and labels
+   use --accent. Do not swap them.
+
+   Brand palette (memory: SeQontrol brand file): Ink #0B0F17, Deep Navy #151C4F, Qontrol Purple
+   #6C4FDF, Mist #E0E1EA, Slate #5A6080. No green, yellow, red or amber anywhere — the product tones
+   and status chips below are built from purples, blues, teal, magenta and slate for that reason.
+
+   Fonts are self-hosted (assets/fonts, SIL OFL 1.1): Sora for display, Manrope for text,
+   JetBrains Mono for labels and figures. font-src 'self' in the CSP covers them; nothing is fetched
+   from another origin.
    ========================================================================== */
+
+/* ---------------------------------------------------------------- fonts */
+
+@font-face {
+  font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 100 800;
+  src: url(../assets/fonts/sora-latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Sora'; font-style: normal; font-display: swap; font-weight: 100 800;
+  src: url(../assets/fonts/sora-latin-ext-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Manrope'; font-style: normal; font-display: swap; font-weight: 200 800;
+  src: url(../assets/fonts/manrope-latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'Manrope'; font-style: normal; font-display: swap; font-weight: 200 800;
+  src: url(../assets/fonts/manrope-latin-ext-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face {
+  font-family: 'JetBrains Mono'; font-style: normal; font-display: swap; font-weight: 100 800;
+  src: url(../assets/fonts/jetbrains-mono-latin-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono'; font-style: normal; font-display: swap; font-weight: 100 800;
+  src: url(../assets/fonts/jetbrains-mono-latin-ext-wght-normal.woff2) format('woff2-variations');
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
 
 /* ---------------------------------------------------------------- tokens */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* --- neutrals, from the platform shell --- */
-  --bg:         #0b0f17;
-  --surface:    #0f172a;
-  --border:     #334155;
-  --text:       #e5e7eb;
-  --muted:      #94a3b8;
-  --danger:     #f87171;
-  --warn:       #fbbf24;
-  --ok:         #4ade80;
+  /* --- grounds --- */
+  --bg:         #EEEFF5;   /* page */
+  --bg-deep:    #E4E5EE;   /* .band */
+  --surface:    #FFFFFF;   /* cards, panels */
+  --surface-2:  #F5F5FA;   /* tags, code, table heads */
 
-  /* --- SeQontrol purple, sampled from the logo --- */
-  --brand:      #6b4de2;   /* the logo purple — solid fills */
-  --brand-dark: #7658e6;   /* hover — lifted, not darkened, and still 4.87:1 on white */
-  --brand-deep: #5b40c9;   /* pressed / borders needing more weight */
-  --focus:      #a78bfa;
+  /* --- lines. Decorative borders may sit under 3:1 (WCAG 1.4.11 exempts dividers and card edges);
+     --border-control is the edge of something you operate and clears 3:1 on every light ground
+     (3.08 worst, on --bg-deep). --- */
+  --border-soft:   #DCDDE7;
+  --border:        #C9CBD9;
+  --border-strong: #A9ACC0;
+  --border-control:#7B80A0;
 
-  /* --- marketing-surface extensions --- */
-  --bg-deep:      #080c13;
-  --surface-2:    #161a2e;
-  --border-soft:  #1e2439;
-  --border-strong:#4b5169;
-  /* The boundary of a control is not decoration: WCAG 1.4.11 wants 3:1 for anything you need in
-     order to tell where an input or a button is. --border is 1.85:1 and --border-strong only
-     2.45:1, so both fail that bar - fine for a divider or a card edge, which the criterion
-     explicitly exempts, but not for the edge of a text field. #5f6987 is the lightest step that
-     still reads as the same slate and clears 3:1 on all three grounds it sits on (bg 3.52,
-     bg-deep 3.60, surface 3.28). Decorative borders deliberately keep using --border. */
-  --border-control:#5f6987;
+  /* --- text --- */
+  --text:   #151C4F;   /* Deep Navy */
+  --muted:  #3D4466;
+  --dim:    #565C7C;   /* Slate, one step darker so it clears 4.5 on --bg-deep too */
 
-  /* The header is sticky, so every in-page jump - the skip link to #main, and every
-     coming.html#product and pricing.html#product deep link - would otherwise scroll its target to
-     y=0 and leave it sitting underneath the header. That is WCAG 2.2 2.4.11 Focus Not Obscured
-     when the skip link lands there, and plain broken navigation the rest of the time. Declared
-     once and used by both .nav and scroll-padding-top so the two cannot drift apart. */
-  --header-h:   62px;
-  /* #6b7490 measured 3.71–4.22:1 across the four surfaces it actually sits on —
-     under the 4.5 WCAG AA wants for body text, on every one of them. Same hue
-     and saturation, lifted until the worst case is 4.79. It carries hints,
-     captions and the footer line, all of which are small text. */
-  --dim:          #7c87a3;
-  --accent:       #a78bfa;  /* readable purple for links + labels on dark */
-  --accent-soft:  #c4b5fd;
-  --glow:         rgba(107, 77, 226, .22);
+  /* --- SeQontrol purple --- */
+  --brand:       #6C4FDF;   /* Qontrol Purple — fills and primary buttons; white on it 5.50:1 */
+  --brand-dark:  #5A3FCB;   /* hover — darkened on a light page; white on it 6.98:1 */
+  --brand-deep:  #4B33B8;   /* pressed, heavier borders */
+  --accent:      #4B33B8;   /* readable purple for links and labels */
+  --accent-soft: #3A2696;   /* link hover */
+  --tint:        #F3F0FF;   /* a purple-washed panel */
+  --focus:       #6C4FDF;
 
-  /* JeffOps' own brand cyan, taken from its --cyan token and logo. Used only
-     for links back to the parent company, never for SeQontrol's own chrome. */
-  --jeffops:      #00d9ff;
-  --jeffops-soft: #6ee9ff;
+  /* Status stays semantic in the markup but is drawn from the brand, not traffic lights. */
+  --ok:     var(--accent);
+  --warn:   var(--text);
+  --danger: var(--text);
 
-  /* product tones — the same 400-step ramp the shell uses for warn/ok/danger */
-  --t-sharecare: #fbbf24;
-  --t-security:  #38bdf8;
-  --t-compliance:#c084fc;
-  --t-posture:   #818cf8;
-  --t-mailtrust: #4ade80;
-  /* pink, because every neighbouring hue was taken: amber is ShareCare, sky is
-     SecurityPortal, the purples are Compliance and Posture, red is Dredd, and
-     cyan belongs to JeffOps. */
-  --t-webscan:   #f472b6;
-  --t-dredd:     #f87171;
-  --t-condaccess:#fb923c;
-  --t-soon:      #94a3b8;
+  /* JeffOps' brand cyan, darkened for a light ground (#006A80, 4.96:1 worst case, on --bg-deep). The bright
+     #00d9ff is restored inside navy chrome, where it is 9.44:1. Used only for links to the parent
+     company, never for SeQontrol's own chrome. */
+  --jeffops:      #006A80;
+  --jeffops-soft: #004E5E;
 
-  --radius-sm: 6px;
-  --radius:    10px;   /* platform tokens.radius */
-  --radius-lg: 16px;
+  /* product tones — no green, yellow, red or amber (brand rule). Each clears 4.5:1 as text on every
+     light ground, because .kicker and .arrow-link use the tone as text colour. */
+  --t-sharecare: #5B3FD0;
+  --t-security:  #1D5FA8;
+  --t-condaccess:#7D2F6E;
+  --t-webscan:   #B02A79;
+  --t-compliance:#8B35C2;
+  --t-posture:   #3846B4;
+  --t-mailtrust: #0E6E7E;
+  --t-dredd:     #3E4863;
+  --t-soon:      #565C7C;
 
-  /* THE SPACE BESIDE THE CONTENT, CUT BY 30% AT EVERY WIDTH. Two tokens govern it and they take
-     turns: below ~1190px the content fills the viewport and --gut is the whole margin; above it the
-     content is centred at --maxw and the margin is whatever is left over. Changing one alone would
-     have moved the edge on half the screens and left the other half untouched.
+  --radius-sm: 8px;
+  --radius:    14px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
 
-     The formula is the request, solved. Old margin each side is (vw - 1140) / 2; 70% of that is
-     (vw - maxw) / 2, which rearranges to maxw = 0.3vw + 798px. At 1440 that is 1230px, at 1920 it is
-     1374px -- 273px of margin where there used to be 390.
+  /* The header is sticky, so in-page jumps need clearance - used by .nav and scroll-padding-top. */
+  --header-h:   66px;
 
-     Clamped at both ends and neither bound is arbitrary. The floor keeps it from ever being NARROWER
-     than it was. The ceiling stops an ultrawide monitor stretching tables and grids to a width nobody
-     designed for -- prose is already capped in ch and does not care, but a ten-column table does. */
+  /* Width: unchanged from the dark theme. See git history for the derivation. */
   --maxw: clamp(1140px, calc(30vw + 798px), 1500px);
-  --gut: 17px;   /* was 24px */
+  --gut: 17px;
 
-  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  --font:    'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --display: 'Sora', 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
-  /* platform elevation ramp */
-  --el-sm: 0 1px 3px rgba(0,0,0,.12);
-  --el-md: 0 8px 28px rgba(0,0,0,.20);
-  --el-lg: 0 20px 60px rgba(0,0,0,.28);
+  --el-sm: 0 1px 3px rgba(21, 28, 79, .08);
+  --el-md: 0 18px 40px -22px rgba(21, 28, 79, .38);
+  --el-lg: 0 30px 60px -28px rgba(21, 28, 79, .50);
+}
+
+/* The navy token set. Applied to everything that is always navy, and to `.on-navy` for any other
+   block that wants it. Same names, navy values: components need no navy variants of their own. */
+.on-navy, .site-header, .hero, .phero, .cta > .wrap, .site-footer, .navy-panel {
+  --bg:            #151C4F;
+  --bg-deep:       #10163F;
+  --surface:       #1E2660;
+  --surface-2:     #252E6E;
+  --border-soft:   #2A3270;
+  --border:        #3B4386;
+  --border-strong: #4A5190;
+  --border-control:#7A82C0;   /* 3.41:1 worst case, on --surface-2 */
+  --text:          #FFFFFF;
+  --muted:         #D2D4E6;
+  --dim:           #A9ADC8;
+  --accent:        #C3B8F5;
+  --accent-soft:   #E0DAFF;
+  --tint:          #252E6E;
+  --focus:         #C3B8F5;
+  --jeffops:       #00D9FF;
+  --jeffops-soft:  #6EE9FF;
+  --t-sharecare: #B9A8FF; --t-security: #8EC2FF; --t-condaccess: #E7A6D6; --t-webscan: #FF9CD2;
+  --t-compliance:#D7A6FF; --t-posture: #A9B2FF;  --t-mailtrust: #7FD6E0;  --t-dredd: #C3C9DB;
+  --t-soon:      #A9ADC8;
+  color: var(--text);
 }
 
 /* ---------------------------------------------------------------- reset */
@@ -117,7 +171,6 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  /* keeps anchored targets clear of the sticky header - see --header-h */
   scroll-padding-top: calc(var(--header-h) + 1rem);
 }
 
@@ -134,11 +187,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
-  /* rem, not px. This was 16.5px and it was the only px font-size in the sheet, so headings,
-     .lede, .section-head p and .card p all scaled with the reader's browser default while the
-     body copy beside them did not - at a 20px default a card paragraph rendered LARGER than the
-     prose around it. Browser default font size, not page zoom, is the setting low-vision readers
-     actually change. 1.03rem is 16.48px at the 16px default: visually identical today. */
+  /* rem, not px, so body copy scales with the reader's browser default like everything else. */
   font-size: 1.03rem;
   line-height: 1.62;
   -webkit-font-smoothing: antialiased;
@@ -147,37 +196,34 @@ body {
 
 img, svg { max-width: 100%; height: auto; display: block; }
 
-h1, h2, h3, h4 { margin: 0 0 .5em; line-height: 1.18; letter-spacing: -.021em; font-weight: 640; }
-h1 { font-size: clamp(2.05rem, 1.35rem + 2.7vw, 3.3rem); letter-spacing: -.033em; }
-h2 { font-size: clamp(1.5rem, 1.15rem + 1.4vw, 2.1rem); letter-spacing: -.026em; }
-h3 { font-size: 1.14rem; }
-h4 { font-size: 1rem; }
+h1, h2, h3, h4 {
+  margin: 0 0 .5em; line-height: 1.12; letter-spacing: -.025em; font-weight: 700;
+  font-family: var(--display); color: var(--text);
+}
+h1 { font-size: clamp(2.3rem, 1.4rem + 3.4vw, 4.4rem); letter-spacing: -.04em; line-height: 1.02; }
+h2 { font-size: clamp(1.75rem, 1.25rem + 1.9vw, 2.9rem); letter-spacing: -.033em; line-height: 1.06; }
+h3 { font-size: 1.2rem; letter-spacing: -.018em; }
+h4 { font-size: 1rem; letter-spacing: -.01em; }
 
 p { margin: 0 0 1.1em; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-soft); text-decoration: underline; }
 
-/* Inline prose links carry an underline, because colour alone does not distinguish them. --accent
-   against --text is 2.20:1 and against --muted - which td, .note p and .note li all use - it is
-   1.06:1, both under the 3:1 WCAG technique G183 requires when colour is the sole signal. The
-   sheet's own palette notes check --accent against the BACKGROUND, which is the wrong comparison
-   for this: what matters is the surrounding text. A hover underline does not help a touch user or
-   anyone scanning. Scoped to <main> so header, footer and nav keep their current look. */
-main p a, main li a, main td a, main th a, main figcaption a {
+/* Inline prose links carry an underline, because colour alone does not distinguish them from the
+   surrounding text (WCAG technique G183). Scoped to <main> so header, footer and nav keep theirs. */
+main p a, main li a, main td a, main th a, main figcaption a, main dd a {
   text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .18em;
 }
-/* Anything already shaped like a control is exempt: it does not read as body copy to begin with. */
-/* :not(:hover) on the crumb, because main .breadcrumb a (0,1,2) outranks a:hover (0,1,1) in every
-   state - and .breadcrumb a already overrides the hover colour change, so without this these links
-   had no hover feedback at all. They are the only upward link on a guide page. */
-main .btn, main .arrow-link, main .tag, main .breadcrumb a:not(:hover), main .subnav a {
+/* Anything already shaped like a control is exempt. */
+main .btn, main .arrow-link, main .tag, main .breadcrumb a:not(:hover), main .subnav a,
+main .door, main .compare-links a {
   text-decoration: none;
 }
 
 ul, ol { margin: 0 0 1.1em; padding-left: 1.25em; }
 li { margin-bottom: .5em; }
 
-strong { font-weight: 620; color: var(--text); }
+strong { font-weight: 700; color: var(--text); }
 
 code, kbd {
   font-family: var(--mono);
@@ -186,7 +232,7 @@ code, kbd {
   border: 1px solid var(--border-soft);
   border-radius: 4px;
   padding: .1em .38em;
-  color: var(--accent-soft);
+  color: var(--accent);
 }
 
 hr { border: 0; border-top: 1px solid var(--border-soft); margin: 3rem 0; }
@@ -196,36 +242,47 @@ hr { border: 0; border-top: 1px solid var(--border-soft); margin: 3rem 0; }
 .skip-link {
   position: absolute; left: -9999px; top: 0; z-index: 200;
   background: var(--brand); color: #fff; padding: .7rem 1.1rem;
-  font-weight: 620; border-radius: 0 0 var(--radius-sm) 0;
+  font-weight: 700; border-radius: 0 0 var(--radius-sm) 0;
 }
-.skip-link:focus { left: 0; }
+.skip-link:focus { left: 0; color: #fff; }
 
 /* ---------------------------------------------------------------- layout */
 
-.wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gut); }
-.wrap-narrow { max-width: 1100px; }   /* was 820px */
+/* Grid and flex children default to min-width:auto, which lets a screenshot frame (sized to its
+   capture's pixel width below 60rem, see .shot-pan) push its column - and the page - wider than a
+   phone. Every two-column layout on the site lets its children shrink instead; the shot then pans
+   inside its own scroll box, which is what .shot-pan exists for. */
+.hero-grid > *, .phero-grid > *, .split > *, .door-panel > *, .shot-feature > *,
+.faq > *, .principle > *, [data-tabs-ready].tabs-v > * { min-width: 0; }
+.shot { min-width: 0; }   /* and width:100% on .shot itself: its margin-inline:auto stops a grid item stretching */
 
-/* Body prose that has to sit in a full-width section. wrap-narrow cannot do this job: it is also
-   margin-inline:auto, so a lone narrow section between two wide ones steps inward at both edges and
-   reads as misaligned. Pages built entirely on wrap-narrow do not have that problem; the product
-   pages, where only "Why it matters" used it, did. Same 730px measure as .section-head. */
+.wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: var(--gut); }
+.wrap-narrow { max-width: 1100px; }
 .measure { max-width: 730px; }
 
-section { padding-block: clamp(3.4rem, 6.5vw, 5.8rem); }
-section.tight { padding-block: clamp(2.4rem, 4vw, 3.4rem); }
-.band { background: var(--bg-deep); border-block: 1px solid var(--border-soft); }
+section { padding-block: clamp(3.2rem, 6vw, 5.4rem); }
+section.tight { padding-block: clamp(2.2rem, 4vw, 3.2rem); }
+.band { background: var(--bg-deep); }
 
-.section-head { max-width: 730px; margin-bottom: 2.5rem; }
-.section-head p { color: var(--muted); font-size: 1.05rem; margin-bottom: 0; }
+.section-head { max-width: 760px; margin-bottom: 2.5rem; }
+.section-head p { color: var(--muted); font-size: 1.08rem; margin-bottom: 0; }
 .section-head p + p { margin-top: .8rem; }
 
 .eyebrow {
   display: inline-block;
-  font-size: .73rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: .85rem;
+  font-family: var(--mono);
+  font-size: .76rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: .9rem;
 }
 
-.lede { font-size: clamp(1.04rem, 1rem + .35vw, 1.2rem); color: var(--muted); }
+/* The pill variant of the eyebrow, used on navy heroes. */
+.pill {
+  display: inline-block; font-family: var(--mono); font-size: .8rem; font-weight: 500;
+  color: var(--accent); border: 1px solid var(--border); border-radius: 100px;
+  padding: .45rem 1rem; margin-bottom: 1.5rem; letter-spacing: .01em;
+}
+
+.lede { font-size: clamp(1.06rem, 1rem + .45vw, 1.28rem); color: var(--muted); line-height: 1.55; }
 .lede strong { color: var(--text); }
 
 .muted { color: var(--muted); }
@@ -233,21 +290,20 @@ section.tight { padding-block: clamp(2.4rem, 4vw, 3.4rem); }
 .small { font-size: .9rem; }
 .center { text-align: center; }
 .mb0 { margin-bottom: 0; }
+.mono { font-family: var(--mono); }
 
 /* ---------------------------------------------------------------- header */
 
 .site-header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(11, 15, 23, .88);
-  backdrop-filter: saturate(160%) blur(12px);
+  background: var(--bg);
   border-bottom: 1px solid var(--border-soft);
 }
 
 .nav { display: flex; align-items: center; gap: 1.5rem; min-height: var(--header-h); }
 
-/* The brand lockup is the supplied artwork: extracted symbol + wordmark.
-   Both are the "on-dark" variants — the delivered logo is navy, which is
-   unreadable on --bg, so the navy is lifted to --text and the purple kept. */
+/* The lockup is the on-dark artwork: the delivered logo is navy, which disappears on the navy
+   header, so the navy is lifted to white and the purple kept. */
 .brand {
   display: inline-flex; align-items: center; gap: .55rem;
   color: var(--text); text-decoration: none; margin-right: auto;
@@ -267,19 +323,19 @@ section.tight { padding-block: clamp(2.4rem, 4vw, 3.4rem); }
   opacity: .85;
 }
 
-.nav-links { display: flex; align-items: center; gap: 1.45rem; list-style: none; margin: 0; padding: 0; }
+.nav-links { display: flex; align-items: center; gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
 .nav-links li { margin: 0; }
 .nav-links a {
-  color: var(--muted); font-size: .94rem; font-weight: 520;
-  text-decoration: none; padding: .35rem 0; border-bottom: 1.5px solid transparent;
+  color: var(--muted); font-size: .95rem; font-weight: 600;
+  text-decoration: none; padding: .35rem 0; border-bottom: 2px solid transparent;
 }
 .nav-links a:hover { color: var(--text); text-decoration: none; }
 .nav-links a[aria-current="page"] { color: var(--text); border-bottom-color: var(--accent); }
 
 .nav-toggle {
   display: none; background: var(--surface); border: 1px solid var(--border-control);
-  color: var(--text); border-radius: var(--radius-sm); padding: .45rem .6rem;
-  cursor: pointer; font: inherit; line-height: 1;
+  color: var(--text); border-radius: var(--radius-sm); padding: .55rem .8rem;
+  cursor: pointer; font: inherit; font-weight: 600; line-height: 1; min-height: 44px;
 }
 
 @media (max-width: 900px) {
@@ -289,19 +345,15 @@ section.tight { padding-block: clamp(2.4rem, 4vw, 3.4rem); }
     flex-direction: column; align-items: stretch; gap: 0;
     background: var(--bg-deep); border-bottom: 1px solid var(--border-soft);
     padding: .5rem var(--gut) 1.1rem;
-    /* The panel is absolutely positioned inside a position:sticky header, so it is pinned to the
-       viewport and scrolling the page behind it moves nothing. At this breakpoint the submenu is
-       rendered inline and visible (see .subnav below), so the panel carries 14 rows and stands
-       roughly 650px tall - taller than an iPhone SE viewport, and far taller than any phone in
-       landscape. Without these four lines the bottom entries, Guides and Contact among them,
-       cannot be reached by any gesture. dvh second so it wins where supported. */
+    /* The panel is pinned to the viewport inside a sticky header and carries the whole submenu at
+       this width, so it must scroll itself or its bottom entries cannot be reached. */
     max-height: calc(100vh - var(--header-h));
     max-height: calc(100dvh - var(--header-h));
     overflow-y: auto;
     overscroll-behavior: contain;
   }
   .nav-links.open { display: flex; }
-  .nav-links a { display: block; padding: .72rem 0; border-bottom: 1px solid var(--border-soft); }
+  .nav-links a { display: block; padding: .78rem 0; border-bottom: 1px solid var(--border-soft); }
   .nav-links .btn { margin-top: .9rem; text-align: center; border-bottom: 0; }
 }
 
@@ -309,10 +361,10 @@ section.tight { padding-block: clamp(2.4rem, 4vw, 3.4rem); }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-  font: inherit; font-size: .94rem; font-weight: 600;
-  padding: .68rem 1.25rem; border-radius: var(--radius-sm);
-  border: 1px solid transparent; cursor: pointer; text-decoration: none;
-  transition: background .15s ease, border-color .15s ease, filter .12s ease, transform .05s ease;
+  font: inherit; font-size: .98rem; font-weight: 700;
+  padding: .85rem 1.4rem; min-height: 48px; border-radius: 12px;
+  border: 2px solid transparent; cursor: pointer; text-decoration: none;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, transform .05s ease;
 }
 .btn:hover { text-decoration: none; }
 .btn:active { transform: translateY(.5px); }
@@ -321,51 +373,103 @@ section.tight { padding-block: clamp(2.4rem, 4vw, 3.4rem); }
 .btn-primary:hover { background: var(--brand-dark); color: #fff; }
 
 .btn-ghost { background: transparent; border-color: var(--border-control); color: var(--text); }
-.btn-ghost:hover { border-color: var(--border-strong); background: var(--surface); color: var(--text); }
+.btn-ghost:hover { border-color: var(--text); background: var(--surface); color: var(--text); }
+
+/* On navy the primary action turns white, as in the design: purple-on-navy is too quiet to lead. */
+.on-navy .btn-primary, .hero .btn-primary, .phero .btn-primary, .cta > .wrap .btn-primary, .navy-panel .btn-primary {
+  background: #FFFFFF; color: #151C4F;
+}
+.on-navy .btn-primary:hover, .hero .btn-primary:hover, .phero .btn-primary:hover,
+.cta > .wrap .btn-primary:hover, .navy-panel .btn-primary:hover { background: #E0DAFF; color: #151C4F; }
+.on-navy .btn-ghost:hover, .hero .btn-ghost:hover, .phero .btn-ghost:hover,
+.cta > .wrap .btn-ghost:hover, .navy-panel .btn-ghost:hover { background: var(--surface); }
 
 .btn-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.9rem; }
 
-.arrow-link { display: inline-flex; align-items: center; gap: .35rem; font-weight: 570; font-size: .93rem; }
-.arrow-link::after { content: "→"; transition: transform .15s ease; }
+.arrow-link { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; font-size: .95rem; }
+.arrow-link::after { content: "→"; font-family: system-ui, sans-serif; transition: transform .15s ease; }
 .arrow-link:hover::after { transform: translateX(3px); }
 
-/* ---------------------------------------------------------------- hero */
+/* ---------------------------------------------------------------- navy chrome */
 
-.hero { position: relative; overflow: hidden; padding-block: clamp(3.8rem, 8vw, 7rem); border-bottom: 1px solid var(--border-soft); }
-.hero::before {
-  content: ""; position: absolute; inset: -45% -10% auto -10%; height: 540px;
-  background:
-    radial-gradient(52% 58% at 22% 45%, var(--glow), transparent 70%),
-    radial-gradient(44% 54% at 78% 28%, rgba(167,139,250,.12), transparent 70%);
-  pointer-events: none;
+/* Concentric rings: the hero's only decoration. Two absolutely-placed circles, no image. */
+.hero, .phero { position: relative; overflow: hidden; background: var(--bg); }
+.hero::before, .hero::after, .phero::before {
+  content: ""; position: absolute; border-radius: 50%;
+  border: 1px solid var(--border-soft); pointer-events: none;
 }
-.hero > .wrap { position: relative; }
-.hero h1 { max-width: 17ch; }
-.hero .lede { max-width: 60ch; }
+.hero::before { width: 1000px; height: 1000px; right: -340px; top: -380px; }
+.hero::after  { width: 660px;  height: 660px;  right: -170px; top: -210px; }
+.phero::before { width: 860px; height: 860px; right: -300px; top: -360px; }
+.hero > .wrap, .phero > .wrap { position: relative; }
 
-.hero-grid { display: grid; grid-template-columns: 1.12fr .88fr; gap: 3rem; align-items: center; }
+.hero { padding-block: clamp(3.6rem, 7vw, 6.2rem) clamp(3.6rem, 7vw, 6rem); }
+.hero h1 { max-width: 16ch; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero .lede { max-width: 58ch; }
+
+.hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 3rem; align-items: center; }
 @media (max-width: 940px) { .hero-grid { grid-template-columns: 1fr; gap: 2.2rem; } }
 
 .oneline {
-  margin-top: 1.9rem; padding: 1rem 1.15rem;
-  /* honours a --tone set on the element, so a product's own colour carries
-     through; falls back to the site accent everywhere else. */
-  border-left: 3px solid var(--tone, var(--accent)); background: var(--surface);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 1.01rem;
+  margin-top: 1.9rem; padding: 1rem 1.2rem;
+  background: var(--tint); border-radius: var(--radius-sm); font-size: 1.01rem;
+  border: 1px solid var(--border-soft);
 }
-.oneline strong { color: var(--accent-soft); font-weight: 620; }
+.oneline strong { color: var(--tone, var(--accent)); font-weight: 700; }
 
-/* stepped "how it works" panel */
+/* The facts card on the home hero: four true things, in place of a marketing illustration. */
+.facts {
+  list-style: none; margin: 0; padding: 1.5rem 1.6rem;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+}
+.facts li { margin: 0; padding: .9rem 0; border-bottom: 1px solid var(--border-soft); color: var(--muted); font-size: .97rem; }
+.facts li:first-child { padding-top: 0; }
+.facts li:last-child { border-bottom: 0; padding-bottom: 0; }
+.facts b {
+  display: block; font-family: var(--mono); font-size: .74rem; font-weight: 600; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: .2rem;
+}
+
+/* stepped "how it works" panel (platform page) */
 .flow { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 1.35rem; box-shadow: var(--el-md); }
 .flow-step { display: flex; gap: .85rem; align-items: flex-start; padding: .8rem .2rem; }
 .flow-step + .flow-step { border-top: 1px solid var(--border-soft); }
 .flow-num {
-  flex: none; width: 26px; height: 26px; display: grid; place-items: center;
-  border-radius: 50%; background: var(--surface-2); border: 1px solid var(--border);
-  color: var(--accent); font-size: .77rem; font-weight: 700; font-family: var(--mono);
+  flex: none; width: 28px; height: 28px; display: grid; place-items: center;
+  border-radius: 50%; background: var(--brand); color: #fff;
+  font-size: .78rem; font-weight: 700; font-family: var(--mono);
 }
-.flow-step h3 { margin: 0 0 .15rem; font-size: .95rem; font-weight: 620; }
-.flow-step p { margin: 0; font-size: .88rem; color: var(--muted); }
+.flow-step h3 { margin: 0 0 .15rem; font-size: 1rem; }
+.flow-step p { margin: 0; font-size: .9rem; color: var(--muted); }
+
+/* ---------------------------------------------------------------- doors (home) */
+
+/* The two audience doors under the home hero. Plain links in the markup — each jumps to its own
+   section — so with JavaScript off both sections render and the doors still work. site.js adds
+   [data-doors-ready] and turns them into a switch: one panel shown, aria-current on its door. */
+.doors-label {
+  font-family: var(--mono); font-size: .8rem; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--accent); margin: clamp(2.6rem, 5vw, 3.6rem) 0 1rem;
+}
+.doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 760px) { .doors { grid-template-columns: 1fr; } }
+.door {
+  display: flex; flex-direction: column; gap: .5rem;
+  padding: 1.6rem 1.75rem; border-radius: 20px;
+  background: var(--surface); border: 2px solid var(--border); color: var(--text);
+  transition: background .15s ease, border-color .15s ease, transform .12s ease;
+}
+.door:hover { border-color: var(--accent); color: var(--text); text-decoration: none; transform: translateY(-2px); }
+.door .door-n { font-family: var(--mono); font-size: .76rem; letter-spacing: .07em; color: var(--accent); }
+.door .door-t { font-family: var(--display); font-size: clamp(1.25rem, 1.05rem + .7vw, 1.6rem); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; }
+.door .door-d { color: var(--muted); font-size: .97rem; line-height: 1.5; }
+/* The chosen door becomes a white card, exactly as in the design. Its own light token set, because
+   it is a light card sitting in navy chrome. */
+[data-doors-ready] .door[aria-current="true"] {
+  --text: #151C4F; --muted: #3D4466; --accent: #4B33B8;
+  background: #FFFFFF; border-color: #6C4FDF; box-shadow: 0 24px 48px -20px #0B0F17;
+}
 
 /* ---------------------------------------------------------------- grids + cards */
 
@@ -375,84 +479,223 @@ section.tight { padding-block: clamp(2.4rem, 4vw, 3.4rem); }
 @media (max-width: 960px) { .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 660px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
 
-.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 1.35rem 1.4rem; }
-.card h3 { margin-bottom: .4rem; }
-.card p { color: var(--muted); font-size: .94rem; }
+.card { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 1.7rem 1.75rem; }
+.card h3 { margin-bottom: .5rem; }
+.card.on-navy { background: var(--bg); border-color: var(--bg); }
+.grid.spaced { margin-top: 3rem; }
+.card p { color: var(--muted); font-size: .97rem; }
 .card p:last-child, .card ul:last-child { margin-bottom: 0; }
 
 /* product card */
 .pcard {
   display: flex; flex-direction: column; position: relative; overflow: hidden;
   background: var(--surface); border: 1px solid var(--border-soft);
-  border-radius: var(--radius); padding: 1.4rem;
+  border-radius: var(--radius-lg); padding: 1.7rem 1.75rem;
   transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
 }
-.pcard::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; background: var(--tone, var(--accent)); opacity: .85; }
 .pcard:hover { border-color: var(--border); transform: translateY(-2px); box-shadow: var(--el-md); }
-/* flex-wrap matters: .status is nowrap and .pcard is overflow:hidden, and a product name is one
-   unbreakable word, so neither flex item can shrink. Without wrapping, the badge on a long name
-   (ConditionalAccessPortal, CompliancePortal, PosturePortal) runs past the padding box and is
-   clipped away on every common phone width - and those are the cards whose badge carries news. */
+/* flex-wrap: the badge on a long product name (ConditionalAccessPortal) must wrap rather than be
+   clipped by overflow:hidden on a phone. */
 .pcard h3 {
-  display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .55rem;
-  margin-bottom: .1rem; font-size: 1.1rem;
+  display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .6rem;
+  margin-bottom: .2rem; font-size: 1.3rem;
 }
 .pcard h3 a { color: var(--text); text-decoration: none; }
 .pcard h3 a:hover { color: var(--tone, var(--accent)); }
 .pcard .kicker {
-  display: block; font-size: .72rem; font-weight: 700; letter-spacing: .11em;
+  display: block; font-family: var(--mono); font-size: .72rem; font-weight: 600; letter-spacing: .07em;
   text-transform: uppercase; color: var(--tone, var(--accent)); margin-bottom: .7rem;
 }
-.pcard p { color: var(--muted); font-size: .93rem; flex: 1; }
+.pcard p { color: var(--muted); font-size: .96rem; flex: 1; }
 .pcard .arrow-link { color: var(--tone, var(--accent)); margin-top: .3rem; align-self: flex-start; }
-.pcard.soon { opacity: .82; }
-.pcard.soon:hover { transform: none; }
+/* Not on sale: a dashed outline instead of a white card, so availability reads before the badge. */
+.pcard:has(.status.early), .pcard:has(.status.soon) {
+  background: transparent; border: 2px dashed var(--border-strong);
+}
+.pcard:has(.status.early):hover, .pcard:has(.status.soon):hover { transform: none; box-shadow: none; }
+
+/* Product groups. A plain .bento is a wrapping row; .bento.lead is the four-up "available today"
+   layout: the first card is the hero product (two rows tall, navy), the fourth spans two columns, so
+   four cards fill a 2-1-1 grid with no orphan. */
+.bento { display: flex; flex-wrap: wrap; gap: 1rem; }
+.bento > .pcard { flex: 1 1 300px; min-width: 0; }
+.bento.lead { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); }
+.bento.lead > .pcard:first-child { grid-row: span 2; justify-content: flex-end; }
+.bento.lead > .pcard:nth-child(4) { grid-column: span 2; }
+@media (max-width: 1000px) {
+  .bento.lead { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bento.lead > .pcard:first-child { grid-row: auto; grid-column: 1 / -1; }
+  .bento.lead > .pcard:nth-child(4) { grid-column: auto; }
+}
+@media (max-width: 640px) {
+  .bento.lead { grid-template-columns: 1fr; }
+}
+.bento.lead > .pcard:first-child {
+  --bg: #151C4F; --surface: #151C4F; --border-soft: #2A3270; --border: #3B4386;
+  --text: #FFFFFF; --muted: #D2D4E6; --dim: #A9ADC8; --accent: #C3B8F5; --tone: #C3B8F5;
+  background: #151C4F; color: #FFFFFF; border-color: #151C4F;
+}
+.bento.lead > .pcard:first-child h3 { font-size: 1.7rem; }
 
 .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--tone, var(--accent)); flex: none; }
 
-/* the three-portal group */
-.suite {
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.6rem;
-  background:
-    radial-gradient(80% 100% at 50% 0%, rgba(107,77,226,.09), transparent 60%),
-    var(--bg-deep);
-}
-.suite-head { margin-bottom: 1.35rem; }
+/* the product group on the home page */
+.suite { padding: 0; }
+.suite-head { margin-bottom: 1.6rem; }
 .suite-head h2, .suite-head h3 {
-  margin: 0 0 .3rem; font-size: clamp(1.15rem, 1rem + .7vw, 1.5rem);
-  letter-spacing: -.025em;
+  margin: 0 0 .3rem; font-size: clamp(1.2rem, 1rem + .8vw, 1.6rem);
 }
 .suite-head h2 .sep, .suite-head h3 .sep { color: var(--accent); font-weight: 400; }
-.suite-head p { margin: 0; color: var(--muted); font-size: .96rem; max-width: 68ch; }
+.suite-head p { margin: 0; color: var(--muted); font-size: 1rem; max-width: 68ch; }
 .suite .grid { gap: 1rem; }
+
+/* Availability headings in the product groups (checked against card badges by verify.py). */
+.bento + .avail-head, .grid + .avail-head { margin-top: 2.6rem; }
+.avail-head {
+  display: flex; align-items: center; gap: .6rem;
+  font-family: var(--mono); font-size: .8rem; letter-spacing: .07em; text-transform: uppercase;
+  color: var(--muted); margin: 0 0 1.1rem; font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- how it works (home) */
+
+.navy-panel {
+  background: var(--bg); border-radius: var(--radius-xl);
+  padding: clamp(2rem, 5vw, 4.4rem);
+}
+.navy-panel h2 { max-width: 22ch; }
+.river { position: relative; margin-top: 3.4rem; list-style: none; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.6rem; }
+.river::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 23px; height: 2px; background: var(--border);
+}
+.river li { position: relative; margin: 0; }
+.river .n {
+  width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  background: #6C4FDF; color: #fff; font-family: var(--display); font-weight: 700; font-size: 1.1rem;
+  box-shadow: 0 0 0 8px var(--bg);
+}
+.river .stage { display: block; margin-top: 1.4rem; font-family: var(--mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.river h3 { margin: .3rem 0 .5rem; font-size: 1.4rem; }
+.river p { margin: 0; color: var(--muted); font-size: .95rem; }
+@media (max-width: 980px) {
+  .river { grid-template-columns: 1fr; gap: 1.8rem; }
+  .river::before { left: 23px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; }
+  .river li { padding-left: 4.4rem; }
+  .river .n { position: absolute; left: 0; top: 0; }
+  .river .stage { margin-top: .2rem; }
+}
+
+/* ---------------------------------------------------------------- tier ladder (home) */
+
+.ladder { list-style: none; padding: 0; margin: 0 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: end; }
+.ladder .step { background: var(--surface); border-radius: var(--radius-lg); padding: 1.8rem; border: 1px solid var(--border-soft); }
+.ladder .step:nth-child(1) { min-height: 15rem; }
+.ladder .step:nth-child(2) { min-height: 18rem; border: 2px solid var(--brand); }
+.ladder .step:nth-child(3) { min-height: 21rem; }
+.ladder .step.on-navy { background: var(--bg); border-color: var(--bg); }
+.ladder .step .n { font-family: var(--mono); font-size: .76rem; letter-spacing: .06em; color: var(--accent); }
+.ladder .step h3 { font-size: 1.65rem; margin: .5rem 0 .6rem; }
+.ladder .step p { color: var(--muted); margin: 0; }
+@media (max-width: 860px) {
+  .ladder { grid-template-columns: 1fr; }
+  .ladder .step:nth-child(n) { min-height: 0; }
+}
+
+/* ---------------------------------------------------------------- principle (home) */
+
+.principle {
+  background: var(--surface); border-radius: var(--radius-xl);
+  padding: clamp(2rem, 5.5vw, 4.8rem);
+  display: grid; grid-template-columns: 1.15fr .85fr; gap: 3rem; align-items: center;
+}
+.principle .statement {
+  font-family: var(--display); font-weight: 700; letter-spacing: -.045em; line-height: .98;
+  font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.8rem); margin: 0;
+}
+.principle .statement em { font-style: normal; color: var(--brand); }
+.principle ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+.principle li { margin: 0; display: flex; gap: .9rem; color: var(--muted); font-size: 1.04rem; }
+.principle li::before { content: "→"; font-family: system-ui, sans-serif; color: var(--brand); flex: none; }
+.principle li strong { color: var(--text); }
+.principle details { grid-column: 1 / -1; border-top: 1px solid var(--border-soft); padding-top: 1.2rem; }
+.principle details > div { max-width: 78ch; margin-top: 1rem; color: var(--muted); }
+@media (max-width: 900px) { .principle { grid-template-columns: 1fr; gap: 2rem; } }
+
+/* ---------------------------------------------------------------- free tools (home) */
+
+.free { display: flex; flex-wrap: wrap; gap: 1rem; }
+.free > * { flex: 1 1 300px; min-width: 0; border-radius: var(--radius-lg); padding: 2rem; }
+.free .lead-tool {
+  flex: 2 1 520px; background: var(--brand); color: #fff;
+  --text: #fff; --muted: #F0EDFF; --accent: #E6E0FF;
+}
+.free .lead-tool .btn-primary { background: #fff; color: #151C4F; }
+.free .lead-tool .btn-primary:hover { background: #E0DAFF; }
+.free .tool { background: var(--surface); }
+.free .need { display: block; font-family: var(--mono); font-size: .74rem; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); margin-bottom: .8rem; }
+.free h3 { font-size: 1.5rem; }
+.free p { color: var(--muted); }
+
+/* ---------------------------------------------------------------- questions (details) */
+
+.faq {
+  background: var(--surface); border-radius: var(--radius-xl);
+  padding: clamp(1.8rem, 5vw, 4.4rem);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 3rem;
+}
+@media (max-width: 900px) { .faq { grid-template-columns: 1fr; gap: 1.5rem; } }
+.faq details { border-top: 1px solid var(--border); padding: 1.2rem 0; }
+.faq details:last-child { border-bottom: 1px solid var(--border); }
+details > summary {
+  cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center;
+  gap: 1.2rem; min-height: 44px;
+  font-family: var(--display); font-weight: 700; font-size: clamp(1.1rem, 1rem + .4vw, 1.35rem); letter-spacing: -.02em;
+}
+details > summary::-webkit-details-marker { display: none; }
+details > summary::after {
+  content: "+"; flex: none; font-family: var(--mono); font-weight: 500; font-size: 1.4rem; color: var(--brand);
+}
+details[open] > summary::after { content: "−"; }
+.faq details p { color: var(--muted); margin: .9rem 0 0; }
+.faq details p:last-child { margin-bottom: .2rem; }
+
+/* ---------------------------------------------------------------- compare links */
+
+.compare-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; list-style: none; margin: 0; padding: 0; }
+.compare-links li { margin: 0; }
+.compare-links a {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 64px;
+  background: var(--surface); border-radius: 16px; padding: 1.2rem 1.4rem;
+  color: var(--text); font-weight: 700; font-size: 1.05rem;
+}
+.compare-links a::after { content: "→"; font-family: system-ui, sans-serif; color: var(--brand); }
+.compare-links a:hover { color: var(--accent); box-shadow: var(--el-md); }
+@media (max-width: 960px) { .compare-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .compare-links { grid-template-columns: 1fr; } }
 
 /* ---------------------------------------------------------------- tables */
 
-.table-wrap { border: 1px solid var(--border-soft); border-radius: var(--radius); overflow: hidden; }
+.table-wrap { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); overflow: hidden; }
 .table-scroll { overflow-x: auto; }
 
-table { width: 100%; border-collapse: collapse; font-size: .94rem; min-width: 540px; }
-th, td { text-align: left; padding: .78rem 1rem; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
-/* Column headers only. Row headers (<th scope="row">) are styled below — they
-   are body cells and must not inherit the uppercase header treatment. */
+table { width: 100%; border-collapse: collapse; font-size: .95rem; min-width: 540px; }
+th, td { text-align: left; padding: .9rem 1.1rem; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+/* Column headers only. Row headers (<th scope="row">) are styled below — they are body cells. */
 thead th {
-  color: var(--text); font-weight: 620; font-size: .76rem;
-  letter-spacing: .08em; text-transform: uppercase;
-  background: var(--surface); border-bottom-color: var(--border);
+  color: var(--muted); font-family: var(--mono); font-weight: 600; font-size: .72rem;
+  letter-spacing: .07em; text-transform: uppercase;
+  background: var(--surface-2); border-bottom-color: var(--border);
 }
-tbody th { font-weight: 500; color: var(--text); text-align: left; }
+tbody th { font-weight: 600; color: var(--text); text-align: left; }
 td { color: var(--muted); }
-td:first-child { color: var(--text); font-weight: 520; }
-tbody tr:last-child td { border-bottom: 0; }
-tbody tr:hover td { background: rgba(148,163,184,.03); }
+td:first-child { color: var(--text); font-weight: 600; }
+tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
+tbody tr:hover td { background: rgba(108, 79, 223, .03); }
 
-.tick { color: var(--ok); font-weight: 700; }
+.tick { color: var(--accent); font-weight: 700; }
 .no { color: var(--dim); }
 
-/* screen-reader-only text: the tick columns read as "included" / "not
-   included" rather than as a bare glyph or nothing at all */
+/* screen-reader-only text */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
@@ -470,27 +713,25 @@ tbody tr:hover td { background: rgba(148,163,184,.03); }
   text-transform: none; color: var(--dim); margin-top: .15rem;
 }
 .matrix tr.group th {
-  background: var(--surface); color: var(--dim);
-  font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  background: var(--surface-2); color: var(--dim);
+  font-family: var(--mono); font-size: .72rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase;
 }
 
-/* Tabs. The panels are plain divs, not <section>, so the global section
-   padding does not apply inside them. Without JS the tab strip stays hidden and
-   every panel renders stacked — the content is never gated behind script. */
+/* Tabs. Without JS the strip stays hidden and every panel renders stacked. */
 .tablist { display: none; }
 [data-tabs-ready] .tablist {
   display: flex;
   gap: .25rem;
   overflow-x: auto;
   scrollbar-width: thin;
-  border-bottom: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border);
   margin-bottom: 1.9rem;
 }
 .tablist button {
   display: inline-flex; align-items: center; gap: .5rem;
   background: none; border: 0; border-bottom: 2px solid transparent;
-  color: var(--muted); font: inherit; font-size: .95rem; font-weight: 560;
-  padding: .7rem .95rem; margin-bottom: -1px;
+  color: var(--muted); font: inherit; font-size: .97rem; font-weight: 600;
+  padding: .7rem .95rem; margin-bottom: -1px; min-height: 44px;
   cursor: pointer; white-space: nowrap;
   transition: color .12s ease, border-color .12s ease;
 }
@@ -509,16 +750,10 @@ tbody tr:hover td { background: rgba(148,163,184,.03); }
 [data-tabs-ready] .product-licence { margin-bottom: 0; }
 [data-tabs-ready] .product-licence h3::before { display: none; }
 
-/* Vertical tab set. Seven product names is too many for a horizontal strip —
-   it overflows, and a tab strip that hides its own options is the one thing a
-   tab strip must not do. A left-hand rail gives every label full width.
-   The rail sticks, because the panels are long enough to scroll past it.
-
-   All panels occupy the same grid cell: only one is ever without [hidden],
-   and [hidden] is display:none, so they never fight for space. */
+/* Vertical tab set: seven product names overflow a horizontal strip, so a sticky left rail. */
 [data-tabs-ready].tabs-v {
   display: grid;
-  grid-template-columns: minmax(170px, 210px) minmax(0, 1fr);
+  grid-template-columns: minmax(170px, 220px) minmax(0, 1fr);
   gap: 2.2rem;
   align-items: start;
 }
@@ -527,24 +762,21 @@ tbody tr:hover td { background: rgba(148,163,184,.03); }
   position: sticky; top: calc(var(--header-h) + 1rem);
   flex-direction: column;
   align-items: stretch;
-  gap: .12rem;
+  gap: .15rem;
   overflow: visible;
   border-bottom: 0;
-  border-right: 1px solid var(--border-soft);
+  border-right: 1px solid var(--border);
   margin-bottom: 0;
   padding-right: .35rem;
 }
 [data-tabs-ready].tabs-v .tablist button {
   justify-content: flex-start;
   text-align: left;
-  padding: .58rem .8rem;
+  padding: .6rem .85rem;
   margin: 0 -1px 0 0;
   border-bottom: 0;
   border-right: 2px solid transparent;
   border-radius: var(--radius-sm) 0 0 var(--radius-sm);
-  /* The rail is capped at 210px and the longest label today is
-     "CompliancePortal". Allow wrapping so a longer product name later spills
-     onto a second line instead of over the rail's border. */
   white-space: normal;
 }
 [data-tabs-ready].tabs-v .tablist button[aria-selected="true"] {
@@ -553,9 +785,6 @@ tbody tr:hover td { background: rgba(148,163,184,.03); }
 }
 [data-tabs-ready].tabs-v .product-licence { grid-column: 2; grid-row: 1; }
 
-/* Narrow screens: the rail would eat the width the tables need, so it becomes
-   a WRAPPING row above the panel. Wrapping, not scrolling — every tab stays
-   visible, which was the whole reason for moving off the horizontal strip. */
 @media (max-width: 820px) {
   [data-tabs-ready].tabs-v { display: block; }
   [data-tabs-ready].tabs-v .tablist {
@@ -564,7 +793,7 @@ tbody tr:hover td { background: rgba(148,163,184,.03); }
     flex-wrap: wrap;
     gap: .2rem .35rem;
     border-right: 0;
-    border-bottom: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border);
     margin-bottom: 1.7rem;
     padding-right: 0;
   }
@@ -584,15 +813,15 @@ tbody tr:hover td { background: rgba(148,163,184,.03); }
 /* Supported technologies */
 .tech { margin: 0 0 1.4rem; }
 .tech h4 {
-  font-size: .74rem; letter-spacing: .11em; text-transform: uppercase;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .07em; text-transform: uppercase;
   color: var(--dim); margin-bottom: .55rem;
 }
 .tech .tags { margin-bottom: .9rem; }
 .tech .tags:last-child { margin-bottom: 0; }
-.tech .tag.on { color: var(--text); border-color: var(--border-strong); }
-.tech .tag.off { color: var(--dim); border-style: dashed; }
+.tech .tag.on { color: var(--text); border-color: var(--border-strong); background: var(--surface); }
+.tech .tag.off { color: var(--dim); border-style: dashed; background: transparent; }
 .tech .group-label {
-  display: block; font-size: .8rem; color: var(--muted);
+  display: block; font-size: .82rem; color: var(--muted);
   margin: 0 0 .35rem;
 }
 
@@ -601,35 +830,36 @@ tbody tr:hover td { background: rgba(148,163,184,.03); }
 .product-licence > header { margin-bottom: 1rem; }
 .product-licence h3 {
   display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
-  margin-bottom: .2rem; font-size: 1.3rem;
+  margin-bottom: .2rem; font-size: 1.45rem;
 }
 .product-licence h3::before {
   content: ""; width: 10px; height: 10px; border-radius: 3px;
   background: var(--tone, var(--accent)); flex: none;
 }
 .product-licence .counted {
-  margin: 0; font-size: .9rem; color: var(--dim);
+  margin: 0; font-size: .92rem; color: var(--dim);
 }
-.product-licence .after { margin: .9rem 0 0; font-size: .92rem; color: var(--muted); }
+.product-licence .after { margin: .9rem 0 0; font-size: .94rem; color: var(--muted); }
 
 /* ---------------------------------------------------------------- notes */
 
 .note {
   border: 1px solid var(--border-soft); border-left: 3px solid var(--tone, var(--accent));
   background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0;
-  padding: 1.15rem 1.35rem; margin-block: 1.7rem;
+  padding: 1.2rem 1.4rem; margin-block: 1.7rem;
 }
-.note h2, .note h3, .note h4 { margin-bottom: .4rem; font-size: 1rem; font-weight: 640; letter-spacing: -.01em; }
+/* Callout headings are styled by container, not by level, so the level can follow the document. */
+.note h2, .note h3, .note h4 { margin-bottom: .4rem; font-size: 1.05rem; letter-spacing: -.01em; }
 .note p:last-child, .note ul:last-child { margin-bottom: 0; }
 .note p, .note li { color: var(--muted); }
-.note.scope { --tone: var(--warn); }
-.note.honest { --tone: var(--dim); }
+.note.scope { --tone: var(--text); }
+.note.honest { --tone: var(--dim); border-left-style: dashed; }
 .note.plain { --tone: var(--border-strong); }
 
 .checklist { list-style: none; padding: 0; }
 .checklist li { position: relative; padding-left: 1.55rem; color: var(--muted); }
 .checklist li::before {
-  content: ""; position: absolute; left: 0; top: .6em;
+  content: ""; position: absolute; left: 0; top: .62em;
   width: 7px; height: 7px; border-radius: 2px; background: var(--tone, var(--accent));
 }
 .checklist li strong { color: var(--text); }
@@ -639,104 +869,134 @@ tbody tr:hover td { background: rgba(148,163,184,.03); }
 
 .tags { display: flex; flex-wrap: wrap; gap: .45rem; margin: 0 0 1.2rem; padding: 0; list-style: none; }
 .tag {
-  display: inline-block; margin: 0; font-size: .77rem; font-weight: 540;
+  display: inline-block; margin: 0; font-size: .8rem; font-weight: 600;
   color: var(--muted); background: var(--surface-2);
-  border: 1px solid var(--border-soft); border-radius: 100px; padding: .22rem .7rem;
+  border: 1px solid var(--border-soft); border-radius: 100px; padding: .24rem .75rem;
 }
 
+/* Availability, in three shapes rather than three traffic-light colours: a filled purple chip for
+   something you can buy, an outlined chip for built-but-not-released, a dashed slate chip for still
+   in development. Shape carries the meaning, so it survives greyscale and colour-blindness. */
 .status {
   display: inline-flex; align-items: center; gap: .4rem;
-  font-size: .7rem; font-weight: 660; letter-spacing: .09em; text-transform: uppercase;
-  border-radius: 100px; padding: .18rem .6rem;
-  border: 1px solid var(--border); color: var(--muted); white-space: nowrap;
+  font-family: var(--mono); font-size: .68rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  border-radius: 100px; padding: .22rem .65rem;
+  border: 1.5px solid var(--border); color: var(--muted); white-space: nowrap;
 }
-.status.built { color: var(--ok);   border-color: rgba(74,222,128,.35);  background: rgba(74,222,128,.07); }
-.status.early { color: var(--warn); border-color: rgba(251,191,36,.35);  background: rgba(251,191,36,.07); }
-.status.soon  { color: var(--muted); border-color: var(--border); }
+.status.built { background: var(--brand); border-color: var(--brand); color: #fff; }
+.status.early { background: transparent; border-color: var(--accent); color: var(--accent); }
+.status.soon  { background: transparent; border-style: dashed; border-color: var(--dim); color: var(--dim); }
+/* On navy the filled chip inverts, so it stays the loudest of the three. */
+.on-navy .status.built, .hero .status.built, .phero .status.built, .site-header .status.built,
+.site-footer .status.built, .navy-panel .status.built, .bento.lead > .pcard:first-child .status.built {
+  background: #FFFFFF; border-color: #FFFFFF; color: #151C4F;
+}
 
 /* ---------------------------------------------------------------- product hero */
 
-.phero { position: relative; overflow: hidden; border-bottom: 1px solid var(--border-soft); padding-block: clamp(2.8rem, 6vw, 4.6rem); }
-.phero::before {
-  content: ""; position: absolute; inset: -60% -20% auto -20%; height: 470px;
-  background: radial-gradient(48% 58% at 28% 50%, color-mix(in srgb, var(--tone, var(--accent)) 14%, transparent), transparent 70%);
-  pointer-events: none;
-}
-.phero > .wrap { position: relative; }
+.phero { padding-block: clamp(2.8rem, 6vw, 4.8rem); }
 .phero .eyebrow { color: var(--tone, var(--accent)); }
-.phero h1 { max-width: 21ch; }
-.phero .oneline { border-left-color: var(--tone, var(--accent)); }
+.phero h1 { max-width: 20ch; font-size: clamp(2.2rem, 1.4rem + 3vw, 3.9rem); }
+.phero .lede { max-width: 62ch; }
 .phero .oneline strong { color: var(--tone, var(--accent)); }
+.phero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: center; }
+@media (max-width: 980px) { .phero-grid { grid-template-columns: 1fr; gap: 2.2rem; } }
 
-.breadcrumb { font-size: .85rem; color: var(--dim); margin-bottom: 1.1rem; }
-.breadcrumb a { color: var(--muted); }
+.breadcrumb { font-family: var(--mono); font-size: .84rem; color: var(--dim); margin-bottom: 1.1rem; }
+.breadcrumb a { color: var(--accent); }
 .breadcrumb span { padding-inline: .45rem; }
 
 .split { display: grid; grid-template-columns: 1.55fr .85fr; gap: 3rem; align-items: start; }
 @media (max-width: 940px) { .split { grid-template-columns: 1fr; gap: 2rem; } }
 
-.aside { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 1.3rem; position: sticky; top: calc(var(--header-h) + 1.4rem); }
+.aside { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 1.5rem; position: sticky; top: calc(var(--header-h) + 1.4rem); }
 @media (max-width: 940px) { .aside { position: static; } }
-.aside h3 { font-size: .74rem; letter-spacing: .11em; text-transform: uppercase; color: var(--dim); margin-bottom: .6rem; font-weight: 700; }
+.aside h3 { font-family: var(--mono); font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; color: var(--dim); margin-bottom: .6rem; font-weight: 600; }
 .aside h3:not(:first-child) { margin-top: 1.35rem; }
 .aside ul { list-style: none; padding: 0; margin: 0; }
-.aside li { font-size: .91rem; color: var(--muted); margin-bottom: .4rem; }
+.aside li { font-size: .93rem; color: var(--muted); margin-bottom: .4rem; }
 .aside li:last-child { margin-bottom: 0; }
 
 /* ---------------------------------------------------------------- licensing */
 
-.flavours { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1.15rem; align-items: stretch; }
+.flavours { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; align-items: stretch; }
 @media (max-width: 900px) { .flavours { grid-template-columns: 1fr; } }
 
 .flavour {
   display: flex; flex-direction: column; position: relative;
   background: var(--surface); border: 1px solid var(--border-soft);
-  border-radius: var(--radius); padding: 1.5rem 1.45rem;
+  border-radius: var(--radius-lg); padding: 1.8rem 1.75rem;
 }
-.flavour.featured { border-color: var(--brand-dark); box-shadow: 0 0 0 1px rgba(107,77,226,.30), var(--el-md); }
+.flavour.featured { border: 2px solid var(--brand); }
 .flavour .tier {
-  font-family: var(--mono); font-size: .72rem; letter-spacing: .12em;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .07em;
   text-transform: uppercase; color: var(--dim); margin-bottom: .55rem;
 }
-.flavour h3 { font-size: 1.22rem; margin-bottom: .3rem; }
-.flavour .verb { color: var(--accent); font-size: .93rem; font-weight: 560; margin-bottom: 1rem; }
-.flavour .price { font-size: 1.9rem; font-weight: 660; letter-spacing: -.03em; margin-bottom: .1rem; }
-.flavour .price small { font-size: .82rem; font-weight: 500; color: var(--muted); letter-spacing: 0; }
-.flavour .price-note { font-size: .82rem; color: var(--dim); margin-bottom: 1.15rem; }
+.flavour h3 { font-size: 1.45rem; margin-bottom: .3rem; }
+.flavour .verb { color: var(--accent); font-size: .95rem; font-weight: 700; margin-bottom: 1rem; }
+.flavour .price { font-family: var(--display); font-size: 2.6rem; font-weight: 700; letter-spacing: -.04em; margin-bottom: .1rem; line-height: 1.1; }
+.flavour .price small { font-family: var(--font); font-size: .9rem; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.flavour .price-note { font-size: .85rem; color: var(--dim); margin-bottom: 1.15rem; }
 .flavour ul { flex: 1; }
 .flavour .badge-top {
-  position: absolute; top: -.7rem; right: 1.2rem;
-  background: var(--brand); color: #fff; font-size: .68rem; font-weight: 700;
-  letter-spacing: .1em; text-transform: uppercase; padding: .2rem .6rem; border-radius: 100px;
+  position: absolute; top: -.75rem; right: 1.2rem;
+  background: var(--brand); color: #fff; font-family: var(--mono); font-size: .66rem; font-weight: 600;
+  letter-spacing: .07em; text-transform: uppercase; padding: .25rem .65rem; border-radius: 100px;
 }
+.flavour.on-navy { background: var(--bg); border-color: var(--bg); }
+
+/* Generated price blocks (tools/build_prices.py). The figures come from tools/prices.py; verify.py
+   checks every one of them against pricing.html, so a product page can never quote a number the
+   pricing page does not. */
+.price-cell { min-width: 15rem; }
+.price-cell .unit { display: block; font-family: var(--mono); font-size: .74rem; color: var(--dim); margin-bottom: .35rem; }
+.price-cell dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: .2rem 1rem; }
+.price-cell dt { color: var(--muted); font-weight: 500; }
+.price-cell dd { margin: 0; font-family: var(--display); font-weight: 700; color: var(--text); text-align: right; white-space: nowrap; }
+.price-cell .note-line { display: block; margin-top: .45rem; font-size: .84rem; color: var(--dim); }
+.volume {
+  margin-top: 1rem; background: var(--surface); border-radius: 16px; padding: 1.1rem 1.4rem;
+  display: flex; flex-wrap: wrap; gap: .6rem 2.2rem; align-items: center; font-size: .97rem; color: var(--muted);
+}
+.volume b { font-family: var(--display); color: var(--text); }
+.volume .label { font-weight: 700; color: var(--text); }
+.volume a { margin-left: auto; font-weight: 700; }
 
 
 /* ---------------------------------------------------------------- CTA */
 
-.cta {
-  text-align: center;
-  background: radial-gradient(62% 130% at 50% 0%, rgba(107,77,226,.16), transparent 68%), var(--bg-deep);
-  border-block: 1px solid var(--border-soft);
+/* The closing call-to-action is a navy panel inset from the page edge, not a full-bleed band. */
+.cta { text-align: center; }
+.cta > .wrap {
+  width: calc(100% - 2 * var(--gut)); max-width: calc(var(--maxw) - 2 * var(--gut));
+  background: var(--bg); border-radius: var(--radius-xl);
+  padding: clamp(2.2rem, 6vw, 5rem) clamp(1.4rem, 5vw, 4rem);
 }
 .cta h2 { max-width: 22ch; margin-inline: auto; }
 .cta p { max-width: 58ch; margin-inline: auto; color: var(--muted); }
 .cta .btn-row { justify-content: center; }
+.cta .fine { font-family: var(--mono); font-size: .78rem; color: var(--dim); margin: 2.4rem auto 0; }
 
 /* ---------------------------------------------------------------- footer */
 
-.site-footer { border-top: 1px solid var(--border-soft); background: var(--bg); padding-block: 3rem 2rem; font-size: .92rem; }
+.site-footer { background: var(--bg-deep); padding-block: 3.4rem 2rem; font-size: .93rem; }
 .footer-grid { display: grid; grid-template-columns: 1.6fr repeat(3, minmax(0,1fr)); gap: 2rem; margin-bottom: 2.4rem; }
 @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
 
-.site-footer h4 { font-size: .74rem; letter-spacing: .11em; text-transform: uppercase; color: var(--dim); margin-bottom: .8rem; }
+/* Column headings are h2 in the markup (heading order after the page's last section); sized here. */
+.site-footer h2, .site-footer h4 {
+  font-family: var(--mono); font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--dim); margin: 0 0 .8rem;
+}
+.site-footer h2 ~ h2 { margin-top: 1.6rem; }
 .site-footer ul { list-style: none; padding: 0; margin: 0; }
 .site-footer li { margin-bottom: .45rem; }
 .site-footer a { color: var(--muted); text-decoration: none; }
 .site-footer a:hover { color: var(--text); text-decoration: none; }
 .site-footer .brand { margin-bottom: .8rem; }
 .site-footer .brand-word { width: 132px; }
-.site-footer .blurb { color: var(--dim); max-width: 36ch; margin: 0; font-size: .9rem; }
+.site-footer .blurb { color: var(--dim); max-width: 36ch; margin: 0; font-size: .92rem; }
 
 .footer-bottom {
   border-top: 1px solid var(--border-soft); padding-top: 1.4rem;
@@ -745,10 +1005,9 @@ tbody tr:hover td { background: rgba(148,163,184,.03); }
 }
 
 /* ------------------------------------------------------ links to JeffOps */
-/* SeQontrol is a JeffOps product, so every link back to the parent brand wears
-   the JeffOps cyan instead of the SeQontrol purple. Matched on the href, so a
-   new mention picks it up with no extra markup. The footer selector is here to
-   out-specify `.site-footer a`, which would otherwise mute them to --muted. */
+/* Every link back to the parent brand wears the JeffOps cyan instead of the SeQontrol purple —
+   matched on the href, so a new mention needs no extra markup. --jeffops is darkened on light
+   grounds and bright inside navy chrome (see the token sets). */
 a[href^="https://jeffops.com"],
 .site-footer a[href^="https://jeffops.com"] {
   color: var(--jeffops);
@@ -762,71 +1021,60 @@ a[href^="https://jeffops.com"]:hover,
 /* ---------------------------------------------------------------- forms */
 
 .field { margin-bottom: 1.1rem; }
-.field label { display: block; font-size: .87rem; font-weight: 570; margin-bottom: .35rem; color: var(--text); }
+.field label { display: block; font-size: .9rem; font-weight: 700; margin-bottom: .35rem; color: var(--text); }
 .field input, .field select, .field textarea {
-  width: 100%; font: inherit; font-size: .94rem; color: var(--text);
-  background: var(--bg-deep); border: 1px solid var(--border-control);
-  border-radius: var(--radius-sm); padding: .6rem .75rem;
+  width: 100%; font: inherit; font-size: 1rem; color: var(--text);
+  background: var(--surface); border: 1.5px solid var(--border-control);
+  border-radius: 10px; padding: .7rem .85rem; min-height: 46px;
 }
 .field textarea { min-height: 140px; resize: vertical; }
-/* No outline:none here. It used to sit alongside a 28%-opacity shadow that composited to 1.28:1
-   against the field background - a focus indicator you could not see, on the only form the site
-   has. Without it the global :focus-visible rule applies: 2px of --focus at 7.20:1. */
+/* No outline:none — the global :focus-visible ring is the focus indicator. */
 .field input:focus, .field select:focus, .field textarea:focus {
   border-color: var(--focus);
 }
-.field .hint { font-size: .82rem; color: var(--dim); margin: .3rem 0 0; }
-/* Browser default placeholder grey fails contrast on this background. */
+.field .hint { font-size: .84rem; color: var(--dim); margin: .3rem 0 0; }
 .field ::placeholder { color: var(--dim); opacity: 1; }
 
-/* ------------------------------------------------- coverage map (homepage)
-   Not a screenshot and not pretending to be one: a map of the surfaces that
-   actually get crawled, so the page has something to look at and the claim
-   is checkable rather than decorative. Real screenshots replace this. */
+/* ------------------------------------------------- coverage map
+   A map of the surfaces that actually get crawled: the claim is checkable, not decorative. */
 .coverage {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
-  gap: .55rem;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: .6rem;
   margin: 1.6rem 0 .8rem;
 }
 .plane {
   background: var(--surface);
   border: 1px solid var(--border-soft);
-  border-left: 3px solid var(--tone, var(--accent));
+  border-top: 3px solid var(--tone, var(--accent));
   border-radius: var(--radius-sm);
-  padding: .7rem .8rem;
+  padding: .8rem .9rem;
 }
 .plane b {
-  display: block; font-size: .92rem; font-weight: 620; color: var(--text);
+  display: block; font-size: .95rem; font-weight: 700; color: var(--text);
   margin-bottom: .12rem;
 }
-.plane span { font-size: .8rem; color: var(--muted); }
-.plane.off { border-left-style: dashed; opacity: .72; }
-.coverage-note { font-size: .86rem; color: var(--dim); margin: 0; }
+.plane span { font-size: .82rem; color: var(--muted); }
+.plane.off { border-top-style: dashed; background: transparent; }
+.coverage-note { font-size: .88rem; color: var(--dim); margin: 0; }
 
 /* ------------------------------------------------------- products submenu
-   Opens on hover and on :focus-within, so it works for a mouse and for a
-   keyboard without any JavaScript. The parent link still navigates to the
-   products index — the submenu is an addition, not a replacement, which is
-   why it is not a button.
-
-   On narrow screens the nav is already a stacked list, so the submenu simply
-   renders inline and indented: no hover to depend on, nothing hidden behind
-   an interaction a touchscreen cannot perform. */
+   Opens on hover and on :focus-within, so it works for mouse and keyboard with no JavaScript. On
+   narrow screens it renders inline inside the stacked menu: nothing hidden behind a hover. */
 .has-sub { position: relative; }
 
 .subnav {
   list-style: none;
   margin: 0;
-  padding: .4rem;
+  padding: .45rem;
   position: absolute;
   top: 100%;
   left: -.6rem;
-  min-width: 15rem;
+  min-width: 16rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--el-md);
+  box-shadow: 0 24px 48px -20px #0B0F17;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-.35rem);
@@ -839,8 +1087,7 @@ a[href^="https://jeffops.com"]:hover,
   visibility: visible;
   transform: translateY(0);
 }
-/* a forgiving gap between the trigger and the panel, so the pointer can cross
-   the border without the menu closing under it */
+/* a forgiving gap so the pointer can cross to the panel without it closing */
 .has-sub::after {
   content: "";
   position: absolute;
@@ -851,17 +1098,17 @@ a[href^="https://jeffops.com"]:hover,
   display: flex;
   align-items: center;
   gap: .55rem;
-  padding: .45rem .6rem;
+  padding: .5rem .65rem;
   border-radius: var(--radius-sm);
   border-bottom: 0;
-  font-size: .92rem;
+  font-size: .94rem;
   color: var(--muted);
   white-space: nowrap;
 }
 .subnav a:hover { background: var(--surface-2); color: var(--text); }
 .subnav .dot { width: 7px; height: 7px; border-radius: 2px; background: var(--tone, var(--accent)); flex: none; }
 .subnav .soon-tag {
-  margin-left: auto; font-size: .68rem; letter-spacing: .07em; text-transform: uppercase;
+  margin-left: auto; font-family: var(--mono); font-size: .66rem; letter-spacing: .05em; text-transform: uppercase;
   color: var(--dim);
 }
 
@@ -872,23 +1119,19 @@ a[href^="https://jeffops.com"]:hover,
     padding: 0 0 .4rem .9rem; min-width: 0;
   }
   .has-sub::after { display: none; }
-  .subnav a { padding: .5rem 0; border-bottom: 1px solid var(--border-soft); }
+  .subnav a { padding: .55rem 0; border-bottom: 1px solid var(--border-soft); }
   .subnav a:hover { background: none; }
 }
 
 /* ----------------------------------------------------------- screenshots
-   Real product UI, on a dark ground that already matches the site, so the
-   frame stays out of the way: a hairline border and a soft lift, nothing
-   skeuomorphic. Captions carry the claim the image is evidence for. */
+   Real product UI. The captures are dark, so on the light page they sit in a white frame with a
+   soft navy-tinted lift; captions carry the claim the image is evidence for. */
 .shot {
   margin: 0;
-  /* CAPPED AT THE OLD CONTENT WIDTH, AND NOT AS A STYLE CHOICE. `.shot img` is width:100%, so a shot
-     sitting directly in a .wrap renders at whatever --maxw is. The source images top out at 1212px
-     intrinsic, so widening --maxw would have upscaled 24 of them -- softening product UI full of
-     small type, which is the one thing on this site that has to survive being looked at closely.
-     Capped and centred, every screenshot renders at or below its natural size exactly as before;
-     text, tables and grids get the extra width. */
+  /* Capped at 1140px so a capture is never upscaled past its own pixels (the sources top out at
+     1212px); text, tables and grids take the extra width instead. */
   max-width: 1140px;
+  width: 100%;
   margin-inline: auto;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -898,29 +1141,22 @@ a[href^="https://jeffops.com"]:hover,
 }
 .shot img { width: 100%; height: auto; display: block; }
 .shot figcaption {
-  font-size: .86rem;
+  font-size: .9rem;
   color: var(--muted);
-  padding: .7rem .9rem;
+  padding: .85rem 1rem;
   border-top: 1px solid var(--border-soft);
-  background: var(--bg-deep);
+  background: var(--surface);
 }
-.shot figcaption b { color: var(--text); font-weight: 620; }
+.shot figcaption b { color: var(--text); font-weight: 700; }
 
-.hero .shot { box-shadow: var(--el-lg); }
+.hero .shot, .phero .shot { box-shadow: 0 30px 60px -24px #0B0F17; border-color: var(--border); }
 
-/* Annotated shots: numbered pins over the image, the same numbers down the
-   caption. The pins are drawn in CSS rather than burnt into the PNG so they
-   stay sharp at any width and the words stay selectable, translatable and
-   readable by a screen reader. Coordinates are percentages of the frame, so
-   they hold as the image scales. The pins are decoration — every one of them
-   repeats a numbered line below — so they are hidden from assistive tech. */
+/* Annotated shots: numbered pins over the image, the same numbers down the caption. Pins are
+   decoration (every one repeats a numbered line), so they are hidden from assistive tech. */
 .shot-frame { position: relative; }
 .shot-frame img { display: block; width: 100%; }
 
-/* A 1200px-wide capture squeezed into a phone is back to being texture. Below
-   the width where it can be read, the shot holds its own size and pans instead
-   — the same bargain the wide tables make, focusable so it works from the
-   keyboard as well as the thumb. --w is the capture's own width. */
+/* Below the width where a capture can be read, it holds its own size and pans instead. */
 .shot-pan { overflow-x: auto; }
 .shot-pan .shot-frame { width: 100%; }
 @media (max-width: 60rem) {
@@ -930,13 +1166,12 @@ a[href^="https://jeffops.com"]:hover,
   position: absolute;
   left: var(--x); top: var(--y);
   transform: translate(-50%, -50%);
-  width: 1.5rem; height: 1.5rem;
+  width: 1.55rem; height: 1.55rem;
   display: grid; place-items: center;
   border-radius: 50%;
-  background: var(--brand); color: #fff;
+  background: #6C4FDF; color: #fff;
   font-size: .78rem; font-weight: 700; font-variant-numeric: tabular-nums;
-  /* the outer ring lifts the pin off whatever product UI sits under it */
-  box-shadow: 0 0 0 2px var(--bg-deep), 0 2px 6px rgba(0, 0, 0, .55);
+  box-shadow: 0 0 0 2px #FFFFFF, 0 2px 6px rgba(0, 0, 0, .45);
 }
 .notes {
   list-style: none;
@@ -946,35 +1181,30 @@ a[href^="https://jeffops.com"]:hover,
   display: grid;
   gap: .5rem;
 }
-/* The marker is positioned out of flow rather than given its own grid column:
-   an <li> laid out as a grid splits "<b>lead.</b> trailing text" into two items
-   and squeezes the sentence into a 1.5rem column. */
 .notes li {
   counter-increment: pin;
   position: relative;
   margin: 0;
-  padding-left: 2.05rem;
+  padding-left: 2.1rem;
 }
 .notes li::before {
   content: counter(pin);
   position: absolute;
   left: 0; top: .02rem;
-  width: 1.5rem; height: 1.5rem;
+  width: 1.55rem; height: 1.55rem;
   display: grid; place-items: center;
   border-radius: 50%;
-  background: var(--brand); color: #fff;
+  background: #6C4FDF; color: #fff;
   font-size: .78rem; font-weight: 700; font-variant-numeric: tabular-nums;
 }
-.notes b { color: var(--text); font-weight: 620; }
+.notes b { color: var(--text); font-weight: 700; }
 
 @media (max-width: 34rem) {
   .pin { width: 1.25rem; height: 1.25rem; font-size: .68rem; }
 }
 
-/* One screenshot given the room to carry a section on its own: the image on
-   one side, what it proves and what to do next on the other. A tall portrait
-   shot stretched edge to edge would only be upscaled, so the image column is
-   capped and the argument takes the space instead. */
+/* One screenshot carrying a section: image one side, argument the other, split only when there is
+   room for the image at full size. */
 .shot-feature {
   display: grid;
   gap: 1.5rem;
@@ -982,49 +1212,39 @@ a[href^="https://jeffops.com"]:hover,
   align-items: start;
   margin: 1.6rem 0 0;
 }
-/* The image column is sized to the capture's own width. Shrinking a screenshot
-   to fit a tidy column is how it stopped being readable in the first place, so
-   the split only happens once there is room for the image at full size. */
 @media (min-width: 72rem) {
   .shot-feature { grid-template-columns: minmax(0, 44rem) minmax(0, 1fr); gap: 2.4rem; }
 }
-/* h4 as well as h3: both screenshot captions on the site are one level deeper than they were,
-   because the section heading above them was promoted. Sized here, not by level. */
-.shot-feature h3, .shot-feature h4 { margin: 0 0 .5rem; font-size: 1.24rem; }
+.shot-feature h3, .shot-feature h4 { margin: 0 0 .5rem; font-size: 1.35rem; }
 .shot-feature > div > p { color: var(--muted); }
 .shot-feature .notes { margin-top: 1.1rem; }
 .shot-feature .cta-under { margin: 1.4rem 0 0; }
 
-/* Cap a shot at the width it was captured at. Stretching a capture past its own
-   pixels blurs exactly the small type the crop existed to rescue. */
 .shot-cap { max-width: var(--w); margin-inline: auto; }
 
-/* side-by-side pair on wide screens, stacked below */
+/* The home page's door-1 panel: argument left, the real ShareCare screen right. */
+.door-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; align-items: center; }
+@media (max-width: 980px) { .door-panel { grid-template-columns: 1fr; gap: 2rem; } }
+.pressures { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1.6rem; }
+.pressures li { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; }
+.pressures .n { font-family: var(--display); font-size: 2.4rem; font-weight: 700; letter-spacing: -.04em; line-height: 1; color: var(--brand); }
+.pressures h3 { margin: 0 0 .35rem; font-size: 1.3rem; }
+.pressures p { margin: 0; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: .6rem; list-style: none; padding: 0; margin: 1.8rem 0 0; }
+.chips li { margin: 0; background: var(--surface); border-radius: 12px; padding: .75rem 1rem; font-weight: 700; font-size: .97rem; }
+.panel-card { background: var(--surface); border-radius: var(--radius-lg); padding: clamp(1.4rem, 3vw, 2.2rem); box-shadow: var(--el-md); }
+.panel-card h3 { font-size: 1.35rem; }
+.panel-card .checklist { margin-bottom: 0; }
 
-/* Availability headings in the products grid. The site sells eight products and four of them cannot be
-   bought yet, so the grid is grouped by what a visitor can actually do rather than by the narrative the
-   suite was originally written around. */
-.avail-head {
-  font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
-  color: var(--muted); margin: 0 0 1.1rem; font-weight: 600;
-}
-
-/* One line per tier inside a pricing panel. The figures and the capabilities live on two different
-   pages by design, and the panels used to send the reader to licensing.html for every question —
-   these answer the common one in place so only the buyer who wants the full matrix leaves. */
+/* One line per tier inside a pricing panel. */
 .tier-lines { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .55rem; }
 .tier-lines li {
-  margin: 0; font-size: .93rem; color: var(--muted);
+  margin: 0; font-size: .95rem; color: var(--muted);
   padding-left: .9rem; border-left: 2px solid var(--tone, var(--border));
 }
-.tier-lines b { color: var(--text); font-weight: 620; }
+.tier-lines b { color: var(--text); font-weight: 700; }
 
-/* Product tone as a class rather than an inline custom property. It was written inline 299
-   times across the site — the same eight values, repeated per element, in the markup. As a
-   class the tone is set in one place per product and the pages stop carrying it.
-
-   The annotation pins keep their inline --x / --y: those are genuine per-element data and a
-   class for each would be worse than the attribute it replaced. */
+/* Product tone as a class, set once per product rather than written inline on every element. */
 .tone-sharecare { --tone: var(--t-sharecare); }
 .tone-security { --tone: var(--t-security); }
 .tone-condaccess { --tone: var(--t-condaccess); }
@@ -1037,19 +1257,13 @@ a[href^="https://jeffops.com"]:hover,
 
 
 /* --------------------------------------------------- unreleased-state note
-
-   Sits directly under the lede on the four product pages you cannot buy yet, and is written by
-   build_nav.py from the PRODUCTS list. It has to read as a warning rather than as a feature box:
-   a page per unreleased product is a better read than the shared roadmap page it replaced, but it
-   also looks exactly like a page for something you can order, which is the risk this closes.
-
-   Tone-coloured left edge rather than a filled panel — loud enough to stop the eye, quiet enough
-   that it does not read as an advertisement for the thing it is warning you about. */
+   Written by build_nav.py from PRODUCTS on the four product pages you cannot buy yet. It sits in
+   the navy product hero, so it reads in navy tokens; a dashed edge marks it as a warning rather
+   than a feature box. */
 .state-note {
   margin: 1.4rem 0 0;
-  padding: .95rem 1.15rem;
-  border: 1px solid var(--border-soft);
-  border-left: 3px solid var(--tone, var(--accent));
+  padding: 1rem 1.2rem;
+  border: 1.5px dashed var(--border-strong);
   border-radius: var(--radius-sm);
   background: var(--surface);
   max-width: 62ch;
@@ -1057,47 +1271,25 @@ a[href^="https://jeffops.com"]:hover,
 .state-note:empty { display: none; }
 .state-note .state-head {
   display: flex; flex-wrap: wrap; align-items: center; gap: .55rem;
-  margin: 0 0 .45rem; font-weight: 620; color: var(--text);
+  margin: 0 0 .45rem; font-weight: 700; color: var(--text);
 }
-.state-note p { color: var(--muted); font-size: .93rem; }
+.state-note p { color: var(--muted); font-size: .95rem; }
 
 /* ----------------------------------------------------------------- print */
 
-/* site.js collapses the pricing page into tabs by setting [hidden] on every panel but one, and
-   the UA sheet's [hidden]{display:none} holds through printing - so Save as PDF produced a
-   pricing document containing one product out of seven, with nothing to indicate the other six
-   existed. Pricing is the page a buyer prints and circulates for sign-off, which makes a silently
-   truncated PDF the worst possible failure on it.
-
-   The tab strip is navigation and means nothing on paper, so it goes. Everything here is scoped to
-   [data-tabs-ready], which site.js sets, so with JavaScript off the markup is already expanded and
-   none of this has anything to do.
-
-   Un-hiding the panels is not sufficient on its own, because three other rules assume exactly one
-   panel is visible at a time and all three had to be undone:
-
-     .tabs-v places every panel at grid-column 2 / grid-row 1 — one cell, seven panels. The sheet's
-     own comment says they never fight for space because only one lacks [hidden]. Un-hide them and
-     they superimpose. A narrow-screen breakpoint at 820px happened to save portrait output, but
-     landscape Letter/A4, A3, Tabloid or a reduced print Scale all exceed it and printed six
-     products on top of a seventh.
-
-     margin-bottom: 0 and the suppressed h3::before tone dot exist for the same single-panel reason.
-     Without them restored the seven products ran together with a measured 0px join and no colour
-     marker — the tab strip having been the only other thing distinguishing them.
-
-   Colours are set because the sheet is dark-only and browsers print colour but not backgrounds:
-   #e5e7eb text on the printer's white is 1.24:1. That was true before this block existed, but a
-   printable pricing PDF is only a deliverable now that the panels actually print. */
+/* site.js collapses the pricing page into tabs by hiding every panel but one, and [hidden] holds
+   through printing — so Save as PDF would carry one product of seven. Pricing is the page a buyer
+   prints for sign-off, so every panel is restored on paper and the single-panel layout undone. */
 @media print {
   [data-tabs-ready] [role="tabpanel"][hidden] { display: block !important; }
   [data-tabs-ready] .tablist { display: none; }
   [data-tabs-ready].tabs-v { display: block; }
   [data-tabs-ready] .product-licence { margin-bottom: 3.2rem; break-inside: avoid; }
   [data-tabs-ready] .product-licence h3::before { display: inline-block; }
+  /* Both audience panels on paper, whichever door was chosen on screen. */
+  [data-doors-ready] [data-door-panel][hidden] { display: block !important; }
 
+  .site-header { position: static; }
   body { background: #fff; color: #111; }
   a { color: #111; }
-  .muted, .dim, .small, td, .note p, .note li { color: #333; }
-  h1, h2, h3, h4, th { color: #000; }
 }
