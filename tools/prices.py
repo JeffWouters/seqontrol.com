@@ -16,7 +16,7 @@ pricing.html itself is NOT generated from this module yet - its tables, worked b
 rates are prose-heavy HTML inside build_legal.py. Moving them onto this data is the natural next
 step; until then the check above is what keeps the two honest.
 
-Figures are strings exactly as pricing.html prints them ("$6.50", "$1,350"), so the cross-check is a
+Figures are strings exactly as pricing.html prints them ("€6.50", "€1,350"), in euros excluding VAT, so the cross-check is a
 plain substring test with no number formatting to disagree about.
 """
 from __future__ import annotations
@@ -40,33 +40,33 @@ PRODUCT_PAGES = {
 SUMMARY = {
     "sharecare": {
         "unit": "per Microsoft 365 user / month",
-        "rows": [("Visibility", "$2"), ("Governance", "$4"), ("Automation", "$6.50")],
+        "rows": [("Visibility", "€2"), ("Governance", "€4"), ("Automation", "€6.50")],
         "note": "No seat minimum, no platform floor. Volume bands from 100 users.",
     },
     "security": {
         "unit": "per user / month &middot; one tier",
-        "rows": [("With any ShareCare tier", "$1.50"), ("Standalone", "$3.50")],
-        "note": "$50 monthly minimum per tenant, greater-of.",
+        "rows": [("With any ShareCare tier", "€1.50"), ("Standalone", "€3.50")],
+        "note": "€50 monthly minimum per tenant, greater-of.",
     },
     "webscan": {
         "unit": "per monitored site / month",
-        "rows": [("Free, with every account", "$0"), ("Pro", "$20")],
+        "rows": [("Free, with every account", "€0"), ("Pro", "€20")],
         "note": "Pro keeps results and history, schedules scans and alerts.",
     },
     "mailtrust": {
         "unit": "per sending domain / month",
-        "rows": [("Visibility", "$15"), ("Governance", "$30"), ("Automation", "$40")],
-        "note": "Five parked domains included per sending domain; more at $3.",
+        "rows": [("Visibility", "€15"), ("Governance", "€30"), ("Automation", "€40")],
+        "note": "Five parked domains included per sending domain; more at €3.",
     },
     "condaccess": {
         "unit": "per user / month &middot; on release",
-        "rows": [("Visibility", "$0.60"), ("Governance", "$1.00"), ("Automation", "$1.50")],
-        "note": "$50 monthly minimum per tenant.",
+        "rows": [("Visibility", "€0.60"), ("Governance", "€1.00"), ("Automation", "€1.50")],
+        "note": "€50 monthly minimum per tenant.",
     },
     "compliance": {
         "unit": "per tenant / month &middot; on release",
-        "rows": [("1 framework", "$300"), ("3 frameworks", "$600"), ("Unlimited", "$900")],
-        "note": "Evidence band. Attested, with sign-off, from $450.",
+        "rows": [("1 framework", "€300"), ("3 frameworks", "€600"), ("Unlimited", "€900")],
+        "note": "Evidence band. Attested, with sign-off, from €450.",
     },
     "dredd": {
         "unit": "in development",
@@ -88,20 +88,20 @@ SUMMARY = {
 TIERS = {
     "sharecare": {
         "tiers": [
-            ("Step 1 &middot; See it", "Visibility", "$2", "/user/mo", [
+            ("Step 1 &middot; See it", "Visibility", "€2", "/user/mo", [
                 "Read-only inventory of sharing and permissions",
                 "Risk scoring and findings history",
                 "Fleet view",
                 "Daily scheduled scans",
             ]),
-            ("Step 2 &middot; Govern it", "Governance", "$4", "/user/mo", [
+            ("Step 2 &middot; Govern it", "Governance", "€4", "/user/mo", [
                 "Everything in Visibility",
                 "Oversharing and advanced detections",
                 "Policies, access reviews and approvals",
                 "Waivers and evidence packs",
                 "Six-hourly scans",
             ]),
-            ("Step 3 &middot; Act on it", "Automation", "$6.50", "/user/mo", [
+            ("Step 3 &middot; Act on it", "Automation", "€6.50", "/user/mo", [
                 "Everything in Governance",
                 "Hourly scans",
                 "OneDrive permission and sharing-link write-back, with undo",

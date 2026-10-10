@@ -323,7 +323,7 @@ CONTENT_RULES = [
     # are maintained. PRICE_PAGES below is the allowlist.
     # A figure spelled in words is still a figure: "under a hundred dollars a client" sat on for-msps.html
     # past this rule until 2026-10-10.
-    (r"\$\s?\d|\b(?:\d+|hundred|thousand) dollars\b", "a price outside the pages that carry pricing"),
+    (r"[$€]\s?\d|\b(?:\d+|hundred|thousand) (?:dollars|euros)\b", "a price outside the pages that carry pricing"),
     (r"\b\d+\s?%\s?(off|discount)", "a discount percentage outside the pages that carry pricing"),
     # A percentage off IS a price, and it was never exempted on the pricing
     # pages when they started carrying figures. The cost of that was invisible:
@@ -432,7 +432,7 @@ _descs: dict[str, str] = {}
 # quote different numbers. pricing.html is still hand-written HTML inside build_legal.py; until it is
 # rendered from tools/prices.py as well, this is the check that keeps them in step. It also fails on a
 # block that is still empty, which means build_prices.py was skipped.
-FIGURE_RE = re.compile(r"\$\s?\d[\d,]*(?:\.\d+)?|\b\d+\s?%")
+FIGURE_RE = re.compile(r"[$€]\s?\d[\d,]*(?:\.\d+)?|\b\d+\s?%")
 
 
 def check_prices() -> None:
