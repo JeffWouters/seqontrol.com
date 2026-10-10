@@ -101,15 +101,15 @@ def tech(groups):
 PRODUCTS = [
     dict(
         key="sharecare", name="ShareCare", tone="--t-sharecare", status=None,
-        counted="Counted per Microsoft 365 user &middot; no seat minimum &middot; $2 / $4 / $6.50 per user, per month",
+        counted="Counted per Microsoft 365 user &middot; no seat minimum &middot; €2 / €4 / €6.50 per user, per month",
         tech=[("Microsoft 365", [("SharePoint", 1), ("OneDrive", 1), ("Teams", 1),
                                  ("Entra ID app consents", 1), ("Exchange Online forwarding", 1),
                                  ("Power Platform", 1), ("Power BI", 1)]),
               ("Beyond Microsoft 365", [("Box", 1), ("Slack Connect", 1), ("Google Workspace — roadmap", 0)])],
         cols=LADDER,
         rows=["Price",
-              ("Per Microsoft 365 user, per month", ["$2", "$4", "$6.50"]),
-              ("At 100 users, per month", ["$200", "$400", "$650"]),
+              ("Per Microsoft 365 user, per month", ["€2", "€4", "€6.50"]),
+              ("At 100 users, per month", ["€200", "€400", "€650"]),
               "Cadence",
               ("On-demand scan, whenever you want one", [Y, Y, Y]),
               ("Scheduled scan cadence", ["Daily", "Every 6 hours", "Hourly"]),
@@ -142,15 +142,15 @@ PRODUCTS = [
     ),
     dict(
         key="securityportal", name="SecurityPortal", tone="--t-security", status=None,
-        counted="$1.50 per user with any ShareCare tier &middot; $3.50 standalone &middot; $50 monthly tenant minimum",
+        counted="€1.50 per user with any ShareCare tier &middot; €3.50 standalone &middot; €50 monthly tenant minimum",
         tech=[("Microsoft 365 and Entra", [("Conditional Access", 1), ("MFA enforcement", 1),
                                            ("Entra ID app permissions", 1), ("Sign-in risk signals", 1),
                                            ("Log Analytics (KQL checks)", 1)])],
         cols=ONE,
         rows=["Price",
-              ("Per user, per month — with any ShareCare tier", ["$1.50"]),
-              ("Per user, per month — standalone", ["$3.50"]),
-              ("Monthly minimum per tenant, greater-of", ["$50"]),
+              ("Per user, per month — with any ShareCare tier", ["€1.50"]),
+              ("Per user, per month — standalone", ["€3.50"]),
+              ("Monthly minimum per tenant, greater-of", ["€50"]),
               "Capability",
               ("On-demand scan, whenever you want one", [Y]),
               ("Scheduled scan cadence — daily", [Y]),
@@ -174,14 +174,14 @@ PRODUCTS = [
         # put Conditional Access back on three tiers, and the next generator run destroyed it — the exact
         # trap build_legal.py's own header warns about. It lives here now, so it survives a rebuild.
         key="condaccess", name="ConditionalAccessPortal", tone="--t-condaccess", status="Coming soon",
-        counted="Per user, per month &middot; $50 monthly tenant minimum &middot; not released yet",
+        counted="Per user, per month &middot; €50 monthly tenant minimum &middot; not released yet",
         tech=[("Microsoft 365 and Entra", [("Conditional Access policies", 1), ("Named locations", 1),
                                            ("Device filters", 1), ("Authentication strengths", 1)]),
               ("Policy as code", [("GitHub", 1), ("Azure DevOps", 1)])],
         cols=LADDER,
         rows=["Price",
-              ("Per user, per month", ["$0.60", "$1.00", "$1.50"]),
-              ("Monthly minimum per tenant, greater-of", ["$50", "$50", "$50"]),
+              ("Per user, per month", ["€0.60", "€1.00", "€1.50"]),
+              ("Monthly minimum per tenant, greater-of", ["€50", "€50", "€50"]),
               "Capability",
               ("Conditional Access policy inventory", [Y, Y, Y]),
               ("Access map &mdash; endpoints, policies, resources, allowed and blocked paths", [Y, Y, Y]),
@@ -195,7 +195,7 @@ PRODUCTS = [
     ),
     dict(
         key="webscan", name="WebScan", tone="--t-webscan", status=None,
-        counted="Free with every SeQontrol account &middot; Pro $20 per monitored site, per month",
+        counted="Free with every SeQontrol account &middot; Pro €20 per monitored site, per month",
         tech=[("Discovery", [("Subdomain and asset discovery", 1),
                              ("Certificate transparency monitoring", 1)]),
               ("Transport", [("TLS versions and cipher suites", 1), ("Certificate chain and expiry", 1),
@@ -209,8 +209,8 @@ PRODUCTS = [
                                               ("Server and technology disclosure", 1)])],
         cols=KEPT,
         rows=["Price",
-              ("Per monitored site, per month", ["$0", "$20"]),
-              ("Five sites", ["$0", "$100"]),
+              ("Per monitored site, per month", ["€0", "€20"]),
+              ("Five sites", ["€0", "€100"]),
               "The scan itself",
               ("On-demand scan, whenever you want one", [Y, Y]),
               ("The complete check set", [Y, Y]),
@@ -246,8 +246,8 @@ PRODUCTS = [
         after=("Counted per site rather than per domain, because a site is what gets scanned: one domain can "
                "front several, and each is its own configuration to grade. Nothing caps how many sites you "
                "may add; the count is trued up, never a hard stop.<br><br>"
-               "<strong>Pro is $20, against paid comparables that start around three times that.</strong> "
-               "They run from roughly $60 per asset per month to several hundred, and "
+               "<strong>Pro is €20, against paid comparables that start around three times that.</strong> "
+               "They run from there to several hundred per asset per month, and "
                "they include active vulnerability testing that WebScan does not do. At the other end the free "
                "graders charge nothing and retain nothing. The gap between those two is where this sits, and "
                "it was empty.<br><br>"
@@ -255,7 +255,7 @@ PRODUCTS = [
     ),
     dict(
         key="complianceportal", name="CompliancePortal", tone="--t-compliance", status=None,
-        counted="Counted per tenant &middot; $300 / $600 / $900 by frameworks &middot; Attested adds half again",
+        counted="Counted per tenant &middot; €300 / €600 / €900 by frameworks &middot; Attested adds half again",
         tech=[("Microsoft", [("Entra ID", 1), ("Exchange Online", 1), ("SharePoint", 1), ("Teams", 1),
                              ("Intune", 1), ("Azure", 1), ("Purview", 1), ("Power Platform", 1), ("Power BI", 1)]),
               ("Other clouds", [("Google Cloud", 1), ("Amazon Web Services", 1)]),
@@ -272,8 +272,8 @@ PRODUCTS = [
                   ("A first-party set", 1)])],
         cols=BANDS,
         rows=["Price",
-              ("Evidence — per tenant, per month", ["$300", "$600", "$900"]),
-              ("Attested — per tenant, per month", ["$450", "$900", "$1,350"]),
+              ("Evidence — per tenant, per month", ["€300", "€600", "€900"]),
+              ("Attested — per tenant, per month", ["€450", "€900", "€1,350"]),
               "In every band",
               ("On-demand assessment, whenever you want one", [Y, Y, Y]),
               ("Recurring scheduled assessments", [N, N, N]),
@@ -323,15 +323,15 @@ PRODUCTS = [
     ),
     dict(
         key="mailtrust", name="MailTrust", tone="--t-mailtrust", status=None,
-        counted="Counted per sending domain &middot; $15 / $30 / $40 &middot; parked domains $3",
+        counted="Counted per sending domain &middot; €15 / €30 / €40 &middot; parked domains €3",
         tech=[("Standards", [("SPF", 1), ("DKIM", 1), ("DMARC", 1), ("BIMI", 1), ("MTA-STS", 1)]),
               ("DNS write-back — live", [("Azure DNS", 1), ("DNSimple", 1)]),
               ("DNS write-back — not yet", [("Cloudflare", 0), ("Route 53", 0),
                                             ("Everything else — guided steps", 0)])],
         cols=LADDER,
         rows=["Price",
-              ("Per sending domain, per month", ["$15", "$30", "$40"]),
-              ("Per parked domain, per month", ["$3", "$3", "$3"]),
+              ("Per sending domain, per month", ["€15", "€30", "€40"]),
+              ("Per parked domain, per month", ["€3", "€3", "€3"]),
               ("Parked domains included, per sending domain", ["5", "5", "5"]),
               "Cadence",
               ("On-demand scan, whenever you want one", [Y, Y, Y]),
@@ -348,7 +348,7 @@ PRODUCTS = [
               ("Multi-domain fleet view", [N, Y, Y]),
               "Write access",
               ("DNS write-back for supported providers", [N, N, Y])],
-        # The parked-domain rate and the $40 Automation price are explained once each, in the panel notes
+        # The parked-domain rate and the €40 Automation price are explained once each, in the panel notes
         # build_legal.py writes; this block used to repeat both.
         note=("<strong>Report volume carries an allowance.</strong> Ingesting, parsing and storing DMARC "
               "aggregate reports is a real cost that scales with how much mail a domain sends, not with how many "
