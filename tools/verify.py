@@ -306,7 +306,9 @@ CONTENT_RULES = [
     # for them. Everywhere else a figure is a leak — a number in a product
     # page or the home hero ages badly and contradicts the two pages that
     # are maintained. PRICE_PAGES below is the allowlist.
-    (r"\$\s?\d", "a price outside the pages that carry pricing"),
+    # A figure spelled in words is still a figure: "under a hundred dollars a client" sat on for-msps.html
+    # past this rule until 2026-10-10.
+    (r"\$\s?\d|\b(?:\d+|hundred|thousand) dollars\b", "a price outside the pages that carry pricing"),
     (r"\b\d+\s?%\s?(off|discount)", "a discount percentage outside the pages that carry pricing"),
     # A percentage off IS a price, and it was never exempted on the pricing
     # pages when they started carrying figures. The cost of that was invisible:
@@ -315,7 +317,8 @@ CONTENT_RULES = [
     # past this line. A guard that quietly degrades the copy it exists to protect
     # is worse than no guard, so it is now scoped like the price rule it belongs
     # with: allowed on the two maintained pricing pages, refused everywhere else.
-    (r"testimonial|customer logo|reference customer|pre-revenue|no customers",
+    (r"testimonial|customer logo|reference customer|pre-revenue|no customers"
+     r"|nothing to show yet|providers we speak to|most people start",
      "a customer reference or a statement about their absence"),
     # The consent overclaim has now come back twice, each time in a phrasing the
     # previous rule did not match. Consent is PER PRODUCT: each product has its
@@ -326,7 +329,12 @@ CONTENT_RULES = [
      r"|one consent|consent covers (every|all)|covers every product's"
      r"|never asks (them |the admin )?for new permissions"
      r"|not (another|a second) trip through onboarding|without re-onboarding"
-     r"|no second consent|share one connection|same connection",
+     r"|no second consent|share one connection|same connection"
+     # Added 2026-10-10, after five live phrasings slipped past the list above - two of them only because
+     # the claim was split across a line break (check_content now collapses whitespace first).
+     r"|one connection|one permission grant|asked for new permissions"
+     r"|never asks (?:the customer |the client )?for new permissions"
+     r"|every later product rides on|connection is already in place",
      "the consent overclaim — each product has its own Entra app and its own "
      "consent (see README, and the code references in the rule above)"),
     # Four products write into the customer's tenant: Security's
@@ -364,7 +372,9 @@ def check_content(page: str, src: str) -> None:
         # Figures are allowed here only inside the generated price blocks; cut those out before
         # applying the price rules to the rest of the page.
         src = PRICE_BLOCK_RE.sub(" ", src)
-    text = re.sub(r"<[^>]+>", " ", src)
+    # Collapse whitespace after stripping tags: a claim wrapped across two source lines ("the same\n
+    # connection") is the same claim, and used to pass every rule here.
+    text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", src))
     for i, (pattern, why) in enumerate(CONTENT_RULES):
         if i in PRICE_RULES and rel in PRICE_PAGES:
             continue

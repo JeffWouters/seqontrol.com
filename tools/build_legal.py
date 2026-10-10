@@ -162,8 +162,9 @@ PAGES = {
     "pricing.html": dict(
         eyebrow="Pricing",
         h1="What sets your number",
-        lede="ShareCare is listed in full. Everything else is quoted, and this page says which is "
-             "which — plus every factor that moves the number, so you can size it before you ask.",
+        lede="Six products have a published price: four that run today and two priced ahead of release. "
+             "Dredd will be quoted and PosturePortal is not priced yet. Below is every factor that moves "
+             "the number, so you can size it before you ask.",
         form=dict(topic="Pricing for my estate",
                   button="Get a real number",
                   estate_label="Your estate",
@@ -182,7 +183,7 @@ PAGES = {
           <tbody>
             <tr><th scope="row">ShareCare</th><td>Microsoft 365 users</td></tr>
             <tr><th scope="row">SecurityPortal</th><td>Users, at a lower rate with any ShareCare tier &middot; $50 monthly tenant minimum</td></tr>
-            <tr><th scope="row">ConditionalAccessPortal</th><td>Users, on the same terms as SecurityPortal</td></tr>
+            <tr><th scope="row">ConditionalAccessPortal</th><td>Users, with the same $50 monthly tenant minimum as SecurityPortal</td></tr>
             <tr><th scope="row">WebScan</th><td>Monitored sites &middot; free on every tenant</td></tr>
             <tr><th scope="row">MailTrust</th><td>Sending domains; parked domains at a lower rate, five included with each</td></tr>
             <tr><th scope="row">CompliancePortal</th><td>Per tenant, banded by how many frameworks are in scope</td></tr>
@@ -216,7 +217,6 @@ PAGES = {
         </div>
 
         <div class="flavour featured">
-          <span class="badge-top">Most common</span>
           <div class="tier">Tier 2 · Governance</div>
           <h3>Govern it</h3>
           <div class="verb">Decide, record and prove</div>
@@ -227,7 +227,6 @@ PAGES = {
             <li><strong>Approvals</strong> and four-eyes sign-off on sensitive actions</li>
             <li><strong>Waivers and risk acceptance</strong> with mandatory expiry, so an exception cannot quietly become permanent</li>
             <li><strong>Evidence packs</strong> and the tamper-evident trail behind them</li>
-            <li><strong>Fleet views</strong> across every tenant or domain you manage</li>
           </ul>
         </div>
 
@@ -305,7 +304,7 @@ PAGES = {
           <li><b>Governance</b> — Adds oversharing and advanced detections, policies, access reviews, approvals, waivers, evidence packs, and six-hourly scans.</li>
           <li><b>Automation</b> — Adds hourly scans plus OneDrive permission and sharing-link write-back with undo, requiring a separate connector remediation consent.</li>
         </ul>
-        <p class="after">There is no seat minimum and no platform floor: a twelve-person company pays for twelve people, and nothing is added on top. What each tier unlocks is on the.</p>
+        <p class="after">There is no seat minimum and no platform floor: a twelve-person company pays for twelve people, and nothing is added on top. What each tier unlocks is in the table below.</p>
 <!--CAPS:sharecare-->
       </div>
       <div class="product-licence tone-security" role="tabpanel" id="panel-security" aria-labelledby="tab-security" tabindex="0">
@@ -316,9 +315,9 @@ PAGES = {
         <p><strong>$1.50 per user with any ShareCare tier</strong>, which is the usual case, or <strong>$3.50 standalone.</strong> Same denominator as ShareCare, so it adds to an existing line rather than starting a new negotiation.</p>
         <div class="note plain">
           <h3>A $50 monthly minimum per tenant</h3>
-          <p class="mb0">Charged greater-of, and it exists because roughly half of what this product checks does not shrink with headcount. A 20-seat tenant has about as many Conditional Access policies, app registrations and configuration settings as a 2,000-seat one, and every one of them is evaluated either way. Per-user alone would price a full posture scan of a small tenant at thirty dollars. The floor bites below 34 users; above that the per-user arithmetic is the whole bill.</p>
+          <p class="mb0">Charged greater-of, and it exists because roughly half of what this product checks does not shrink with headcount. A 20-seat tenant has about as many Conditional Access policies, app registrations and configuration settings as a 2,000-seat one, and every one of them is evaluated either way. Per-user alone would price a full posture scan of a small tenant at thirty dollars. The floor bites below 34 users with a ShareCare tier and below 15 standalone; above that the per-user arithmetic is the whole bill.</p>
         </div>
-        <p class="after"><b>What you get</b> — read-only Microsoft 365 and Entra posture scans, on demand or daily, with findings history across managed tenants..</p>
+        <p class="after"><b>What you get</b> — read-only Microsoft 365 and Entra posture scans, on demand or daily, with findings history across managed tenants.</p>
 <!--CAPS:securityportal-->
       </div>
       <div class="product-licence tone-condaccess" role="tabpanel" id="panel-condaccess" aria-labelledby="tab-condaccess" tabindex="0">
@@ -382,7 +381,7 @@ PAGES = {
             on its own, which is deliberate: an estate that grows on a timer would be an invoice that grows on a
             timer. Coverage is partial and improving &mdash; the <a href="limits.html">limits page</a> says how.</p>
         </div>
-        <p class="after">Scanning is never counted &mdash; only sites you chose to keep, once per billing period each, however often they run..</p>
+        <p class="after">Scanning is never counted &mdash; only sites you chose to keep, once per billing period each, however often they run.</p>
 <!--CAPS:webscan-->
       </div>
       <div class="product-licence tone-mailtrust" role="tabpanel" id="panel-mailtrust" aria-labelledby="tab-mailtrust" tabindex="0">
@@ -519,7 +518,7 @@ PAGES = {
       </ul>
 
       <h2>Your own tenant, if you are a partner</h2>
-      <p><strong>$50 a month, every product, every tier, on the tenant you run your own business from.</strong>
+      <p><strong>$50 a month, every released product, every tier, on the tenant you run your own business from.</strong>
         The same estate computes somewhere between $260 and $640 at list, so this is not a discount and is not
         described as one &mdash; it is deliberately below what a tenant costs to run, which means it costs us money and
         is meant to.</p>
@@ -547,13 +546,14 @@ PAGES = {
       <div class="grid grid-3">
         <article class="card">
           <h3>Never per scan</h3>
-          <p>Scan hourly or nightly; it costs the same. Per-scan pricing would make you widen your schedule to
+          <p>Scan as often as you like; an on-demand scan never costs extra. A tier buys how often it runs on
+             its own, never how often you may look. Per-scan pricing would make you widen your schedule to
              save money, which defeats the entire point of continuous assurance.</p>
         </article>
         <article class="card">
           <h3>Never per finding</h3>
           <p>"The worse your posture, the more you pay to learn about it" is the most perverse metric in this
-             category. Findings are free. Fixing is free.</p>
+             category. Findings are never counted, and neither are remediation actions.</p>
         </article>
         <article class="card">
           <h3>Estate, not effort</h3>
@@ -647,7 +647,7 @@ PAGES = {
         <li><strong>Your posture, record by record</strong> — what SPF actually authorises, whether DKIM is
           signing, what your DMARC policy does today, and whether MTA-STS and BIMI are in play.</li>
         <li><strong>Whether you can be spoofed right now</strong>, stated plainly rather than as a score.
-          Most domains sit at <code>p=none</code>, which monitors and blocks nothing.</li>
+          Many domains that publish DMARC never get past <code>p=none</code>, which monitors and blocks nothing.</li>
         <li><strong>Every sender using your domain</strong> — from real DMARC aggregate reports once
           collection is running. Legitimate services you had forgotten about, and anyone else.</li>
         <li><strong>A staged path to enforcement</strong> that will not drop the mail your business depends
@@ -733,31 +733,34 @@ PAGES = {
     "vs-cipp.html": dict(
         eyebrow="Comparison",
         h1="SeQontrol and CIPP",
-        lede="Most providers we speak to already run CIPP, and should keep running it. Here is what it "
-             "does that we do not, and the one thing it was never built to do.",
+        lede="If you run CIPP, keep running it. Here is what it does that we do not, and the one thing "
+             "it was never built to do.",
         body="""
       <h2>Keep it</h2>
-      <p>That is the recommendation, not a courtesy. <strong>CIPP is free, open source, and running in
-        production at thousands of providers</strong>, and on multi-tenant administration it does things
+      <p>That is the recommendation, not a courtesy. <strong>CIPP is free and open source</strong>, and on
+        multi-tenant administration it does things
         this platform does not attempt: standards deployment across a book, GDAP management, identity
         lifecycle, offboarding, licence juggling, the daily operational surface of running Microsoft 365
         for other people.</p>
       <p>If your problem is "I need to administer sixty tenants without sixty browser tabs", that is
-        CIPP, it costs nothing, and nothing here replaces it. A provider running both is the normal case
-        rather than an awkward one.</p>
+        CIPP, it costs nothing, and nothing here replaces it. Running both is a normal setup, not an
+        awkward one.</p>
 
       <h2>What it was not built to do</h2>
       <p><strong>Produce evidence.</strong> CIPP tells you what a tenant looks like now and lets you change
         it. What it does not do &mdash; and does not claim to &mdash; is retain a control-tagged record that a
         control held over a period, with the exceptions named, time-boxed and attributable to whoever
         accepted them.</p>
+      <p class="small dim"><em>Where this stands today:</em> ShareCare and SecurityPortal findings already
+        carry control tags and history. <a href="products/complianceportal.html">CompliancePortal</a>, which
+        turns them into framework evidence with attestation, is built but not yet released.</p>
       <p>That distinction does not matter until somebody asks. Then it is the only thing that matters: a
         cyber-insurance renewal, a client's customer sending a security questionnaire, an auditor asking
         how you know MFA was enforced in March rather than today. A management plane answers "what is it
         now". An assurance layer answers "what was it, and can you prove it".</p>
 
       <h2>The other two differences, stated plainly</h2>
-      <p><strong>Outside-in.</strong> CIPP works through the tenant. Roughly half of what gets a client
+      <p><strong>Outside-in.</strong> CIPP works through the tenant. A good deal of what gets a client
         breached is not in the tenant at all &mdash; an expiring certificate, a spoofable domain, a forgotten
         subdomain pointing at a service somebody else now controls. Those need scanning from outside, with
         no credential, and that is a different kind of tool.</p>
@@ -789,7 +792,7 @@ PAGES = {
         surgery on a large SharePoint estate.</p>
       <p><strong>If your problem is "we have one large tenant and need to run permissions as an
         ongoing administrative discipline", buy one of those.</strong> That is what they are for, and
-        the entry price on a per-seat basis is genuinely lower than ours. We would rather say that
+        the entry price on a per-seat basis is often lower than ours. We would rather say that
         here than have you discover it after a trial.</p>
 
       <h2>What we are better at</h2>
@@ -798,12 +801,15 @@ PAGES = {
         held over a period, at control granularity, with the exceptions named and time-boxed. Our
         findings are written to a shared store already tagged to the controls they prove, so a
         ShareCare scan becomes CompliancePortal evidence with no export and no second integration.</p>
-      <p><strong>Breadth on one connection.</strong> Sharing is one surface. The same estate also has
+      <p class="small dim"><em>Where this stands today:</em> ShareCare and SecurityPortal findings already
+        carry control tags and history. <a href="products/complianceportal.html">CompliancePortal</a>, which
+        turns them into framework evidence with attestation, is built but not yet released.</p>
+      <p><strong>Breadth in one platform.</strong> Sharing is one surface. The same estate also has
         Conditional Access coverage, application consents, email authentication and a public web
-        surface — and those live in four different tools, or in one platform with one onboarding, one
-        audit trail and one bill.</p>
+        surface — and those live in four different tools, or in one platform with one console, one
+        findings store, one audit trail and one bill. Each product connects with its own admin consent.</p>
       <p><strong>Small tenants, and a lot of them.</strong> This is the sharpest split. The
-        governance specialists start at a hundred-seat minimum or an enterprise contract; the average
+        governance specialists often sell with a seat minimum or an enterprise contract; the average
         tenant a provider manages is nowhere near that. If your book is sixty clients of twenty-odd
         users, most of this category cannot sell to you at all, and the ones that can are priced for a
         single large estate rather than a fleet of small ones.</p>
@@ -844,18 +850,21 @@ PAGES = {
 
       <h2>What we are better at</h2>
       <p>Proving the technical controls, at control granularity, on a Microsoft 365 estate.</p>
-      <p>A GRC platform generally establishes that a control exists by asking you, or by a shallow
+      <p>A GRC platform generally establishes that a control exists by asking you, or by an
         integration check. SeQontrol establishes it by scanning: external sharing containment,
         Conditional Access coverage, MFA enforcement including the exclusions, application permissions
         that are actually unused, email authentication posture. The finding and the evidence are the
         same record, and you can re-run it.</p>
       <p>The second difference is fleet economics. If you manage many client tenants, per-tenant GRC
-        licensing prices the work out of existence. This platform was built provider-first.</p>
+        licensing quickly prices the work beyond what a small client will pay. This platform was built provider-first.</p>
 
       <h2>They are often complementary</h2>
       <p>The common shape: a GRC platform runs the programme, and SeQontrol feeds it the technical
         control evidence it cannot produce itself. If that is your situation, say so on the first call
         and we will scope for it rather than argue for replacement.</p>
+      <p class="small dim"><em>Where this stands today:</em> ShareCare and SecurityPortal findings already
+        carry control tags and history. <a href="products/complianceportal.html">CompliancePortal</a>, which
+        turns them into framework evidence with attestation, is built but not yet released.</p>
 
       <div class="note scope">
         <h2>What we will not claim</h2>
@@ -884,7 +893,7 @@ PAGES = {
           period.</li>
         <li><strong>Per workload, per tenant.</strong> Sharing sits in one report, identity in
           another, mail flow in a third — and none of them span the clients a provider manages.</li>
-        <li><strong>No outside-in view.</strong> Nothing native scans your public web and domain
+        <li><strong>No outside-in view.</strong> Nothing in a Microsoft 365 licence scans your public web and domain
           surface, which is where a good deal of exposure actually lives — that is
           <a href="products/webscan.html">WebScan</a>, and running it costs nothing.</li>
         <li><strong>Reporting, not remediation, and no memory.</strong> Native reports show a state.
@@ -1117,9 +1126,8 @@ PAGES = {
 
       <h2>What we will not do</h2>
       <ul>
-        <li><strong>Claim customers we do not have.</strong> There are no logos on this site because
-          there is nothing to show yet, and inventing them would be a strange way to start a
-          relationship built on trusting us with tenant access.</li>
+        <li><strong>Invent proof.</strong> Every claim on this site can be tested against your own
+          tenant &mdash; <a href="exposure-report.html">a free report</a> is the quickest way.</li>
         <li><strong>Fabricate a pass.</strong> A control we cannot assess is reported as "not
           assessed", never as green.</li>
         <li><strong>Oversell the roadmap.</strong> What is shipped is labelled shipped, and what is

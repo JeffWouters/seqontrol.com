@@ -70,7 +70,7 @@
     <div class="wrap wrap-narrow">
       <span class="eyebrow">Comparison</span>
       <h1>SeQontrol and CIPP</h1>
-      <p class="lede">Most providers we speak to already run CIPP, and should keep running it. Here is what it does that we do not, and the one thing it was never built to do.</p>
+      <p class="lede">If you run CIPP, keep running it. Here is what it does that we do not, and the one thing it was never built to do.</p>
     </div>
   </section>
 
@@ -78,27 +78,30 @@
     <div class="wrap wrap-narrow">
 
       <h2>Keep it</h2>
-      <p>That is the recommendation, not a courtesy. <strong>CIPP is free, open source, and running in
-        production at thousands of providers</strong>, and on multi-tenant administration it does things
+      <p>That is the recommendation, not a courtesy. <strong>CIPP is free and open source</strong>, and on
+        multi-tenant administration it does things
         this platform does not attempt: standards deployment across a book, GDAP management, identity
         lifecycle, offboarding, licence juggling, the daily operational surface of running Microsoft 365
         for other people.</p>
       <p>If your problem is "I need to administer sixty tenants without sixty browser tabs", that is
-        CIPP, it costs nothing, and nothing here replaces it. A provider running both is the normal case
-        rather than an awkward one.</p>
+        CIPP, it costs nothing, and nothing here replaces it. Running both is a normal setup, not an
+        awkward one.</p>
 
       <h2>What it was not built to do</h2>
       <p><strong>Produce evidence.</strong> CIPP tells you what a tenant looks like now and lets you change
         it. What it does not do &mdash; and does not claim to &mdash; is retain a control-tagged record that a
         control held over a period, with the exceptions named, time-boxed and attributable to whoever
         accepted them.</p>
+      <p class="small dim"><em>Where this stands today:</em> ShareCare and SecurityPortal findings already
+        carry control tags and history. <a href="products/complianceportal.html">CompliancePortal</a>, which
+        turns them into framework evidence with attestation, is built but not yet released.</p>
       <p>That distinction does not matter until somebody asks. Then it is the only thing that matters: a
         cyber-insurance renewal, a client's customer sending a security questionnaire, an auditor asking
         how you know MFA was enforced in March rather than today. A management plane answers "what is it
         now". An assurance layer answers "what was it, and can you prove it".</p>
 
       <h2>The other two differences, stated plainly</h2>
-      <p><strong>Outside-in.</strong> CIPP works through the tenant. Roughly half of what gets a client
+      <p><strong>Outside-in.</strong> CIPP works through the tenant. A good deal of what gets a client
         breached is not in the tenant at all &mdash; an expiring certificate, a spoofable domain, a forgotten
         subdomain pointing at a service somebody else now controls. Those need scanning from outside, with
         no credential, and that is a different kind of tool.</p>

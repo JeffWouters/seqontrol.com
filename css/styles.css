@@ -206,6 +206,10 @@ h3 { font-size: 1.2rem; letter-spacing: -.018em; }
 h4 { font-size: 1rem; letter-spacing: -.01em; }
 
 p { margin: 0 0 1.1em; }
+/* Prose pages (legal, comparisons, guides) run several sections inside one wrapper, so a heading that
+   follows body copy needs its own space above it; the heading margins above are bottom-only. */
+:is(p, ul, ol, figure, .note, .table-wrap, .grid) + h2 { margin-top: 2.6rem; }
+:is(p, ul, ol, figure, .note, .table-wrap) + h3 { margin-top: 1.8rem; }
 a { color: var(--accent); text-decoration: none; }
 a:hover { color: var(--accent-soft); text-decoration: underline; }
 
