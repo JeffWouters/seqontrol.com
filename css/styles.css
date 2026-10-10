@@ -184,6 +184,9 @@ html {
 
 body {
   margin: 0;
+  /* A long API or permission name (DelegatedAdminRelationship.ReadWrite.All on limits.html) is one
+     unbreakable word; without this it pushed a 320px phone 50px sideways. Breaks only when it must. */
+  overflow-wrap: break-word;
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
@@ -690,7 +693,10 @@ details[open] > summary::after { content: "−"; }
 /* ---------------------------------------------------------------- tables */
 
 .table-wrap { background: var(--surface); border: 1px solid var(--border-soft); border-radius: var(--radius); overflow: hidden; }
-.table-scroll { overflow-x: auto; }
+/* position: relative makes the scroller the containing block for the screen-reader-only labels in the
+   cells. Without it those absolutely positioned spans resolve against the page, escape the scroll
+   clip, and widen the whole document: pricing.html scrolled sideways by 144px on a 390px phone. */
+.table-scroll { overflow-x: auto; position: relative; }
 
 table { width: 100%; border-collapse: collapse; font-size: .95rem; min-width: 540px; }
 th, td { text-align: left; padding: .9rem 1.1rem; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
