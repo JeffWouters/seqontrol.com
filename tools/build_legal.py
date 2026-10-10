@@ -161,7 +161,7 @@ FORM_SCRIPT = '''
 PAGES = {
     "pricing.html": dict(
         eyebrow="Pricing",
-        h1="What sets your number",
+        h1="Published prices, and what moves them",
         lede="Six products have a published price: four that run today and two priced ahead of release. "
              "Dredd will be quoted and PosturePortal is not priced yet. Below is every factor that moves "
              "the number, so you can size it before you ask.",
@@ -173,10 +173,6 @@ PAGES = {
       <h2>What each product counts</h2>
       <p>Every product is priced on the thing that actually drives its cost and its value to you. Those are not
         the same unit, and forcing them into one would misprice most of the portfolio.</p>
-      <p><strong>Four of these are available today</strong> &mdash; ShareCare, SecurityPortal, WebScan and
-        MailTrust. ConditionalAccessPortal and CompliancePortal are built and close but not released; their
-        prices are published so the number is settled before they ship rather than negotiated after. Dredd and
-        PosturePortal are further out, and neither carries a list price.</p>
       <div class="table-wrap table-scroll" tabindex="0">
         <table>
           <thead><tr><th scope="col">Product</th><th scope="col">Priced on</th></tr></thead>
@@ -193,77 +189,6 @@ PAGES = {
         </table>
       </div>
 
-<section>
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">License flavours</span>
-        <h2>See it. Govern it. Act on it.</h2>
-        <p>Each tier contains the one below. Moving up is an entitlement change, not a migration or a
-           reinstall — the capability is already in the product, waiting to be switched on.</p>
-      </div>
-
-      <div class="flavours">
-        <div class="flavour">
-          <div class="tier">Tier 1 · Visibility</div>
-          <h3>See it</h3>
-          <div class="verb">Know what is actually there</div>
-          <ul class="checklist">
-            <li><strong>Continuous inventory</strong> of the estate the product covers</li>
-            <li><strong>Risk scoring and findings</strong>, deduplicated and tracked over time</li>
-            <li><strong>Reporting and export</strong>, including scheduled reports</li>
-            <li><strong>Daily scheduled scans</strong>, plus on-demand scans whenever you want one</li>
-            <li>Strictly <strong>read-only</strong> — nothing is written to your tenant on this tier</li>
-          </ul>
-        </div>
-
-        <div class="flavour featured">
-          <div class="tier">Tier 2 · Governance</div>
-          <h3>Govern it</h3>
-          <div class="verb">Decide, record and prove</div>
-          <ul class="checklist">
-            <li>Everything in <strong>Visibility</strong></li>
-            <li><strong>Scheduled scans every six hours</strong></li>
-            <li><strong>Policies and campaigns</strong> — including owner-delegated access reviews</li>
-            <li><strong>Approvals</strong> and four-eyes sign-off on sensitive actions</li>
-            <li><strong>Waivers and risk acceptance</strong> with mandatory expiry, so an exception cannot quietly become permanent</li>
-            <li><strong>Evidence packs</strong> and the tamper-evident trail behind them</li>
-          </ul>
-        </div>
-
-        <div class="flavour">
-          <div class="tier">Tier 3 · Automation</div>
-          <h3>Act on it</h3>
-          <div class="verb">Let it fix things</div>
-          <ul class="checklist">
-            <li>Everything in <strong>Governance</strong></li>
-            <li><strong>Hourly scheduled scans</strong> — the tightest loop between a change and its finding</li>
-            <li><strong>Automated remediation and write-back</strong> into the customer's tenant or DNS</li>
-            <li><strong>Simulate, then execute</strong> — with a grace window and undo where the plane supports it</li>
-            <li><strong>Two independent gates:</strong> the license entitlement <em>and</em> the connector's own remediation consent. Either one off means nothing is written</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="note scope">
-        <h3>Why the top tier is separate</h3>
-        <p class="mb0">Tiers 1 and 2 read and record. Tier 3 changes your production tenant. That is a difference in
-          kind, not degree, so it is a distinct purchase and a distinct consent — and it stays revocable without
-          losing the visibility and evidence you already paid for.</p>
-      </div>
-
-      <div class="note plain">
-        <h3>Cadence is a tier feature. Looking is not.</h3>
-        <p>The tiers set how often a scan runs <em>on a schedule</em> — daily, every six hours, hourly. They never
-          limit how often you may look: an <strong>on-demand scan is available on every tier</strong>, at any time,
-          as many times as you need. Nothing about an incident should require a purchase order.</p>
-        <p class="mb0">The distinction matters and it is deliberate. Continuous scanning is the cost we carry on
-          your behalf, and tighter cadence genuinely costs more to run — so a tighter loop between a change and its
-          finding is something you buy. But charging <em>per scan</em> would teach you to look less often, which is
-          the one behaviour this product exists to prevent. A floor on automatic frequency does the opposite: every
-          tier still sees everything, and the higher tiers see it sooner.</p>
-      </div>
-    </div>
-  </section>
 
       <h2 id="figures" style="margin-top:3rem">The figures, product by product</h2>
       <p>Pick the one you are buying. Everything that applies to the whole account &mdash; the floor, the
@@ -343,7 +268,7 @@ PAGES = {
           <li><b>Automation</b> &mdash; Adds approval-gated write-back: enable, disable or move a policy to report-only in your tenant, and deploy the repository&rsquo;s policy to it. Every change needs an approval from somebody other than the person who requested it, and a separate connector consent.</li>
         </ul>
 <!--CAPS:condaccess-->
-        <p class="after"><strong>Governance reads, Automation writes, and the line between them is the whole ladder.</strong> Everything on Governance &mdash; the baselines, the repository comparison, the schedule, even the capture &mdash; leaves your directory exactly as it found it. Capture writes only to your Git repository, on a new branch, as a pull request somebody has to merge; it never pushes to the branch we read. Automation is the one rung that changes your tenant, and even there the deliberate decision is per change, not per contract: a deployment is approved by somebody other than the person who requested it, and nothing is written without a separate connector consent you grant yourself. Nothing is ever deleted &mdash; a policy your tenant has and the repository does not is reported, never removed.</p>
+        <p class="after"><strong>Governance reads, Automation writes.</strong> Everything on Governance leaves your directory as it found it; capture writes only to your Git repository, as a pull request somebody has to merge. Automation is the one rung that changes your tenant, and nothing is ever deleted &mdash; a policy your tenant has and the repository does not is reported, never removed.</p>
         <p class="after"><strong>Not released yet.</strong> Built, running and close &mdash; the price is published so it is not a surprise when it ships, not because you can buy it today. <a href="products/conditionalaccessportal.html">What it does, and what it does not</a>.</p>
       </div>
       <div class="product-licence tone-webscan" role="tabpanel" id="panel-webscan" aria-labelledby="tab-webscan" tabindex="0">
@@ -363,7 +288,6 @@ PAGES = {
             </tbody>
           </table>
         </div>
-        <p class="small dim">One paid licence, not a ladder &mdash; keeping a scan and scheduling it were separate tiers, and that sold a distinction nobody makes: a saved site nobody re-scans is a stale record, and a schedule that keeps nothing is a cron job with no output.</p>
         <ul class="tier-lines">
           <li><b>Free</b> — The complete check set on demand, graded with references and fixes — nothing kept once you close the page.</li>
           <li><b>Pro</b> — Keeps results, history and audit trail, scans on a schedule, and alerts on expiry, new assets and regressions.</li>
@@ -374,12 +298,11 @@ PAGES = {
         </div>
         <div class="note plain">
           <h3>Discovered subdomains are free, and stay free until you say otherwise</h3>
-          <p class="mb0">Pro looks for hostnames under a site you already pay for and lists what it finds &mdash; the
-            name, whether it still resolves, where it last pointed. That costs nothing and is never billed, however
-            many turn up. They are listed, not scanned. Promoting one to a monitored site is a button you press, and
-            only then does it get the full check suite and only then does it count. Nothing here can raise your bill
-            on its own, which is deliberate: an estate that grows on a timer would be an invoice that grows on a
-            timer. Coverage is partial and improving &mdash; the <a href="limits.html">limits page</a> says how.</p>
+          <p class="mb0">Pro lists the hostnames it finds under a site you already pay for &mdash; the name, whether
+            it still resolves, where it last pointed &mdash; and never bills for them, however many turn up. Promoting
+            one to a monitored site is a button you press; only then is it scanned and counted, so nothing here can
+            raise your bill on its own. Coverage is partial and improving &mdash; the
+            <a href="limits.html">limits page</a> says how.</p>
         </div>
         <p class="after">Scanning is never counted &mdash; only sites you chose to keep, once per billing period each, however often they run.</p>
 <!--CAPS:webscan-->
@@ -413,7 +336,7 @@ PAGES = {
           <p class="mb0">Charging full rate for them makes the rational decision <em>protect fewer domains</em>, which is the behaviour this product exists to prevent. The classification is measured, not asserted: a domain is parked when it has produced no DMARC report volume and no DKIM signing for a full period, and it reclassifies itself the moment you start sending from it.</p>
         </div>
         <h4 style="margin-top:2rem">If you are a provider: partner rates</h4>
-        <p>The list price above is a retail price, and a provider is not a retail buyer. MSP-focused DMARC platforms sell partners a wholesale rate precisely because the partner does the onboarding, the sender inventory and the support conversation, then sets their own retail. Charging a reseller list would ask them to buy at several times what a competitor charges them, which is not a price either.</p>
+        <p>The list price above is a retail price, and a provider is not a retail buyer: the partner does the onboarding, the sender inventory and the support conversation, then sets their own retail.</p>
         <div class="table-wrap table-scroll" tabindex="0">
           <table class="matrix">
             <thead>
@@ -502,6 +425,75 @@ PAGES = {
       </div>
       </div>
 
+<section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">License flavours</span>
+        <h2>See it. Govern it. Act on it.</h2>
+        <p>The three tiers mean the same thing on every product that has them; each tab above lists what they
+           unlock there.</p>
+        <p class="mb0">Each tier contains the one below. Moving up is an entitlement change, not a migration or a
+           reinstall — the capability is already in the product, waiting to be switched on.</p>
+      </div>
+
+      <div class="flavours">
+        <div class="flavour">
+          <div class="tier">Tier 1 · Visibility</div>
+          <h3>See it</h3>
+          <div class="verb">Know what is actually there</div>
+          <ul class="checklist">
+            <li><strong>Continuous inventory</strong> of the estate the product covers</li>
+            <li><strong>Risk scoring and findings</strong>, deduplicated and tracked over time</li>
+            <li><strong>Reporting and export</strong>, including scheduled reports</li>
+            <li><strong>Daily scheduled scans</strong>, plus on-demand scans whenever you want one</li>
+            <li>Strictly <strong>read-only</strong> — nothing is written to your tenant on this tier</li>
+          </ul>
+        </div>
+
+        <div class="flavour featured">
+          <div class="tier">Tier 2 · Governance</div>
+          <h3>Govern it</h3>
+          <div class="verb">Decide, record and prove</div>
+          <ul class="checklist">
+            <li>Everything in <strong>Visibility</strong></li>
+            <li><strong>Scheduled scans every six hours</strong></li>
+            <li><strong>Policies and campaigns</strong> — including owner-delegated access reviews</li>
+            <li><strong>Approvals</strong> and four-eyes sign-off on sensitive actions</li>
+            <li><strong>Waivers and risk acceptance</strong> with mandatory expiry, so an exception cannot quietly become permanent</li>
+            <li><strong>Evidence packs</strong> and the tamper-evident trail behind them</li>
+          </ul>
+        </div>
+
+        <div class="flavour">
+          <div class="tier">Tier 3 · Automation</div>
+          <h3>Act on it</h3>
+          <div class="verb">Let it fix things</div>
+          <ul class="checklist">
+            <li>Everything in <strong>Governance</strong></li>
+            <li><strong>Hourly scheduled scans</strong> — the tightest loop between a change and its finding</li>
+            <li><strong>Automated remediation and write-back</strong> into the customer's tenant or DNS</li>
+            <li><strong>Simulate, then execute</strong> — with a grace window and undo where the plane supports it</li>
+            <li><strong>Two independent gates:</strong> the license entitlement <em>and</em> the connector's own remediation consent. Either one off means nothing is written</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note scope">
+        <h3>Why the top tier is separate</h3>
+        <p class="mb0">Tiers 1 and 2 read and record. Tier 3 changes your production tenant. That is a difference in
+          kind, not degree, so it is a distinct purchase and a distinct consent — and it stays revocable without
+          losing the visibility and evidence you already paid for.</p>
+      </div>
+
+      <div class="note plain">
+        <h3>Cadence is a tier feature. Looking is not.</h3>
+        <p>The tiers set how often a scan runs <em>on a schedule</em> — daily, every six hours, hourly. They never
+          limit how often you may look: an <strong>on-demand scan is available on every tier</strong>, at any time,
+          as many times as you need. Nothing about an incident should require a purchase order.</p>
+      </div>
+    </div>
+  </section>
+
       <h2 style="margin-top:3rem">What you pay for</h2>
       <p><strong>There is no platform minimum.</strong> You pay for the products you hold, in the unit each one
         counts, at any size. The tenancy, auth, audit trail, findings store, reporting and scheduling that every
@@ -519,12 +511,10 @@ PAGES = {
 
       <h2>Your own tenant, if you are a partner</h2>
       <p><strong>$50 a month, every released product, every tier, on the tenant you run your own business from.</strong>
-        The same estate computes somewhere between $260 and $640 at list, so this is not a discount and is not
-        described as one &mdash; it is deliberately below what a tenant costs to run, which means it costs us money and
-        is meant to.</p>
-      <p>The reasoning is plain enough to publish: a provider who runs this on themselves every day can
-        demonstrate it from a live tenant instead of a slide, and will find our mistakes before your clients
-        do. That is worth more to us than the margin on one small tenant.</p>
+        The same estate computes somewhere between $260 and $640 at list; this is deliberately below what a
+        tenant costs us to run.</p>
+      <p>A provider who runs this on themselves every day can demonstrate it from a live tenant instead of a
+        slide, and will find our mistakes before your clients do.</p>
       <ul>
         <li>Your <strong>own</strong> tenant &mdash; the domain on your provider agreement, checked against it.</li>
         <li>Requires an active provider agreement. It is a partner benefit, not a tier to sign up for.</li>
@@ -612,21 +602,13 @@ PAGES = {
 
       <h2 id="never">What never moves it</h2>
       <p><strong>How many products you take.</strong> There is no suite discount. Each product is priced on
-        its own and adding one costs what that product costs — no bundle, no package, no number that only
-        appears if you buy everything. What running more than one does get you is structural rather than
-        promotional: one tenancy, one identity, one audit trail across the account, and findings that
-        land somewhere they are already useful.</p>
+        its own and adding one costs what that product costs. What running more than one does get you is
+        structural: one tenancy, one identity, one audit trail, and findings that land somewhere already
+        useful.</p>
       <p>How often you scan, how many findings you have, how much you remediate, or how much evidence you
-        export. None of those are metered, deliberately — charging for them would teach you to look less
-        often, which is the one behaviour this product exists to prevent.</p>
-      <p><strong>Nor does how you pay.</strong> A year costs twelve months. Annual and monthly are a
-        cash-flow decision, not a lever: there is no discount for committing and no penalty for not. If you
-        would rather pay yearly because it is one invoice instead of twelve, do that — it will not change
-        the number, and nobody here will pretend it should.</p>
-      <p><a href="products/webscan.html">WebScan</a> takes that further: every tenant scans at no cost,
-        indefinitely, one URL at a time. The licence buys what happens <em>after</em> the scan — the history,
-        the schedule, the audit trail and the evidence. A scan you do not keep cannot prove anything, and the
-        one you do keep is the one we charge for.</p>
+        export &mdash; for the reasons in the cards above.</p>
+      <p><strong>Nor does how you pay.</strong> A year costs twelve months: there is no discount for
+        committing to annual and no penalty for paying monthly.</p>
 
       <h2 id="request">Get a number</h2>
       <p>Tell us the size of the estate. You will get a real figure back, not a discovery call.</p>
@@ -734,7 +716,7 @@ PAGES = {
 
     "vs-cipp.html": dict(
         eyebrow="Comparison",
-        h1="SeQontrol and CIPP",
+        h1="CIPP and SeQontrol: run both",
         lede="If you run CIPP, keep running it. Here is what it does that we do not, and the one thing "
              "it was never built to do.",
         body="""

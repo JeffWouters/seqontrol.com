@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SeQontrol - Guide - DMARC without breaking mail</title>
+<title>DMARC from p=none to p=reject without breaking email</title>
 <meta name="description" content="How to get a domain from p=none to p=reject without dropping legitimate mail: sender inventory, staged policy, and the mistakes that stall most DMARC projects.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; base-uri 'self'; object-src 'none'">
 <link rel="canonical" href="https://seqontrol.com/guides/dmarc-without-breaking-mail.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="SeQontrol">
 <meta property="og:locale" content="en">
-<meta property="og:title" content="SeQontrol - Guide - DMARC without breaking mail">
+<meta property="og:title" content="DMARC from p=none to p=reject without breaking email">
 <meta property="og:description" content="How to get a domain from p=none to p=reject without dropping legitimate mail: sender inventory, staged policy, and the mistakes that stall most DMARC projects.">
 <meta property="og:url" content="https://seqontrol.com/guides/dmarc-without-breaking-mail.html">
 <meta property="og:image" content="https://seqontrol.com/assets/og-card.png">
@@ -24,7 +24,8 @@
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://seqontrol.com/" },
-    { "@type": "ListItem", "position": 2, "name": "DMARC without breaking mail", "item": "https://seqontrol.com/guides/dmarc-without-breaking-mail.html" }
+    { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://seqontrol.com/guides/" },
+    { "@type": "ListItem", "position": 3, "name": "DMARC without breaking mail", "item": "https://seqontrol.com/guides/dmarc-without-breaking-mail.html" }
   ]
 }
 </script>
@@ -110,7 +111,9 @@
         <li><strong>Raise the percentage as the reports stay clean</strong>, then move to
           <code>p=reject</code>.</li>
         <li><strong>Keep watching.</strong> New senders appear whenever someone buys something. A domain
-          that reached enforcement and stopped being monitored drifts back into breakage.</li>
+          that reached enforcement and stopped being monitored drifts back into breakage. Keeping that watch
+          across every domain, and writing the record changes for supported DNS providers, is what
+          <a href="../products/mailtrust.html">MailTrust</a> does.</li>
       </ol>
 
       <h2>Three mistakes worth avoiding</h2>
