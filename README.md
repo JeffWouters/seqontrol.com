@@ -17,13 +17,12 @@ index.html          Home — pitch, products, platform, pricing preview, MSP, ho
 platform.html       The shared platform layer + the trust/security answers
 pricing.html        Every price, plus the per-product capability tabs and metering rules
 for-msps.html       Provider model, commercials, land-and-expand motion
-contact.html        Contact + the main form (see "Form backend" for where forms post)
+contact.html        Contact + a form that composes a mailto (no backend, nothing submitted)
 limits.html         What the platform deliberately does not do
 about.html  security.html  privacy.html  terms.html   Company and legal
 exposure-report.html  spoofing-report.html  surface-report.html   The three free assessments
 vs-cipp.html  vs-grc-platforms.html  vs-m365-governance.html  vs-secure-score.html   Comparisons
 404.html            Not-found page (noindex, carries the same chrome)
-thanks.html         Where a sent form lands (noindex, not in the sitemap)
 products/
   index.html        Product overview + at-a-glance comparison table
   sharecare.html  securityportal.html  webscan.html  mailtrust.html    the four shipped products
@@ -43,9 +42,6 @@ assets/             Logo extractions, on-dark variants, icons, OG card
                     and are gitignored — they still carry a real third-party domain.
 favicon.ico         Multi-resolution icon at the root, where browsers look for it
 .github/workflows/deploy.yml   Verify, then publish to GitHub Pages
-.github/workflows/forms.yml    Test, then deploy the form backend (only once Azure is set up)
-forms/              The form backend: a .NET 10 Azure Function, with its tests
-infra/forms/        Bicep for the form backend
 CNAME, .nojekyll, robots.txt, sitemap.xml
 ```
 
@@ -199,110 +195,10 @@ pointing at GitHub with no repository claiming it is exactly the takeover descri
 - `.nojekyll` stops GitHub running the content through Jekyll. Nothing here starts with an underscore
   today, but the file costs nothing and removes a whole class of surprise.
 - `tools/` and `.github/` are uploaded with the site. They are a few KB, are never executed by Pages,
-  and keeping them in the artifact means the deployed tree matches the repository exactly. The same
-  goes for `forms/` and `infra/`: source code, no secrets (nothing in either uses a key), never run.
+  and keeping them in the artifact means the deployed tree matches the repository exactly.
 - The site makes no external requests at runtime, so there is no CDN, font host or analytics endpoint
-  to allow-list, and nothing to break when a third party changes. The one exception is our own form
-  backend, once `FORM_ENDPOINT` is set: forms post to it, and the CSP names its origin. If that ever changes, read
+  to allow-list, and nothing to break when a third party changes. If that ever changes, read
   [Third-party code](#third-party-code) first.
-
-## Form backend
-
-Every form on the site (contact, pricing and the three free reports) posts to one Azure Function in
-`forms/`. It validates the request, **stores it in Table Storage first**, then mails it to `NOTIFY_TO`
-with the sender as Reply-To, and sends the sender one acknowledgement. The table is the record; mail
-is only a notification of it, so a mail outage loses nothing.
-
-While `FORM_ENDPOINT` in `tools/build_legal.py` is empty, nothing changes on the site: the forms
-compose an email, as they always have. Setting it does four things on the next generator run:
-`build_nav.py` stamps it onto all five forms, `build_seo.py` adds its origin to `connect-src` and
-`form-action`, the privacy page switches to the wording that describes storage, and a sent form lands
-on `thanks.html`.
-
-What the function does and does not do, because a public form is an invitation to abuse:
-
-- **Spam**: a hidden trap field (`website`) and a fill-time check (a form sent within three seconds of
-  rendering is a script). Both are answered exactly like a real submission and then dropped.
-- **No relay**: the acknowledgement contains nothing the sender typed — the topic is only a key into a
-  fixed table of phrases (`forms/src/SeQontrol.Forms/Topics.cs`) — and an address gets at most one a
-  day, counting plus-tags and Gmail dot variants as the same inbox. Otherwise the form would be a free
-  way to mail anyone anything from our domain.
-- **Mail budget**: at most 60 notifications and 30 acknowledgements in any hour (`FormsOptions`). A
-  script that gets past the spam checks can fill the table, but past the budget it is stored and nothing
-  is sent, so a flood cannot burn the ACS quota or get `mail.seqontrol.com` suspended for bounces.
-- **Origin check**: a POST carrying a foreign `Origin` is refused; CORS allows only the site.
-- **No IP addresses** are stored. What is stored: the fields, the page it came from, the referrer and
-  any `utm_*` tags on that page's own URL. Nothing is kept in the visitor's browser to carry them.
-- **Limits**: 32 KB per request; fields are capped, not rejected; control characters are stripped
-  from every single-line field, so nothing typed can add a mail header.
-
-Keep `Topics.cs` in step with the form topics (contact.html's `<option>`s and the `form=dict(topic=…)`
-entries in `build_legal.py`); a test lists them.
-
-### Deploying it (one-time)
-
-Needs the Azure CLI, **Owner** (or User Access Administrator plus Contributor) on the resource group,
-because the template creates role assignments and one narrow custom role for sending mail, and an EU
-region where Flex Consumption runs. The template defaults to **Sweden Central**; to move it, check
-`az functionapp list-flexconsumption-locations` first (the privacy page says "in the EU", not which
-region, so any EU region keeps it true).
-
-1. **Infrastructure.** Creates the function app, storage (shared keys off), Application Insights, a
-   user-assigned identity with data-plane roles only, and Azure Communication Services with its data
-   held in Europe:
-
-   ```
-   az group create -n rg-seqontrol-forms -l swedencentral
-   az deployment group create -g rg-seqontrol-forms -f infra/forms/main.bicep
-   ```
-
-   Note the outputs: `formEndpoint`, `functionAppName` and `mailDomainVerificationRecords`.
-2. **Code.** Either let the workflow do it (step 5), or once by hand:
-
-   ```
-   cd forms/src/SeQontrol.Forms
-   dotnet publish -c Release -o publish && (cd publish && zip -qr ../forms.zip .)
-   az functionapp deployment source config-zip -g rg-seqontrol-forms -n <functionAppName> --src forms.zip
-   ```
-3. **Turn the forms on.** Paste `formEndpoint` into `FORM_ENDPOINT`, run the generators, commit. From
-   here submissions are stored, and the function logs a warning for each mail it could not send yet.
-4. **Mail.** Acknowledgements come from `noreply@mail.seqontrol.com`, a subdomain, so ACS never touches
-   the apex domain's SPF or DMARC. Add the records from `mailDomainVerificationRecords` (a TXT, an SPF
-   TXT and two DKIM CNAMEs) to the `mail.seqontrol.com` zone, verify each:
-
-   ```
-   az communication email domain initiate-verification -g rg-seqontrol-forms \
-     --email-service-name acs-email-seqontrol-forms --domain-name mail.seqontrol.com \
-     --verification-type Domain   # then SPF, DKIM, DKIM2
-   ```
-
-   then redeploy with `-p linkMailDomain=true`. That links the domain and sets `ACS_ENDPOINT` and
-   `MAIL_FROM`; mail starts with the next submission.
-5. **Continuous deployment** (optional). Create an Entra app with a federated credential for this
-   repository's `forms` environment, give it **Website Contributor** on the function app and nothing
-   else, and set these repository variables: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`,
-   `AZURE_SUBSCRIPTION_ID`, `FORMS_RESOURCE_GROUP`, `FORMS_FUNCTION_APP`. Until
-   `FORMS_FUNCTION_APP` exists the deploy job is skipped, not failed. No secret is stored in GitHub.
-
-Cost is close to nothing at this volume: Flex Consumption bills per execution with no always-ready
-instances, the table holds a few kilobytes a month, and `maximumInstanceCount` caps what a flood could
-cost.
-
-### Running it locally
-
-Needs the .NET 10 SDK, Azure Functions Core Tools 4 and Azurite.
-
-```
-azurite --silent --location .azurite &
-cd forms/src/SeQontrol.Forms
-cp local.settings.example.json local.settings.json
-func start
-```
-
-Set `FORM_ENDPOINT = 'http://localhost:7071/api/submit'`, run the generators, serve the site on port
-8765 (`python -m http.server 8765`) and the forms post to it. Put `FORM_ENDPOINT` back before
-committing. Tests: `dotnet test forms/SeQontrol.Forms.slnx`; with
-`FORMS_TABLE_CONNECTION=UseDevelopmentStorage=true` they also run against Azurite, as CI does.
 
 ## Security
 

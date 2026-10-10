@@ -70,12 +70,6 @@ SUPPORT = 'support@seqontrol.com'
 # hand-written link to the app that does not match it exactly.
 SIGNUP = 'https://app.seqontrol.com/'
 
-# Where every form on the site posts: the Azure Function in forms/, deployed by infra/forms/main.bicep,
-# whose formEndpoint output is the value to paste here. build_nav.py stamps it onto all five forms,
-# build_seo.py adds its origin to the CSP, and the privacy page describes storage only once it is set.
-# Left empty, the forms fall back to composing an email, exactly as they did before the function.
-FORM_ENDPOINT = ''
-
 # A page someone reaches from search used to end with nothing to do next. The comparison pages now
 # close on the same band the product pages use; a page can pass its own heading, line and buttons.
 COMPARE_CLOSING = dict(
@@ -126,12 +120,11 @@ ADDRESS_INLINE = ', '.join(ADDRESS_LINES)
 # rather than being pasted into the HTML, because this script regenerates those
 # files — anything added to the output by hand is wiped on the next run.
 FORM = '''
-      <!-- action and data-endpoint are stamped by build_nav.py from build_legal.FORM_ENDPOINT. -->
+      <!-- FORM ENDPOINT: paste the URL into BOTH action and data-endpoint.
+           With it set the form posts normally and works without JavaScript;
+           left empty it falls back to composing a mailto, which can fail
+           silently on webmail — see README. -->
       <form id="contact-form" method="post" action="" data-endpoint="" novalidate>
-        <div class="hp" aria-hidden="true">
-          <label for="cf-website">Leave this empty</label>
-          <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off">
-        </div>
         <input type="hidden" id="cf-topic" name="topic" value="{topic}">
         <div class="field">
           <label for="cf-name">Name</label>
@@ -1226,7 +1219,10 @@ PAGES = {
       <p>The site is static. It sets no cookies, runs no advertising or profiling scripts, and makes
         no third-party requests — no fonts, no CDN, no embedded video. Nothing about you is collected
         by visiting it.</p>
-{form_privacy}
+      <p>If you send the contact form, we receive what you typed: your name, email address, and
+        whatever else you chose to add. We use it to reply to you and to keep track of the
+        conversation. We do not sell it, share it for marketing, or add you to a list you did not ask
+        for.</p>
 
       <h2>What the product reads</h2>
       <p>Once you connect a Microsoft 365 tenant, SeQontrol reads configuration and metadata, mostly
@@ -1256,8 +1252,8 @@ PAGES = {
         compliance evidence is that it covers a period. The audit trail is hash-chained and
         append-only by design: entries are not edited or deleted, which is the property that makes it
         worth having.</p>
-      <p>Form submissions and the correspondence that follows are kept for as long as the
-        conversation is useful, and deleted on request.</p>
+      <p>Contact-form correspondence is kept for as long as the conversation is useful, and deleted
+        on request.</p>
 
       <h2>Your rights</h2>
       <p>You can ask what we hold about you, ask for it to be corrected, ask for it to be deleted, or
@@ -1404,23 +1400,6 @@ def hero_buttons(spec: dict) -> str:
     return f'      <div class="btn-row"><a class="btn btn-primary" href="#request">{req}</a></div>\n'
 
 
-# What the privacy page says about the forms depends on where they go, so it is chosen from
-# FORM_ENDPOINT rather than written once: the page can never describe a backend that is not live.
-FORM_PRIVACY_MAIL = """      <p>If you send one of the forms on this site, it opens an email to us with what you typed: your
-        name, email address, and whatever else you chose to add. We use it to reply to you and to keep
-        track of the conversation. We do not sell it, share it for marketing, or add you to a list you
-        did not ask for.</p>"""
-
-FORM_PRIVACY_LIVE = """      <p>If you send one of the forms on this site, we receive what you typed: your name, email address,
-        and whatever else you chose to add, plus the page you sent it from and, if the link that brought
-        you carried them, its campaign tags. It is stored in <strong>Microsoft Azure, in the EU</strong>,
-        mailed to us, and you get one automatic acknowledgement. We use it to reply to you and to keep
-        track of the conversation. We do not sell it, share it for marketing, or add you to a list you
-        did not ask for.</p>
-      <p>The acknowledgement goes through Azure Communication Services, with its data held in Europe.
-        It contains nothing you typed, and an address receives at most one a day.</p>"""
-
-
 def closing_band(closing) -> str:
     if not closing:
         return ""
@@ -1446,8 +1425,7 @@ def build(name: str, spec: dict) -> None:
                   operator=OPERATOR, entity=ENTITY,
                   kvk=KVK, address=ADDRESS_INLINE,
                   address_html='<br>'.join(ADDRESS_LINES),
-                  others=OTHER_FRAMEWORKS, form_privacy=FORM_PRIVACY_LIVE if FORM_ENDPOINT
-                  else FORM_PRIVACY_MAIL)
+                  others=OTHER_FRAMEWORKS)
     body = spec["body"].format(**fields)
     spec = {**spec, "lede": spec["lede"].format(**fields)} if "lede" in spec else spec
 

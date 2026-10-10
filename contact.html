@@ -92,12 +92,11 @@
         <p class="muted">Straight to a person. We reply to everything, usually the same working day, and we
           will tell you if this is not a fit for you.</p>
 
-        <!-- action and data-endpoint are stamped by build_nav.py from build_legal.FORM_ENDPOINT. -->
-        <form id="contact-form" method="post" action="mailto:jeff@jeffops.com" enctype="text/plain" data-endpoint="" novalidate data-contact="jeff@jeffops.com">
-          <div class="hp" aria-hidden="true">
-            <label for="cf-website">Leave this empty</label>
-            <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off">
-          </div>
+        <!-- FORM ENDPOINT: paste the URL into BOTH action and data-endpoint below.
+             With it set, the form posts normally (works without JavaScript) and
+             site.js upgrades it to an inline thank-you. Left empty, it falls back
+             to composing a mailto, which can fail silently on webmail — see README. -->
+        <form id="contact-form" method="post" action="" data-endpoint="" novalidate data-contact="jeff@jeffops.com">
           <div class="field">
             <label for="cf-name">Name</label>
             <input id="cf-name" name="name" type="text" autocomplete="name" required>

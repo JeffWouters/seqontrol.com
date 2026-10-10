@@ -274,24 +274,14 @@ def lazy_footer(src: str) -> str:
 # more and every fallback resolved to the literal "mailto:{contact}" - a dead link on the only
 # conversion path the site has. Stamped here instead, from the one constant that defines it, so the
 # address cannot drift from the five forms that use it.
-from build_legal import CONTACT, FORM_ENDPOINT, SIGNUP  # noqa: E402
+from build_legal import CONTACT, SIGNUP  # noqa: E402
 
 CONTACT_FORM_RE = re.compile(r'<form id="contact-form"([^>]*)>')
 
 
 def stamp_contact(m: "re.Match") -> str:
-    # strip any previous stamp first so a second run is a no-op rather than an append. The endpoint
-    # used to be pasted by hand into action AND data-endpoint on five forms, which is ten places to
-    # keep in step; it is now one constant, stamped onto both attributes of every form.
-    attrs = re.sub(r'\s*(?:data-contact|action|data-endpoint|enctype)="[^"]*"', "", m.group(1))
-    # Without an endpoint, a browser with no JavaScript would post to the static page itself and get
-    # a 405 from Pages, losing the message. A mailto action with text/plain hands it to the mail
-    # client instead, which is what the scripted path does too. data-endpoint stays empty, so site.js
-    # still takes the mailto route.
-    action = FORM_ENDPOINT or f"mailto:{CONTACT}"
-    extra = "" if FORM_ENDPOINT else ' enctype="text/plain"'
-    attrs = attrs.replace(' method="post"', ' method="post" action="%s"%s data-endpoint="%s"'
-                          % (action, extra, FORM_ENDPOINT), 1)
+    # strip any previous stamp first so a second run is a no-op rather than an append
+    attrs = re.sub(r'\s*data-contact="[^"]*"', "", m.group(1))
     return '<form id="contact-form"%s data-contact="%s">' % (attrs, CONTACT)
 
 
