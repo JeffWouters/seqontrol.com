@@ -110,8 +110,12 @@ PRICING_SUB = []
 # an-unreleased-product pattern that made four cards wrong on products/index.html. Since 2026-08-23
 # these products have their own pages, where the sidebar badge sits inches from a banner saying the
 # opposite, so the two are now the same three states throughout: green only for something shipped.
+#
+# Since 2026-10-10 the shipped badge reads "Available" rather than "Built". "Built" describes the
+# engineering; what a buyer needs to know is whether they can have it, and the two unreleased states
+# are also built. verify.AVAIL_HEADINGS carries the same word and has to change with it.
 STATUS = {
-    None:       ("built", "Built",             "Running today"),
+    None:       ("built", "Available",         "Running today"),
     "Soon":     ("early", "Coming soon",       "Built and running &mdash; not released yet"),
     "In dev":   ("soon",  "Under development", "Not yet available"),
 }
@@ -127,7 +131,7 @@ STATUS = {
 # badge becomes a lie. Three states, three existing styles: green built, amber close, grey still being
 # written.
 CARD_STATUS = {
-    None:     ("built", "Built"),
+    None:     ("built", "Available"),
     "Soon":   ("early", "Coming soon"),
     "In dev": ("soon",  "Under development"),
 }

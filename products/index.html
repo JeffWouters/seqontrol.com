@@ -220,7 +220,7 @@
           </tbody>
         </table>
       </div>
-      <p class="small dim" style="margin-top:1rem">“Built” means the capability exists and runs today, and four of the eight
+      <p class="small dim" style="margin-top:1rem">“Available” means it runs today and you can buy it, and four of the eight
         are: ShareCare, SecurityPortal, WebScan and MailTrust. “Coming soon” means built and running
         but not on sale. “Under development” means not yet available. Where a plane is detected but
         not yet remediable, the product’s own page says so — and
@@ -228,8 +228,9 @@
         rather label it plainly than let you find out in month two.</p>
 
       <h3 style="margin-top:3rem">What actually gets crawled</h3>
-      <p class="muted" style="max-width:62ch">Every surface below is read app-only, on a schedule, and
-        scored into one findings store. Dashed means detected but not yet remediable app-only — the
+      <p class="muted" style="max-width:62ch">Every surface below that sits inside a tenant or a cloud
+        account is read app-only, on a schedule, and scored into one findings store; the public web and
+        email-authentication surfaces are read from outside, with no grant at all. Dashed means detected but not yet remediable app-only — the
         distinction is stated rather than glossed.</p>
       <div class="coverage">
         <div class="plane tone-sharecare"><b>SharePoint</b><span>Sites, links, permissions — site roles detect only</span></div>
@@ -274,28 +275,58 @@
     </div>
   </section>
 
-  <!-- the three portals -->
-  <section>
+  <!-- the portfolio, grouped by what you can have today -->
+  <section class="band">
     <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The portfolio</span>
+        <h2>Four running today, four on the way</h2>
+        <p>Each one answers a question you are probably already being asked, is sold on its own, and the
+          scanning ones feed the same shared findings store. SecurityPortal finds the weaknesses,
+          CompliancePortal turns them into evidence and PosturePortal puts the picture on one board &mdash;
+          two of those three are not released yet, so that loop is not closed until they ship.</p>
+      </div>
+
       <div class="suite">
-        <div class="suite-head">
-          <h2>Three products, one loop</h2>
-          <p>SecurityPortal finds the weaknesses. CompliancePortal turns them into evidence. PosturePortal
-            puts the whole picture on one board. Two of the three are not released yet — the badges below say
-            which is which, and the loop is not closed until they ship. Each is sold on its own; together they
-            close the loop from
-            "what is wrong" to "here is the proof" without a single manual hand-off.</p>
-        </div>
-        <div class="grid grid-3">
+        <h3 class="avail-head">Available today</h3>
+        <div class="grid grid-2">
+          <article class="pcard tone-sharecare">
+            <span class="kicker">Data access governance</span>
+            <h3><a href="sharecare.html">ShareCare</a> <span class="status built">Available</span></h3>
+            <p>What is shared outside, what is over-shared inside so Copilot can reach it, and who can fix it.
+              Crawls seven Microsoft 365 planes app-only, plus Box and Slack Connect, scores by sensitivity and blast radius, and remediates with a grace
+              window and undo.</p>
+            <a class="arrow-link" href="sharecare.html">ShareCare</a>
+          </article>
+
           <article class="pcard tone-security">
             <span class="kicker">Posture scanning</span>
-            <h3><a href="securityportal.html">SecurityPortal</a> <span class="status built">Built</span></h3>
+            <h3><a href="securityportal.html">SecurityPortal</a> <span class="status built">Available</span></h3>
             <p>Continuous Microsoft 365 and Entra posture — Conditional Access coverage, MFA enforcement gaps,
               over-permissioned apps, risky sign-in patterns. Findings carry control tags so they land in
               CompliancePortal as evidence.</p>
             <a class="arrow-link" href="securityportal.html">SecurityPortal</a>
           </article>
 
+          <article class="pcard tone-webscan">
+            <span class="kicker">External attack surface</span>
+            <h3><a href="webscan.html">WebScan</a> <span class="status built">Available</span></h3>
+            <p>Finds and grades the public face of your organisation — subdomain discovery, certificate
+              transparency, TLS, headers, cookies, DNS, exposed services and infrastructure. Needs no tenant
+              and no consent, and the scan itself is free on every tenant; you pay to keep the results.</p>
+            <a class="arrow-link" href="webscan.html">WebScan</a>
+          </article>
+
+          <article class="pcard tone-mailtrust">
+            <span class="kicker">Email authentication</span>
+            <h3><a href="mailtrust.html">MailTrust</a> <span class="status built">Available</span></h3>
+            <p>SPF, DKIM, DMARC, BIMI and MTA-STS posture, real sender inventory from aggregate reports, a staged
+              path to enforcement, and DNS records written in-product for supported providers.</p>
+            <a class="arrow-link" href="mailtrust.html">MailTrust</a>
+          </article>
+        </div>
+        <h3 class="avail-head">Built, and not released yet</h3>
+        <div class="grid grid-2">
           <article class="pcard tone-compliance">
             <span class="kicker">Control evidence</span>
             <h3><a href="complianceportal.html">CompliancePortal</a> <span class="status early">Coming soon</span></h3>
@@ -305,6 +336,17 @@
             <a class="arrow-link" href="complianceportal.html">CompliancePortal</a>
           </article>
 
+          <article class="pcard tone-condaccess">
+            <span class="kicker">Policy governance</span>
+            <h3><a href="conditionalaccessportal.html">ConditionalAccessPortal</a> <span class="status early">Coming soon</span></h3>
+            <p>Conditional Access policy inventory and metering, baseline coverage gaps, and approval-gated policy
+              write-back — on the Visibility / Governance / Automation ladder. Its Entra app asks
+              for read scope only until write-back is consented separately. Not released yet.</p>
+            <a class="arrow-link" href="conditionalaccessportal.html">ConditionalAccessPortal</a>
+          </article>
+        </div>
+        <h3 class="avail-head">Still in development</h3>
+        <div class="grid grid-2">
           <article class="pcard tone-posture">
             <span class="kicker">Single pane</span>
             <h3><a href="postureportal.html">PosturePortal</a> <span class="status soon">Under development</span></h3>
@@ -313,62 +355,15 @@
               and board reporting.</p>
             <a class="arrow-link" href="postureportal.html">PosturePortal</a>
           </article>
+
+          <article class="pcard tone-dredd">
+            <span class="kicker">Drift governance</span>
+            <h3><a href="dredd.html">Dredd</a> <span class="status soon">Under development</span></h3>
+            <p>Your approved configuration as a versioned baseline. Every deviation becomes a finding with two
+              answers: revert it, or ratify it into the baseline. Both are recorded, attributed and versioned.</p>
+            <a class="arrow-link" href="dredd.html">Dredd</a>
+          </article>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- the rest -->
-  <section class="band">
-    <div class="wrap">
-      <div class="section-head">
-        <h2>And the rest of the portfolio</h2>
-        <p>Each of these is a complete answer to a question you are probably already being asked — and the scanning
-          ones feed the same shared findings store.</p>
-      </div>
-
-      <div class="grid grid-3">
-        <article class="pcard tone-sharecare">
-          <span class="kicker">Data access governance</span>
-          <h3><a href="sharecare.html">ShareCare</a> <span class="status built">Built</span></h3>
-          <p>What is shared outside, what is over-shared inside so Copilot can reach it, and who can fix it.
-            Crawls seven Microsoft 365 planes app-only, plus Box and Slack Connect, scores by sensitivity and blast radius, and remediates with a grace
-            window and undo.</p>
-          <a class="arrow-link" href="sharecare.html">ShareCare</a>
-        </article>
-
-        <article class="pcard tone-webscan">
-          <span class="kicker">External attack surface</span>
-          <h3><a href="webscan.html">WebScan</a> <span class="status built">Built</span></h3>
-          <p>Finds and grades the public face of your organisation — subdomain discovery, certificate
-            transparency, TLS, headers, cookies, DNS, exposed services and infrastructure. Needs no tenant
-            and no consent, and the scan itself is free on every tenant; you pay to keep the results.</p>
-          <a class="arrow-link" href="webscan.html">WebScan</a>
-        </article>
-
-        <article class="pcard tone-mailtrust">
-          <span class="kicker">Email authentication</span>
-          <h3><a href="mailtrust.html">MailTrust</a> <span class="status built">Built</span></h3>
-          <p>SPF, DKIM, DMARC, BIMI and MTA-STS posture, real sender inventory from aggregate reports, a staged
-            path to enforcement, and DNS records written in-product for supported providers.</p>
-          <a class="arrow-link" href="mailtrust.html">MailTrust</a>
-        </article>
-
-        <article class="pcard tone-dredd">
-          <span class="kicker">Drift governance</span>
-          <h3><a href="dredd.html">Dredd</a> <span class="status soon">Under development</span></h3>
-          <p>Your approved configuration as a versioned baseline. Every deviation becomes a finding with two
-            answers: revert it, or ratify it into the baseline. Both are recorded, attributed and versioned.</p>
-          <a class="arrow-link" href="dredd.html">Dredd</a>
-        </article>
-
-        <article class="pcard tone-condaccess">
-          <span class="kicker">Policy governance</span>
-          <h3><a href="conditionalaccessportal.html">ConditionalAccessPortal</a> <span class="status early">Coming soon</span></h3>
-          <p>Conditional Access policy inventory and metering, baseline coverage gaps, and approval-gated policy
-            write-back — on the Visibility / Governance / Automation ladder. Its Entra app asks
-            for read scope only until write-back is consented separately. Not released yet.</p>
-        </article>
       </div>
     </div>
   </section>

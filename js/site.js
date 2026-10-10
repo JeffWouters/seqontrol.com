@@ -198,6 +198,17 @@
 
   function say(m) { status.textContent = m; }
 
+  // ?topic=<key> preselects the matching <option data-topic="key">, so a "Tell me when it ships"
+  // button on a product page lands on a form that already says what it is about. An unknown key,
+  // or a page whose topic is a hidden input rather than a select, leaves the form as it was.
+  var topicSelect = form.querySelector('select[name="topic"]');
+  var wantTopic = (new URLSearchParams(window.location.search).get('topic') || '').toLowerCase();
+  if (topicSelect && wantTopic) {
+    Array.prototype.forEach.call(topicSelect.options, function (o) {
+      if ((o.getAttribute('data-topic') || '') === wantTopic) o.selected = true;
+    });
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var name = form.elements.name.value.trim();

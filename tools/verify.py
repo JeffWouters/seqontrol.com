@@ -49,9 +49,9 @@ def check_links(page: str, src: str) -> None:
         # nothing, so these have to be split out rather than skipped — skipping is how 404.html
         # shipped sixty relative links that only worked at one depth.
         if url.startswith("/"):
-            target = url.lstrip("/").split("#")[0]
+            target = url.lstrip("/").split("#")[0].split("?")[0]
         else:
-            target = os.path.join(os.path.dirname(page), url.split("#")[0])
+            target = os.path.join(os.path.dirname(page), url.split("#")[0].split("?")[0])
         if not os.path.exists(target):
             fail(page, f"broken link -> {url}")
 
@@ -557,7 +557,7 @@ def check_singletons(page: str, src: str) -> None:
 # hand-typed "In dev" tag while sitting under that heading. The badge and the heading are the same
 # fact stated twice, so they get checked against each other.
 AVAIL_HEADINGS = {
-    "Available today":              "Built",
+    "Available today":              "Available",
     "Built, and not released yet":  "Coming soon",
     "Still in development":         "Under development",
 }

@@ -112,15 +112,18 @@
           <div class="field">
             <label for="cf-topic">What is this about?</label>
             <select id="cf-topic" name="topic">
-              <option>A walkthrough of the platform</option>
-              <option>A scoped assessment (Copilot oversharing)</option>
-              <option>A scoped assessment (email spoofing / DMARC)</option>
-              <option>A security posture assessment</option>
-              <option>A compliance readiness snapshot</option>
-              <option>Tell me when Dredd or PosturePortal lands</option>
-              <option>Partner / MSP model</option>
-              <option>A quote for my estate</option>
-              <option>Something else</option>
+              <option data-topic="walkthrough">A walkthrough of the platform</option>
+              <option data-topic="sharecare">A scoped assessment (Copilot oversharing)</option>
+              <option data-topic="mailtrust">A scoped assessment (email spoofing / DMARC)</option>
+              <option data-topic="securityportal">A security posture assessment</option>
+              <option data-topic="readiness">A compliance readiness snapshot</option>
+              <option data-topic="msp">Partner / MSP model</option>
+              <option data-topic="quote">A quote for my estate</option>
+              <option data-topic="conditionalaccessportal">Tell me when ConditionalAccessPortal ships</option>
+              <option data-topic="complianceportal">Tell me when CompliancePortal ships</option>
+              <option data-topic="postureportal">Tell me when PosturePortal ships</option>
+              <option data-topic="dredd">Tell me when Dredd ships</option>
+              <option data-topic="other">Something else</option>
             </select>
           </div>
           <div class="field">
@@ -181,6 +184,8 @@
           <li>Buyers who need an on-premises-only tool</li>
           <li>Anyone needing a signed audit opinion from the vendor</li>
         </ul>
+        <p class="small muted mb0">The rest is on <a href="limits.html">what we don&rsquo;t do</a>, written
+          down before you have to ask.</p>
       </aside>
     </div>
   </section>

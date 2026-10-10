@@ -90,9 +90,9 @@ def mailto(to: str, cc: str = '', subject: str = '', body: str = '') -> str:
 AWKWARD_QUESTION = mailto(
     SUPPORT,
     cc='jeff+seqontrol@jeffops.com',
-    subject='Feature request',
-    body="Hello,\r\n\r\nI have a question about something <ProductName> doesn't do that's a deal "
-         "breaker for us, because we need that functionality.")
+    subject='Dealbreaker question',
+    body="Hello,\r\n\r\nOne of the limits on your site may be a dealbreaker for us. The product and "
+         "the limit:\r\n\r\nWhat we need instead:\r\n")
 
 
 # The registered entity. Named in full on privacy and terms because both are
@@ -637,10 +637,11 @@ PAGES = {
         h1="Find out who is sending email as your domain",
         lede="A free check of SPF, DKIM, DMARC, BIMI and MTA-STS — and, once reports are flowing, a list "
              "of every source sending mail as you. No tenant access required.",
+        hero_cta=True,
         form=dict(topic="Free spoofing / DMARC check",
                   button="Check my domain",
                   estate_label="Domain",
-                  estate_hint="yourcompany.com — or several, comma separated"),
+                  estate_hint="yourcompany.com — or a list of client domains"),
         body="""
       <h2>What you get back</h2>
       <ul>
@@ -680,10 +681,11 @@ PAGES = {
         lede="A free grade of your public surface — TLS, HTTP headers, cookies, DNS, content and "
              "infrastructure — with the standard behind every failure and the fix next to it. No tenant, "
              "no consent, no onboarding.",
+        hero_cta=True,
         form=dict(topic="Free public surface scan",
                   button="Scan my site",
                   estate_label="Site",
-                  estate_hint="https://yourcompany.com — or several, comma separated"),
+                  estate_hint="https://yourcompany.com — or a prospect's site"),
         body="""
       <h2>The one you can start with today</h2>
       <p>Every other assessment on this site needs an administrator to consent to something. This one does
@@ -769,6 +771,20 @@ PAGES = {
         you now own: the app registrations, the secret rotation, the upgrade path, the blast radius. That
         is a reasonable trade for free. It is worth being deliberate that you have made it.</p>
 
+      <h2>What we ask for, since you will ask</h2>
+      <p>You already know what CIPP holds across your book, so what a second tool wants is a fair question.
+        Each product has its own Entra application and its own admin consent, scoped to what that product
+        reads. Scanning is app-only and read-first; remediation is a separate consent on top of it, and
+        every read-only product keeps working without it. Revoking one product's consent revokes exactly
+        one product's Graph access. <a href="security.html">The access, in full</a>, and
+        <a href="limits.html">what it does not cover yet</a>.</p>
+
+      <h2>Across a book</h2>
+      <p>The evidence is per client; the work of keeping it is not. One console across every client
+        tenant, capacity pooled across the book rather than forty minimum charges, and partner margin built
+        into the plan &mdash; so the evidence layer is a line you resell beside CIPP rather than a cost you
+        absorb. <a href="for-msps.html">The provider model</a>.</p>
+
       <h2>What we will not claim</h2>
       <p>We are not cheaper than free, and we will not pretend the comparison is close on that axis. We do
         not do tenant administration, and adding it would make us worse at the thing we are for.</p>
@@ -776,6 +792,14 @@ PAGES = {
         those, it is maintained by people who know this platform properly, and a provider running it is
         making a defensible engineering decision. We are asking for the budget line next to it, not
         instead of it.</p>
+
+      <h2>Where to start</h2>
+      <p>Pick the client you worry about most and see what it is already exposing, before anyone grants
+        anything more than the scan needs.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="exposure-report.html">Get the free exposure report</a>
+        <a class="btn btn-ghost" href="for-msps.html">See the provider model</a>
+      </div>
 """),
 
     "vs-m365-governance.html": dict(
@@ -913,10 +937,11 @@ PAGES = {
     "exposure-report.html": dict(
         eyebrow="Free assessment",
         h1="See what Copilot can reach in your tenant",
+        hero_cta=True,
         form=dict(topic="Free exposure report",
                   button="Request my exposure report",
-                  estate_label="Tenant size",
-                  estate_hint="e.g. 150 users, ~4 TB in SharePoint"),
+                  estate_label="Tenant size, or tenant count",
+                  estate_hint="e.g. 150 users — or 12 client tenants, for a provider"),
         lede="A scoped scan, a scored list of what is actually exposed, and a remediation order. "
              "Free, read-only, and useful whether or not you buy anything afterwards.",
         body="""
@@ -983,7 +1008,7 @@ PAGES = {
         that are trying to persuade you.</p>
 
 <div class="note honest">
-        <h2>Every product asks for its own consent</h2>
+        <h2 id="consent">Every product asks for its own consent</h2>
         <p>There is no single grant that switches the platform on. Each product that reads your tenant has
           its own Entra application and its own admin consent, scoped to that product's permissions &mdash; so
           adding a product means going back to an administrator, not flipping a switch. The upside is real:
@@ -1092,6 +1117,15 @@ PAGES = {
         and finding out late costs you more than it costs us.</p>
       <p>If one of them is a dealbreaker, tell us and we will say so plainly rather than sell around
         it. <a href="{awkward_question}">Ask the awkward question</a>.</p>
+
+      <h2>If none of them stopped you</h2>
+      <p>The quickest way to find out whether the rest holds up is to point it at something real. Two of
+        these need nothing from your tenant at all.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="exposure-report.html">Get the free exposure report</a>
+        <a class="btn btn-ghost" href="surface-report.html">Scan a site, free</a>
+        <a class="btn btn-ghost" href="for-msps.html">Running a client book?</a>
+      </div>
 """),
 
     "about.html": dict(
@@ -1364,6 +1398,10 @@ def build(name: str, spec: dict) -> None:
         + f'      <span class="eyebrow">{spec["eyebrow"]}</span>\n'
         + f'      <h1>{spec["h1"]}</h1>\n'
         + f'      <p class="lede">{spec["lede"]}</p>\n'
+        # A free-assessment page puts its form at the bottom, under the explanation. The button
+        # takes someone who already knows they want it straight there instead of past four sections.
+        + (f'      <div class="btn-row"><a class="btn btn-primary" href="#request">'
+           f'{spec["form"]["button"]}</a></div>\n' if spec.get("hero_cta") else "")
         + "    </div>\n  </section>\n\n"
         + '  <section>\n    <div class="wrap wrap-narrow">\n'
         + body
