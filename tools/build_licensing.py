@@ -51,7 +51,7 @@ ONE = [("Included", "one tier")]
 # Two licences, not a ladder. The free one runs everything and remembers
 # nothing; Pro is the one that keeps and schedules. Splitting those apart sold
 # a distinction no buyer makes.
-KEPT = [("Free", "on every tenant"), ("Pro", "per monitored site")]
+KEPT = [("Free", "with every account"), ("Pro", "per monitored site")]
 
 
 def rows(items, cols):
@@ -195,7 +195,7 @@ PRODUCTS = [
     ),
     dict(
         key="webscan", name="WebScan", tone="--t-webscan", status=None,
-        counted="Free on every tenant &middot; Pro $20 per monitored site, per month",
+        counted="Free with every SeQontrol account &middot; Pro $20 per monitored site, per month",
         tech=[("Discovery", [("Subdomain and asset discovery", 1),
                              ("Certificate transparency monitoring", 1)]),
               ("Transport", [("TLS versions and cipher suites", 1), ("Certificate chain and expiry", 1),
@@ -242,7 +242,7 @@ PRODUCTS = [
               "saved site nobody re-scans is a stale record, and a schedule that keeps nothing is a cron job "
               "with no output. Pro grants both.<br><br>"
               "<strong>The free tier is the whole scanner, and that is deliberate.</strong> It is not a trial "
-              "with an expiry date: it is auto-granted to every tenant, and what it does not do is remember."),
+              "with an expiry date: it is auto-granted to every SeQontrol account, and what it does not do is remember."),
         after=("Counted per site rather than per domain, because a site is what gets scanned: one domain can "
                "front several, and each is its own configuration to grade. Nothing caps how many sites you "
                "may add; the count is trued up, never a hard stop.<br><br>"
@@ -367,12 +367,10 @@ PRODUCTS = [
         cols=None,
         rows=None,
         after=None,
-        note=("<strong>Dredd runs; its licence shape is still being set.</strong> The product is built and the "
-              "governance, remediation and bulk-heal paths are live — what is not settled is the unit it should "
-              "be counted on. It is the metric we understand least, and rather than guess a shape and reprice "
-              "it six months later, it is being set against real configuration scopes first. Ask and you will "
-              "get a number. The full capability set is on the "
-              "<a href=\"products/dredd.html\">Dredd section</a>."),
+        note=("<strong>Dredd is still being written, and has no list price.</strong> When it lands it will be "
+              "quoted rather than listed: its unit is monitored configuration scope, the metric this model "
+              "understands least, and it is being set against real configuration scopes rather than guessed. "
+              "What it is meant to do is on the <a href=\"products/dredd.html\">Dredd page</a>."),
     ),
 ]
 

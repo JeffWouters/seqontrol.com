@@ -88,7 +88,7 @@
             <tr><th scope="row">ShareCare</th><td>Microsoft 365 users</td></tr>
             <tr><th scope="row">SecurityPortal</th><td>Users, at a lower rate with any ShareCare tier &middot; $50 monthly tenant minimum</td></tr>
             <tr><th scope="row">ConditionalAccessPortal</th><td>Users, with the same $50 monthly tenant minimum as SecurityPortal</td></tr>
-            <tr><th scope="row">WebScan</th><td>Monitored sites &middot; free on every tenant</td></tr>
+            <tr><th scope="row">WebScan</th><td>Monitored sites &middot; free with every SeQontrol account</td></tr>
             <tr><th scope="row">MailTrust</th><td>Sending domains; parked domains at a lower rate, five included with each</td></tr>
             <tr><th scope="row">CompliancePortal</th><td>Per tenant, banded by how many frameworks are in scope</td></tr>
             <tr><th scope="row">Dredd</th><td>Monitored configuration scope &mdash; quoted, not listed</td></tr>
@@ -294,7 +294,7 @@
         <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="WebScan">
           <table class="matrix">
             <thead>
-              <tr><th scope="col">&nbsp;</th><th class="tier-head" scope="col">Free<small>on every tenant</small></th><th class="tier-head" scope="col">Pro<small>kept and scheduled</small></th></tr>
+              <tr><th scope="col">&nbsp;</th><th class="tier-head" scope="col">Free<small>with every account</small></th><th class="tier-head" scope="col">Pro<small>kept and scheduled</small></th></tr>
             </thead>
             <tbody>
               <tr><th scope="row">List</th><td>$0</td><td>$20</td></tr>
@@ -309,7 +309,7 @@
         </ul>
         <div class="note plain">
           <h3>WebScan is priced on its own</h3>
-          <p class="mb0">A tenant that arrived through a free scan is one we would not otherwise have, and putting a minimum in front of them would eat the funnel it sits downstream of. Nothing is added when a second product applies from that point.</p>
+          <p class="mb0">An account that arrived through a free scan is one we would not otherwise have, and putting a minimum in front of them would eat the funnel it sits downstream of. Nothing is added when a second product applies from that point.</p>
         </div>
         <div class="note plain">
           <h3>Discovered subdomains are free, and stay free until you say otherwise</h3>
@@ -337,7 +337,7 @@
         <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="WebScan licence comparison">
           <table class="matrix">
             <thead>
-              <tr><th scope="col">Capability</th><th class="tier-head" scope="col">Free<small>on every tenant</small></th><th class="tier-head" scope="col">Pro<small>per monitored site</small></th></tr>
+              <tr><th scope="col">Capability</th><th class="tier-head" scope="col">Free<small>with every account</small></th><th class="tier-head" scope="col">Pro<small>per monitored site</small></th></tr>
             </thead>
             <tbody>
               <tr class="group"><th colspan="3" scope="colgroup">Price</th></tr>
@@ -373,7 +373,7 @@
           </table>
         </div>
         <div class="note plain" style="margin-top:0">
-          <p class="mb0"><strong>Two licences, not a ladder, and the reason is that the ladder sold a distinction nobody makes.</strong> Keeping a scan and running it on a schedule were separate tiers; but a saved site nobody re-scans is a stale record, and a schedule that keeps nothing is a cron job with no output. Pro grants both.<br><br><strong>The free tier is the whole scanner, and that is deliberate.</strong> It is not a trial with an expiry date: it is auto-granted to every tenant, and what it does not do is remember.</p>
+          <p class="mb0"><strong>Two licences, not a ladder, and the reason is that the ladder sold a distinction nobody makes.</strong> Keeping a scan and running it on a schedule were separate tiers; but a saved site nobody re-scans is a stale record, and a schedule that keeps nothing is a cron job with no output. Pro grants both.<br><br><strong>The free tier is the whole scanner, and that is deliberate.</strong> It is not a trial with an expiry date: it is auto-granted to every SeQontrol account, and what it does not do is remember.</p>
         </div>
         <p class="after">Counted per site rather than per domain, because a site is what gets scanned: one domain can front several, and each is its own configuration to grade. Nothing caps how many sites you may add; the count is trued up, never a hard stop.<br><br><strong>Pro is $20, against paid comparables that start around three times that.</strong> They run from roughly $60 per asset per month to several hundred, and they include active vulnerability testing that WebScan does not do. At the other end the free graders charge nothing and retain nothing. The gap between those two is where this sits, and it was empty.<br><br>WebScan never writes anywhere; SPF, DKIM and DMARC belong to MailTrust.</p>
         <div class="btn-row">
@@ -592,7 +592,7 @@
           <ul class="tags"><li class="tag on">Microsoft Entra ID</li><li class="tag off">Microsoft 365 tenant config — designed</li><li class="tag off">Intune — designed</li></ul>
         </div>
         <div class="note plain" style="margin-top:0">
-          <p class="mb0"><strong>Dredd runs; its licence shape is still being set.</strong> The product is built and the governance, remediation and bulk-heal paths are live — what is not settled is the unit it should be counted on. It is the metric we understand least, and rather than guess a shape and reprice it six months later, it is being set against real configuration scopes first. Ask and you will get a number. The full capability set is on the <a href="products/dredd.html">Dredd section</a>.</p>
+          <p class="mb0"><strong>Dredd is still being written, and has no list price.</strong> When it lands it will be quoted rather than listed: its unit is monitored configuration scope, the metric this model understands least, and it is being set against real configuration scopes rather than guessed. What it is meant to do is on the <a href="products/dredd.html">Dredd page</a>.</p>
         </div>
         <h4 style="margin-top:2rem">What the PosturePortal licence includes</h4>
         <div class="tech">
