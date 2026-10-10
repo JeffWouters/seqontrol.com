@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SeQontrol - ShareCare - Who can reach what, and why</title>
 <meta name="description" content="See what Microsoft 365 over-shares, externally and to Copilot, across every tenant you manage — then remediate it safely, with a grace window and undo.">
-<meta name="theme-color" content="#0b0f17">
+<meta name="theme-color" content="#151c4f">
 <link rel="icon" href="../favicon.ico" sizes="any">
 <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="../assets/favicon-32-light.png" sizes="32x32" type="image/png" media="(prefers-color-scheme: light)">
@@ -88,20 +88,34 @@
 <main id="main">
 
   <section class="phero tone-sharecare">
-    <div class="wrap">
-      <p class="breadcrumb"><a href="index.html">Products</a><span>/</span>ShareCare</p>
-      <span class="eyebrow">Data access governance</span>
-      <h1>See your Copilot blast radius. Then shrink it.</h1>
-      <p class="lede">
-        ShareCare answers the question every Microsoft 365 customer suddenly has to answer:
-        <strong>what is shared with the outside world — or over-shared internally so Copilot can reach it —
-        and who can fix it?</strong>
-      </p>
-      <div class="oneline"><strong>In one line:</strong> see what is exposed across every tenant you manage, and safely fix it.</div>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="../exposure-report.html">Get the free exposure report</a>
-        <a class="btn btn-ghost" href="../pricing.html#sharecare">Licensing</a>
+    <div class="wrap phero-grid">
+      <div>
+        <p class="breadcrumb"><a href="index.html">Products</a><span>/</span>ShareCare</p>
+        <span class="eyebrow">Data access governance</span>
+        <h1>See your Copilot blast radius. Then shrink it.</h1>
+        <p class="lede">
+          ShareCare answers the question every Microsoft 365 customer suddenly has to answer:
+          <strong>what is shared with the outside world — or over-shared internally so Copilot can reach it —
+          and who can fix it?</strong>
+        </p>
+        <div class="oneline"><strong>In one line:</strong> see what is exposed across every tenant you manage, and safely fix it.</div>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="../exposure-report.html">Get the free exposure report</a>
+          <a class="btn btn-ghost" href="#pricing">See pricing</a>
+        </div>
       </div>
+      <figure class="shot">
+        <div class="shot-pan" tabindex="0">
+        <div class="shot-frame" style="--w:529px">
+          <picture><source srcset="../assets/Screenshots/ShareCare/hero-attention.webp" type="image/webp"><img src="../assets/Screenshots/ShareCare/hero-attention.png"
+               alt="ShareCare overview: a needs-attention bar showing three anonymous links and 35
+                    privileged grants, above an exposure score of 39 out of 100."
+               width="529" height="501" loading="eager" decoding="async"></picture>
+        </div>
+        </div>
+        <figcaption><b>The first screen.</b> What needs a decision today, and one number you can take apart
+          down to the file and the person it is shared with.</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -272,6 +286,61 @@
           </tbody>
         </table>
       </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">ShareCare pricing</span>
+        <h2>Prices on the site. All of them.</h2>
+        <p>Per Microsoft 365 user, per month. No seat minimum and no platform floor &mdash; a twelve-person
+          company pays for twelve people &mdash; and scans are never metered.</p>
+      </div>
+      <!--PRICE-TIERS:sharecare-->
+      <div class="flavours">
+        <div class="flavour">
+          <div class="tier">Step 1 &middot; See it</div>
+          <h3>Visibility</h3>
+          <div class="price">$2 <small>/user/mo</small></div>
+          <ul class="checklist">
+            <li>Read-only inventory of sharing and permissions</li>
+            <li>Risk scoring and findings history</li>
+            <li>Fleet view</li>
+            <li>Daily scheduled scans</li>
+          </ul>
+        </div>
+        <div class="flavour featured">
+          <div class="tier">Step 2 &middot; Govern it</div>
+          <h3>Governance</h3>
+          <div class="price">$4 <small>/user/mo</small></div>
+          <ul class="checklist">
+            <li>Everything in Visibility</li>
+            <li>Oversharing and advanced detections</li>
+            <li>Policies, access reviews and approvals</li>
+            <li>Waivers and evidence packs</li>
+            <li>Six-hourly scans</li>
+          </ul>
+        </div>
+        <div class="flavour on-navy">
+          <div class="tier">Step 3 &middot; Act on it</div>
+          <h3>Automation</h3>
+          <div class="price">$6.50 <small>/user/mo</small></div>
+          <ul class="checklist">
+            <li>Everything in Governance</li>
+            <li>Hourly scans</li>
+            <li>OneDrive permission and sharing-link write-back, with undo</li>
+            <li>Requires a separate connector remediation consent</li>
+          </ul>
+        </div>
+      </div>
+      <p class="volume"><span class="label">Volume discount on the whole bill</span>
+        <span><b>10%</b> above 100 users</span>
+        <span><b>20%</b> above 500</span>
+        <span><b>30%</b> above 2,000</span>
+        <a href="../pricing.html#sharecare">Worked bills and every product&rsquo;s pricing</a>
+      </p>
+      <!--/PRICE-TIERS-->
     </div>
   </section>
 

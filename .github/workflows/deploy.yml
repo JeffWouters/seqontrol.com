@@ -24,7 +24,7 @@ jobs:
   # The site is hand-written static HTML with no build step, so there is nothing
   # to compile — but there is plenty to get wrong. This job is the guard rail:
   # broken links, unbalanced tags, accessibility regressions, and the editorial
-  # rules the site is committed to (no prices, no customer references, no CIS
+  # rules the site is committed to (prices only in generated blocks, no customer references, no CIS
   # framework names, no re-consent overclaim). See tools/verify.py.
   verify:
     runs-on: ubuntu-latest
@@ -61,6 +61,7 @@ jobs:
           python tools/build_legal.py
           python tools/build_guides.py
           python tools/build_licensing.py
+          python tools/build_prices.py
           python tools/build_nav.py
           python tools/build_seo.py
           # sitemap.xml is excluded, and only sitemap.xml. Its <lastmod> values come from
