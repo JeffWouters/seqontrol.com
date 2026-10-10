@@ -132,6 +132,9 @@
 
 <div class="note honest">
         <h2>Subdomain discovery is not a complete estate</h2>
+        <p><strong>In one line:</strong> the list of hostnames WebScan shows is what it has seen so far, not
+          everything you own, and a host it has never seen usually turns up at its next certificate
+          renewal. The detail follows.</p>
         <p>WebScan finds hostnames two ways, and only one of them is immediate. The names carried on the
           certificate your site serves at scan time are read straight away &mdash; though a wildcard
           certificate names a shape rather than hosts and yields nothing to enumerate, and a shared CDN or

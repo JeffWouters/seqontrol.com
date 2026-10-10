@@ -156,7 +156,7 @@ META = {
         "CompliancePortal"),
     "products/postureportal.html": (
         "PosturePortal: one posture board per tenant (in development)",
-        "The read-only board that answers \u201chow are we doing\u201d without opening five products: "
+        "The read-only board that answers \u201chow are we doing\u201d without opening every product: "
         "findings, risk and coverage per tenant and across a whole fleet.",
         "PosturePortal"),
     "products/dredd.html": (

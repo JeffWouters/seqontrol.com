@@ -175,12 +175,18 @@
           <li>SPF · DKIM · DMARC</li>
           <li>BIMI · MTA-STS</li>
         </ul>
+        <h3>Writes to your tenant?</h3>
+        <ul><li>Never to Microsoft 365. On Automation it writes DNS records, through each DNS provider&rsquo;s
+          own authorisation, which you grant separately.</li></ul>
         <h3>DNS write-back</h3>
         <ul>
           <li>Azure DNS</li>
           <li>DNSimple</li>
           <li>Others — guided steps</li>
         </ul>
+        <h3>Needs</h3>
+        <ul><li>No Graph consent. The posture check reads public DNS; the sender inventory needs DMARC reports
+          pointed at a mailbox, which is part of onboarding.</li></ul>
         <h3>Pairs with</h3>
         <ul>
           <li><a href="complianceportal.html">CompliancePortal</a> — email authentication as control evidence (coming soon)</li>
