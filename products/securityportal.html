@@ -134,8 +134,9 @@
             query-based checks that a native score cannot produce: high-privilege application permissions that are
             genuinely unused, and per-user MFA usage as actually observed.</li>
           <li><strong>Control-tagged findings</strong> — each finding carries control references and a structured
-            evidence table, so it flows into <a href="complianceportal.html">CompliancePortal</a> as first-party
-            evidence rather than being re-collected by hand.</li>
+            evidence table, kept with its history, so when <a href="complianceportal.html">CompliancePortal</a>
+            ships (it is built, not yet released) it reads them as first-party evidence rather than re-collecting
+            them by hand.</li>
           <li><strong>Fleet-wide and scan-only</strong> — no agents, no write path, built to run across every
             tenant you manage.</li>
         </ul>
@@ -175,9 +176,9 @@
         <h3>Pairs with</h3>
         <ul>
           <li><a href="webscan.html">WebScan</a> — the same posture, from outside</li>
-          <li><a href="complianceportal.html">CompliancePortal</a> — findings become evidence</li>
+          <li><a href="complianceportal.html">CompliancePortal</a> — findings become evidence (coming soon)</li>
           <li><a href="postureportal.html">PosturePortal</a> — posture on one board (in development)</li>
-          <li><a href="dredd.html">Dredd</a> — promote a failing check into an enforced control</li>
+          <li><a href="dredd.html">Dredd</a> — promote a failing check into an enforced control (in development)</li>
         </ul>
       </aside>
     </div>
@@ -299,7 +300,7 @@
             <tr><td>Conditional Access, MFA and application-permission posture</td><td>The controls auditors and clients actually ask about</td></tr>
             <tr><td>Log-analytics query checks</td><td>Evidence a native score cannot produce — truly unused permissions, real MFA source</td></tr>
             <tr><td>Not-assessed counted separately from pass and fail</td><td>A check that could not run never becomes a quiet pass</td></tr>
-            <tr><td>Control-reference tags on every finding</td><td>Posture becomes compliance evidence with no second integration</td></tr>
+            <tr><td>Control-reference tags on every finding</td><td>Posture is recorded against the controls it proves, ready for CompliancePortal when it ships</td></tr>
             <tr><td>Fleet-wide, agentless</td><td>Run it across the whole book without touching an endpoint</td></tr>
           </tbody>
         </table>
@@ -328,7 +329,7 @@
         </article>
         <article class="card">
           <h3>"Why not a general cloud posture tool?"</h3>
-          <p>Most do not combine Microsoft 365 identity posture, fleet economics and compliance evidence output
+          <p>Few combine Microsoft 365 identity posture, fleet economics and compliance evidence output
             in one place — nor sit beside a scanner for the public surface that files into the same store.</p>
         </article>
       </div>

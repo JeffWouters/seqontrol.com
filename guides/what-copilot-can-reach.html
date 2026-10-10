@@ -88,13 +88,15 @@
       <h2>Where the exposure actually comes from</h2>
       <p>In practice, four patterns account for most of what surprises people.</p>
       <h3>1. Organisation-wide sharing links</h3>
-      <p>A link created as "anyone in the organisation" is permanent, transferable and invisible in most
-        reporting. Ten years of them accumulate. Each one is a document Copilot can now quote to anybody
-        who asks a question near enough to its contents.</p>
+      <p>A "people in your organisation" link is a transferable key. Creating one does not open the file to
+        everyone &mdash; but everyone it reaches can open it, and once they have, Copilot can surface it to
+        them. Links sent by email or in a Teams chat are redeemed automatically for up to a hundred
+        recipients, links get forwarded, and unless an expiration policy is set they do not expire. Ten
+        years of them accumulate, and nobody can say who already holds which.</p>
       <h3>2. Company-wide groups used as convenience</h3>
       <p>"Everyone except external users" started as a shortcut for one intranet page. It is now attached
-        to sites nobody remembers granting. This is the single most common cause of a Copilot answer that
-        contains something a colleague should not have seen.</p>
+        to sites nobody remembers granting. It is a common cause of a Copilot answer that contains something
+        a colleague should not have seen.</p>
       <h3>3. Inherited permissions on old sites</h3>
       <p>A site created from a template in 2019 inherits an access model designed for a team that no
         longer exists. Nobody checks, because nothing surfaced it — until something did.</p>
@@ -103,9 +105,11 @@
         collaborate on one file. The folder stays shared.</p>
 
       <h2>Why native reporting does not answer this</h2>
-      <p>You can retrieve sharing information per workload, per site, in separate reports. What you cannot
-        easily get is the question you actually need answered: <em>for this person, what would Copilot be
-        able to reach, and which of that is sensitive?</em></p>
+      <p>SharePoint Advanced Management's data access governance reports flag broad sharing per site, and
+        they are worth running. Sharing information is also retrievable per workload, in separate reports.
+        What none of them answers easily is the question you actually need answered: <em>for this person,
+        what would Copilot be able to reach, and which of that is sensitive?</em> And each answers it one
+        tenant at a time.</p>
       <p>That requires joining the sharing surface to the permission model to the sensitivity of what sits
         behind it — across SharePoint, OneDrive, Teams and the groups underpinning all three. It is a
         crawl, not a report.</p>
@@ -122,12 +126,14 @@
         <li><strong>Keep the evidence.</strong> The scan that proves you fixed it is the same artefact
           your auditor wants next quarter.</li>
       </ol>
+      <p><a href="../products/sharecare.html">ShareCare</a> runs this crawl across SharePoint, OneDrive, Teams and
+        the groups behind them, scores it by sensitivity and blast radius, and keeps the history.</p>
 
       <h2>The uncomfortable part</h2>
       <p>Restricting Copilot tenant-wide — turning off search scope, delaying the rollout — treats the
         symptom and costs you the value you paid for. The exposure was there before Copilot and will
-        outlast it. The links, the stale guests and the forwarding rules are a data-access problem that
-        happens to have become visible.</p>
+        outlast it. The links, the stale guests and the company-wide groups are a data-access problem
+        that happens to have become visible.</p>
 
       <div class="note plain">
         <h2>Find out what Copilot can reach in your own tenant.</h2>

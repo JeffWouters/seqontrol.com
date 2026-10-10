@@ -165,7 +165,8 @@ PRODUCTS = [
                "checks does not shrink with headcount — a 20-seat tenant has about as many Conditional Access "
                "policies, app registrations and configuration settings as a 2,000-seat one, and every one is "
                "evaluated either way. Per-user alone would price a full posture scan of a small tenant at "
-               "thirty dollars. The floor bites below 34 users and does nothing above it.<br><br>"
+               "thirty dollars. The floor bites below 34 users with a ShareCare tier, below 15 standalone, and "
+               "does nothing above that.<br><br>"
                "One tier, not a ladder: SecurityPortal is scan-only, so there is no write access to sell on a "
                "higher tier. Remediation lives in the products built to write safely. The log-analytics checks "
                "need the tenant to export activity logs; without that export they report &ldquo;not "
@@ -252,8 +253,8 @@ PRODUCTS = [
         after=("Counted per site rather than per domain, because a site is what gets scanned: one domain can "
                "front several, and each is its own configuration to grade. Nothing caps how many sites you "
                "may add; the count is trued up, never a hard stop.<br><br>"
-               "<strong>Pro is $20 against a category that starts an order of magnitude higher.</strong> The "
-               "nearest paid comparables run from roughly $60 per asset per month to several hundred, and "
+               "<strong>Pro is $20, against paid comparables that start around three times that.</strong> "
+               "They run from roughly $60 per asset per month to several hundred, and "
                "they include active vulnerability testing that WebScan does not do. At the other end the free "
                "graders charge nothing and retain nothing. The gap between those two is where this sits, and "
                "it was empty.<br><br>"
@@ -334,7 +335,7 @@ PRODUCTS = [
                "connects to nothing itself — it reads the shared findings store — so it costs almost nothing to "
                "run and will not be sold as a separate line. Exactly how it is packaged is not settled, and "
                "putting a number against something still being built is how a price list stops being trusted. "
-               "The capabilities below describe what it does; none of them is something you can buy today."),
+               "The capabilities listed for it describe what it does; none of them is something you can buy today."),
     ),
     dict(
         key="mailtrust", name="MailTrust", tone="--t-mailtrust", status=None,

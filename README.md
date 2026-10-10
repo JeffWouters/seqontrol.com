@@ -452,18 +452,19 @@ What that involved, and why, so it does not get undone:
 
 ## Content rules baked into the copy
 
-- **Be exact about consent and onboarding.** The site previously claimed "the customer consents once, not
-  once per product, and adding a product never means going back through onboarding". Verified against the
-  code, that overclaimed. What is true: **one Entra app** for the whole platform, declaring the union of
-  every product's Graph permissions, so the admin consents once and **enabling a product never asks for new
-  permissions**. What is not: consent is recorded per connector, and connectors are per (tenant, product) —
-  so enabling a product still needs an administrator to activate its connector. It is a cheap trip (Entra
-  already holds the grant, no new prompt) but it is a step, it needs Manage authorization, and the product
-  does not run until it happens. The adjacent planes do **not** ride the Graph consent: Exchange admin needs
-  a certificate and its own role, Power Platform a pre-registered service principal, Azure/Log Analytics a
-  workspace and reader role, DNS its own OAuth2 flow per provider. Write-back is a second consent round trip.
-  Only ShareCare, SecurityPortal, CompliancePortal and Dredd are Graph connector products. `platform.html`
-  carries the full step-by-step table; do not compress it back into "connect once".
+- **Be exact about consent and onboarding.** Each product that reads a tenant has **its own Entra app and its
+  own admin consent**, scoped to that product's permissions — the rule `verify.py` enforces, citing the code
+  (AppHost.cs, Connectors/Program.cs, Dredd's GraphDirectoryRefResolver). Adding a product is therefore a
+  second consent, through the same onboarding flow — never a second integration project — and revoking one
+  revokes exactly one. Never write that the admin "consents once", that adding a product "never asks for new
+  permissions", or that products share "one connection": `verify.py` refuses those phrasings, and since
+  2026-10-10 it collapses whitespace first, so a claim wrapped across two source lines is caught too. The
+  adjacent planes do **not** ride the Graph consent: Exchange admin needs a certificate and its own role,
+  Power Platform a pre-registered service principal, Azure/Log Analytics a workspace and reader role, DNS its
+  own OAuth2 flow per provider. Write-back is a separate consent round trip. `platform.html` carries the full
+  step-by-step table; do not compress it back into "connect once". (Until 2026-10-10 this bullet described
+  one Entra app for the whole platform, contradicting `verify.py` and every page; if the code has since
+  moved to a single app, change the rule, this bullet and the pages together.)
 - **Security stands above compliance.** The key principle, stated in the `#principle` section on
   the home page (the full argument sits in its "Why security comes first" disclosure), reinforced in the CompliancePortal scope area and on the
   platform trust list. The argument: a compliance control can be waived, which turns the report green

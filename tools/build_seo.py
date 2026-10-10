@@ -25,8 +25,8 @@ SITE = "https://seqontrol.com"
 META = {
     "index.html": (
         "SeQontrol - Microsoft 365 - See what is over-shared",
-        "ShareCare finds what Microsoft 365 over-shares, SecurityPortal scores your posture, "
-        "CompliancePortal turns both into audit evidence, MailTrust stops spoofing.",
+        "See what your Microsoft 365 tenants over-share, how their posture scores and who can spoof "
+        "their domains, for one estate or a whole client book.",
         None),
     "platform.html": (
         "SeQontrol - Platform - The layer under every product",
@@ -65,8 +65,8 @@ META = {
         "Evidence auditors accept"),
     "pricing.html": (
         "SeQontrol - Pricing - What sets your number",
-        "Every product with a settled price, listed: per user, per site, per domain or per tenant, "
-        "with the suite terms and the volume bands.",
+        "Every published SeQontrol price: per user, per site, per domain or per tenant, with the "
+        "volume bands, the provider rates and what is never metered.",
         "Pricing"),
     "spoofing-report.html": (
         "SeQontrol - Free report - Who is sending as you",
