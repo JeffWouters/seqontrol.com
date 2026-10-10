@@ -709,6 +709,10 @@ tbody tr:hover td { background: rgba(108, 79, 223, .03); }
 .tick { color: var(--accent); font-weight: 700; }
 .no { color: var(--dim); }
 
+/* The form trap field. Off-screen rather than display:none, which some bots know to skip, and
+   aria-hidden with tabindex=-1 so neither a screen reader nor the Tab key ever lands on it. */
+.hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
 /* screen-reader-only text */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;

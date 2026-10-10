@@ -297,16 +297,40 @@ def strip_existing(src: str) -> str:
 # frame-ancestors is deliberately absent: it is ignored in a meta policy and only works as a header,
 # so writing it here would look like clickjacking protection the site does not have. The same is true
 # of X-Frame-Options. Both need a real host to set them.
-CSP = ('<meta http-equiv="Content-Security-Policy" content="'
-       "default-src 'self'; "
-       "script-src 'self'; "
-       "style-src 'self' 'unsafe-inline'; "
-       "img-src 'self' data:; "
-       "font-src 'self'; "
-       "connect-src 'self'; "
-       "base-uri 'self'; "
-       "object-src 'none'"
-       '">')
+def form_origin() -> str:
+    """The origin the forms post to, or '' while they still fall back to email.
+
+    Imported here rather than at the top: build_legal imports this module, so a top-level import
+    would be circular whenever build_seo runs as the script.
+    """
+    from urllib.parse import urlsplit
+    from build_legal import FORM_ENDPOINT
+    if not FORM_ENDPOINT:
+        return ""
+    parts = urlsplit(FORM_ENDPOINT)
+    return f"{parts.scheme}://{parts.netloc}"
+
+
+# connect-src and form-action name the form backend's origin, and only once FORM_ENDPOINT is set:
+# site.js fetches it, and a browser without JavaScript posts the form to it directly. form-action is
+# otherwise left out, as before, because it does not fall back to default-src and 'self' alone would
+# change nothing a reader can see.
+def _csp() -> str:
+    origin = form_origin()
+    extra = f" {origin}" if origin else ""
+    form_action = f"form-action 'self'{extra}; " if origin else ""
+    return ('<meta http-equiv="Content-Security-Policy" content="'
+            "default-src 'self'; "
+            "script-src 'self'; "
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data:; "
+            "font-src 'self'; "
+            f"connect-src 'self'{extra}; "
+            f"{form_action}"
+            "base-uri 'self'; "
+            "object-src 'none'"
+            '">')
+
 
 
 def apply(rel: str) -> None:
@@ -323,7 +347,7 @@ def apply(rel: str) -> None:
                  f'<meta name="description" content="{desc}">', src, count=1)
 
     blocks = [
-        CSP,
+        _csp(),
         f'<link rel="canonical" href="{url}">',
         f'<meta property="og:type" content="{"website" if rel == "index.html" else "article"}">',
         f'<meta property="og:site_name" content="SeQontrol">',
@@ -416,7 +440,7 @@ def apply_csp_only(rel: str) -> None:
     path = os.path.join(ROOT, rel.replace("/", os.sep))
     src = io.open(path, encoding="utf-8").read()
     src = re.sub(r'\s*<meta http-equiv="Content-Security-Policy"[^>]*>', "", src)
-    src = src.replace("<head>", "<head>\n" + CSP, 1)
+    src = src.replace("<head>", "<head>\n" + _csp(), 1)
     io.open(path, "w", encoding="utf-8", newline="\n").write(src)
 
 

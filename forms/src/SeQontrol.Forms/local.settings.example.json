@@ -1,0 +1,17 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "SUBMISSIONS_STORAGE_CONNECTION": "UseDevelopmentStorage=true",
+    "NOTIFY_TO": "jeff@jeffops.com",
+    "REPLY_TO": "jeff@jeffops.com",
+    "ALLOWED_ORIGINS": "http://localhost:8765",
+    "THANKS_URL": "http://localhost:8765/thanks.html",
+    "ACS_ENDPOINT": "",
+    "MAIL_FROM": ""
+  },
+  "Host": {
+    "CORS": "http://localhost:8765"
+  }
+}

@@ -402,7 +402,9 @@ def check_content(page: str, src: str) -> None:
 
 # 404.html is deliberately noindex, with no canonical and no Open Graph
 # identity: a soft-404 in an index helps nobody.
-SEO_EXEMPT = {"404.html"}
+# thanks.html is where a sent form lands. Indexing it would only send search visitors to a page
+# thanking them for something they never did.
+SEO_EXEMPT = {"404.html", "thanks.html"}
 
 # Redirect stubs are not pages: they exist so an obvious URL resolves. They are
 # noindex, canonical to their target, and carry no chrome — so the page-shaped
@@ -433,6 +435,36 @@ _descs: dict[str, str] = {}
 # rendered from tools/prices.py as well, this is the check that keeps them in step. It also fails on a
 # block that is still empty, which means build_prices.py was skipped.
 FIGURE_RE = re.compile(r"\$\s?\d[\d,]*(?:\.\d+)?|\b\d+\s?%")
+
+
+# ------------------------------------------------------------- form endpoint
+
+FORM_TAG_RE = re.compile(r'<form id="contact-form"[^>]*>')
+
+
+def check_form_endpoint() -> None:
+    """Every form posts to build_legal.FORM_ENDPOINT, and that is never a local address.
+
+    README tells anyone testing locally to point it at localhost and put it back; this is what makes
+    forgetting the second half a failed build rather than five forms posting into somebody's laptop.
+    """
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    from build_legal import FORM_ENDPOINT  # noqa: E402
+    if FORM_ENDPOINT and (not FORM_ENDPOINT.startswith("https://")
+                          or re.search(r"localhost|127\.0\.0\.1", FORM_ENDPOINT)):
+        fail("tools/build_legal.py", f"FORM_ENDPOINT {FORM_ENDPOINT!r} must be an https URL, not a local one")
+    for rel in ("contact.html", "pricing.html", "exposure-report.html", "spoofing-report.html",
+                "surface-report.html"):
+        src = open(os.path.join(ROOT, rel), encoding="utf-8").read()
+        tags = FORM_TAG_RE.findall(src)
+        if not tags:
+            fail(rel, "has no contact form")
+        for tag in tags:
+            action = FORM_ENDPOINT or "mailto:"
+            if f'action="{action}' not in tag or f'data-endpoint="{FORM_ENDPOINT}"' not in tag:
+                fail(rel, "form action/data-endpoint do not match build_legal.FORM_ENDPOINT; run build_nav.py")
+        if 'name="website"' not in src:
+            fail(rel, "form is missing its trap field (name=\"website\")")
 
 
 def check_prices() -> None:
@@ -868,6 +900,7 @@ def main() -> int:
     check_sitemap()
     check_security_txt()
     check_prices()
+    check_form_endpoint()
 
     print(f"checked {len(PAGES)} pages")
     if failures:

@@ -124,11 +124,12 @@
       <h2 id="request">Scan my site</h2>
       <p>Send a URL. No tenant, no consent, no call first.</p>
 
-      <!-- FORM ENDPOINT: paste the URL into BOTH action and data-endpoint.
-           With it set the form posts normally and works without JavaScript;
-           left empty it falls back to composing a mailto, which can fail
-           silently on webmail — see README. -->
-      <form id="contact-form" method="post" action="" data-endpoint="" novalidate data-contact="jeff@jeffops.com">
+      <!-- action and data-endpoint are stamped by build_nav.py from build_legal.FORM_ENDPOINT. -->
+      <form id="contact-form" method="post" action="mailto:jeff@jeffops.com" enctype="text/plain" data-endpoint="" novalidate data-contact="jeff@jeffops.com">
+        <div class="hp" aria-hidden="true">
+          <label for="cf-website">Leave this empty</label>
+          <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
         <input type="hidden" id="cf-topic" name="topic" value="Free public surface scan">
         <div class="field">
           <label for="cf-name">Name</label>

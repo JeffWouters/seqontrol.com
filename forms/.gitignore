@@ -1,0 +1,8 @@
+bin/
+obj/
+TestResults/
+local.settings.json
+*.user
+__azurite_db_*
+__blobstorage__/
+__queuestorage__/
