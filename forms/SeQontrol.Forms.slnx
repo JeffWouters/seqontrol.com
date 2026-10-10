@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeQontrol.Forms/SeQontrol.Forms.csproj" />
+  <Project Path="tests/SeQontrol.Forms.Tests/SeQontrol.Forms.Tests.csproj" />
+</Solution>

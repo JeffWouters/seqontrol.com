@@ -198,6 +198,23 @@
 
   function say(m) { status.textContent = m; }
 
+  // Context for whoever reads the request: which page it came from, how the visitor arrived, and
+  // when the form rendered (the backend treats a form sent within three seconds of that as a bot).
+  // Read from this page's own URL and referrer only; nothing is stored in the browser to carry it.
+  function hidden(name, value) {
+    if (!value || form.elements[name]) return;
+    var input = document.createElement('input');
+    input.type = 'hidden'; input.name = name; input.value = String(value).slice(0, 500);
+    form.appendChild(input);
+  }
+  hidden('ts', Date.now());
+  hidden('page', window.location.pathname);
+  hidden('referrer', document.referrer);
+  var params = new URLSearchParams(window.location.search);
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) {
+    hidden(k, params.get(k));
+  });
+
   // ?topic=<key> preselects the matching <option data-topic="key">, so a "Tell me when it ships"
   // button on a product page lands on a form that already says what it is about. An unknown key,
   // or a page whose topic is a hidden input rather than a select, leaves the form as it was.
@@ -229,11 +246,19 @@
 
     if (endpoint) {
       submit.disabled = true; say('Sending…');
+      // URL-encoded rather than multipart: it is what the form sends without JavaScript too, so the
+      // backend parses one format, and it keeps the request a CORS "simple" one with no preflight.
       fetch(endpoint, { method: 'POST', headers: { 'Accept': 'application/json' },
-                        body: new FormData(form) })
-        .then(function (r) { if (!r.ok) throw new Error(r.status);
-          form.hidden = true; thanks.hidden = false;
-          thanks.setAttribute('tabindex', '-1'); thanks.focus(); })
+                        body: new URLSearchParams(new FormData(form)) })
+        .then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (data) {
+            if (r.ok) { window.location.href = '/thanks.html'; return; }
+            submit.disabled = false;
+            say(r.status === 400 && data.errors && data.errors.length
+              ? data.errors.join(' ')
+              : 'That did not send. Try again, or email us — your message is still in the form.');
+          });
+        })
         .catch(function () { submit.disabled = false;
           say('That did not send. Try again, or email us — your message is still in the form.'); });
       return;

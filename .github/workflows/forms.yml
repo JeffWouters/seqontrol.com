@@ -1,0 +1,93 @@
+name: Form backend
+
+# The Azure Function behind every form on the site (forms/) and its infrastructure (infra/forms/).
+# Separate from the Pages workflow: a site-copy change never rebuilds the function, and a function
+# change never redeploys the site.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'forms/**'
+      - 'infra/forms/**'
+      - '.github/workflows/forms.yml'
+  pull_request:
+    paths:
+      - 'forms/**'
+      - 'infra/forms/**'
+      - '.github/workflows/forms.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: forms
+  cancel-in-progress: false
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Azurite, so the table code is exercised against a real Table endpoint, not only fakes.
+    services:
+      azurite:
+        image: mcr.microsoft.com/azure-storage/azurite
+        ports:
+          - 10002:10002
+    env:
+      FORMS_TABLE_CONNECTION: UseDevelopmentStorage=true
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: forms/global.json
+
+      - name: Test
+        working-directory: forms
+        run: dotnet test SeQontrol.Forms.slnx -c Release
+
+      - name: Template builds
+        run: az bicep build --file infra/forms/main.bicep --stdout > /dev/null
+
+  # Runs only once the Azure side is set up: README "Form backend" lists the repository variables
+  # this needs. Until they exist the job is skipped, not failed.
+  deploy:
+    needs: test
+    # main only: a manual run from another branch must not reach production either.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.FORMS_FUNCTION_APP != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: forms
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: forms/global.json
+
+      - name: Publish
+        working-directory: forms/src/SeQontrol.Forms
+        run: |
+          dotnet publish -c Release -o "$RUNNER_TEMP/publish"
+          cd "$RUNNER_TEMP/publish" && zip -qr "$RUNNER_TEMP/forms.zip" .
+
+      # Federated credentials: no secret is stored in GitHub. The identity behind AZURE_CLIENT_ID needs
+      # Website Contributor on the function app and nothing else.
+      - uses: azure/login@v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy
+        run: |
+          az functionapp deployment source config-zip \
+            --resource-group "${{ vars.FORMS_RESOURCE_GROUP }}" \
+            --name "${{ vars.FORMS_FUNCTION_APP }}" \
+            --src "$RUNNER_TEMP/forms.zip"
