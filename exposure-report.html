@@ -130,12 +130,9 @@
       <p>Tell us the tenant size and we will come back with a scope and a date. A person replies,
         usually the same working day.</p>
 
-      <!-- action and data-endpoint are stamped by build_nav.py from build_legal.FORM_ENDPOINT. -->
+      <!-- The form composes an email: site.js builds it from the fields, and without
+           JavaScript the mailto action that build_nav.py stamps does the same. -->
       <form id="contact-form" method="post" action="mailto:jeff@jeffops.com" enctype="text/plain" data-endpoint="" novalidate data-contact="jeff@jeffops.com">
-        <div class="hp" aria-hidden="true">
-          <label for="cf-website">Leave this empty</label>
-          <input id="cf-website" name="website" type="text" tabindex="-1" autocomplete="off">
-        </div>
         <input type="hidden" id="cf-topic" name="topic" value="Free exposure report">
         <div class="field">
           <label for="cf-name">Name</label>
