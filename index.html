@@ -104,7 +104,8 @@
         </div>
         <div class="btn-row">
           <a class="btn btn-primary" href="exposure-report.html">Get my free exposure report</a>
-          <a class="btn btn-ghost" href="limits.html">Read what we cannot do</a>
+          <a class="btn btn-ghost" href="products/index.html">See the eight products</a>
+          <a class="btn btn-ghost" href="platform.html">What every product inherits</a>
         </div>
         <p class="small dim" style="margin:.9rem 0 0">A scoped scan of your worst tenants, and a
           report you can act on — whether or not you buy anything afterwards.</p>
@@ -169,6 +170,58 @@
         </article>
       </div>
     </div>
+  </section><section class="band">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Three ways in</span>
+        <h2>Find out something true about your estate, for nothing</h2>
+        <p>Each of these is a real assessment with a real report at the end, whether or not you buy
+          anything afterwards. <strong>Two of them need nothing from you but a domain name.</strong></p>
+      </div>
+
+      <div class="grid grid-3">
+        <article class="card tone-sharecare">
+          <h3>What Copilot can reach</h3>
+          <p>A scoped crawl of your worst tenants: anonymous links, external guests, company-wide shares
+            and the app consents nobody remembers granting &mdash; scored, with the list of what to revoke.</p>
+          <p class="small dim">Needs a read-only connection to your tenant.</p>
+          <p class="mb0"><a class="btn btn-primary" href="exposure-report.html">Get my exposure report</a></p>
+        </article>
+
+        <article class="card tone-mailtrust">
+          <h3>Who is sending as you</h3>
+          <p>SPF, DKIM, DMARC, BIMI and MTA-STS across your sending and parked domains, and what an
+            attacker could send from the ones you forgot you owned.</p>
+          <p class="small dim">Needs a domain name. Nothing else.</p>
+          <p class="mb0"><a class="btn btn-primary" href="spoofing-report.html">Check my domain</a></p>
+        </article>
+
+        <article class="card tone-webscan">
+          <h3>What your attacker sees first</h3>
+          <p>TLS, certificates, security headers, cookies, DNS hygiene and exposed content on the public
+            face of your estate &mdash; graded against the standards that define each one.</p>
+          <p class="small dim">Needs a domain name. Nothing else.</p>
+          <p class="mb0"><a class="btn btn-primary" href="surface-report.html">Scan my site</a></p>
+        </article>
+      </div>
+
+      <div class="section-head">
+        <h3>One product needs nothing from you at all</h3>
+        <p><a href="products/webscan.html">WebScan</a> reads what any anonymous visitor reads. No tenant, no
+          Entra app, no admin consent, no onboarding, no call. Send one URL and it goes looking for the rest —
+          then grades everything it finds, with the standard behind each failure and the fix.</p>
+      </div>
+      <div class="oneline tone-webscan">
+        <strong>And it does not stop being free.</strong> The complete scanner is included with every
+        SeQontrol tenant — one URL at a time, fire and forget, for as long as you keep the tenant and with no
+        expiry date on it. The licence buys what happens after the scan: history, schedules, alerts,
+        evidence.
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="surface-report.html">Scan my site, free</a>
+        <a class="btn btn-ghost" href="products/webscan.html">What it checks</a>
+      </div>
+    </div>
   </section><section id="products">
     <div class="wrap">
       <div class="section-head">
@@ -182,10 +235,6 @@
       <div class="suite">
         <div class="suite-head">
           <h2>Sold separately. <span class="sep">·</span> Built as one. <span class="sep">·</span> Priced honestly.</h2>
-          <p>SecurityPortal finds the weaknesses, CompliancePortal turns them into evidence, and PosturePortal
-             will put the whole picture on one board. The scanning products write to the same findings store, so a
-             scan run by one becomes evidence in another with nothing to integrate. Four are running today;
-             ConditionalAccessPortal and CompliancePortal are close, and Dredd and PosturePortal are further out.</p>
         </div>
         <h3 class="avail-head">Available today</h3>
         <div class="grid grid-2">
@@ -267,56 +316,6 @@
 
         </div>
 
-
-
-      <h3 style="margin-top:3rem">What actually gets crawled</h3>
-      <p class="muted" style="max-width:62ch">Every surface below is read app-only, on a schedule, and
-        scored into one findings store. Dashed means detected but not yet remediable app-only — the
-        distinction is stated rather than glossed.</p>
-      <div class="coverage">
-        <div class="plane tone-sharecare"><b>SharePoint</b><span>Sites, links, permissions — site roles detect only</span></div>
-        <div class="plane tone-sharecare"><b>OneDrive</b><span>Shares, revoke app-only</span></div>
-        <div class="plane tone-sharecare"><b>Teams</b><span>Membership, guest access</span></div>
-        <div class="plane tone-sharecare"><b>Entra ID</b><span>App consents, grants</span></div>
-        <div class="plane off tone-sharecare"><b>Exchange</b><span>Forwarding — detect only</span></div>
-        <div class="plane off tone-sharecare"><b>Power Platform</b><span>Detect only</span></div>
-        <div class="plane tone-sharecare"><b>Power BI</b><span>Sharing surface</span></div>
-        <div class="plane tone-security"><b>Conditional Access</b><span>Coverage and gaps</span></div>
-        <div class="plane tone-security"><b>Log Analytics</b><span>Where logs are exported</span></div>
-        <div class="plane tone-webscan"><b>Public web surface</b><span>TLS, headers, DNS</span></div>
-        <div class="plane tone-mailtrust"><b>Email auth</b><span>SPF, DKIM, DMARC, BIMI</span></div>
-        <div class="plane tone-compliance"><b>Google Cloud &amp; AWS</b><span>Read-only connectors — not released yet</span></div>
-        <div class="plane tone-sharecare"><b>Box</b><span>Links, revoke app-only</span></div>
-        <div class="plane off tone-sharecare"><b>Slack Connect</b><span>Detect only</span></div>
-      </div>
-      <p class="coverage-note">Google Workspace is the next plane. What is not here is not scanned —
-        <a href="limits.html">the full list of what we do not do</a>.</p>
-
-      <h3 style="margin-top:3rem">What happens to what it finds</h3>
-      <div class="flow" role="group" aria-labelledby="flow-heading" style="margin-bottom:1rem">
-        <h2 class="sr-only" id="flow-heading">How SeQontrol works</h2>
-        <div class="flow-step">
-          <span class="flow-num">1</span>
-          <div><h3>Connect</h3><p>An app-only Entra app per product, each asking only for what that product needs. Same onboarding flow every time.</p></div>
-        </div>
-        <div class="flow-step">
-          <span class="flow-num">2</span>
-          <div><h3>See</h3><p>Each scanning product reads through that connection and writes into one shared findings store.</p></div>
-        </div>
-        <div class="flow-step">
-          <span class="flow-num">3</span>
-          <div><h3>Prove</h3><p>Findings carry control tags, so a security finding becomes compliance evidence without a second integration.</p></div>
-        </div>
-        <div class="flow-step">
-          <span class="flow-num">4</span>
-          <div><h3>Fix</h3><p>Remediation is simulate-then-execute, with grace windows, approvals and undo where the plane allows it.</p></div>
-        </div>
-        <div class="flow-step">
-          <span class="flow-num">5</span>
-          <div><h3>Govern</h3><p>Waivers expire, approvals are recorded, and the audit trail is hash-chained. Findings are live records that change as the estate changes; what is chained is the trail of what was done and the evidence snapshots taken from it.</p></div>
-        </div>
-      </div>
-
     </div>
   </section><section class="band">
     <div class="wrap">
@@ -348,71 +347,11 @@
             <li>One console across every client, from day one</li>
             <li>Pooled capacity, per-tenant floor as greater-of, partner margin</li>
             <li>A benchmark that ranks your book and sells the remediation work</li>
+            <li>Delegated onboarding, audited impersonation, and an approval gate before you act</li>
           </ul>
           <div class="btn-row">
             <a class="btn btn-primary" href="for-msps.html">See the provider model</a>
           </div>
-        </article>
-      </div>
-    </div>
-  </section><section>
-    <div class="wrap split">
-      <div>
-        <span class="eyebrow">For providers</span>
-        <h2>Microsoft 365 security across every client you manage</h2>
-        <p>Onboard one SeQontrol tenant and you get a fleet console across <em>all</em> your clients and
-          <em>all</em> products from day one — the same crawl, the same evidence, the same board, priced per
-          managed tenant.</p>
-        <ul class="checklist">
-          <li><strong>Fleet views in every product</strong> — manage 5 clients or 500 from one screen, and benchmark them against each other.</li>
-          <li><strong>Delegated onboarding</strong> with audited impersonation and an approval gate before you act inside a client tenant.</li>
-          <li><strong>Pooled capacity</strong> across managed tenants with a per-tenant floor applied as greater-of, never additive.</li>
-          <li><strong>Partner margin</strong> built into the plan, so the service is resellable rather than a cost line.</li>
-        </ul>
-        <div class="btn-row"><a class="btn btn-ghost" href="for-msps.html">The provider model</a></div>
-      </div>
-      <aside class="aside">
-        <h3>Fleet benchmarking</h3>
-        <p class="small muted mb0">Rank every client's exposure against the rest of your book. "These eight clients
-          are one anonymous link away from a Copilot leak" is a conversation that sells remediation work — and it
-          only exists if one tool sees every tenant.</p>
-        <h3>Quarterly reviews</h3>
-        <p class="small muted mb0">PosturePortal — still in development — becomes the client-facing artefact:
-          one board per client, annotated and saved, instead of an afternoon of assembling exports by hand.</p>
-      </aside>
-    </div>
-  </section>  <section class="band">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Three ways in</span>
-        <h2>Find out something true about your estate, for nothing</h2>
-        <p>Each of these is a real assessment with a real report at the end, whether or not you buy
-          anything afterwards. <strong>Two of them need nothing from you but a domain name.</strong></p>
-      </div>
-
-      <div class="grid grid-3">
-        <article class="card tone-sharecare">
-          <h3>What Copilot can reach</h3>
-          <p>A scoped crawl of your worst tenants: anonymous links, external guests, company-wide shares
-            and the app consents nobody remembers granting &mdash; scored, with the list of what to revoke.</p>
-          <p class="small dim">Needs a read-only connection to your tenant.</p>
-          <p class="mb0"><a class="btn btn-primary" href="exposure-report.html">Get my exposure report</a></p>
-        </article>
-
-        <article class="card tone-mailtrust">
-          <h3>Who is sending as you</h3>
-          <p>SPF, DKIM, DMARC, BIMI and MTA-STS across your sending and parked domains, and what an
-            attacker could send from the ones you forgot you owned.</p>
-          <p class="small dim">Needs a domain name. Nothing else.</p>
-          <p class="mb0"><a class="btn btn-primary" href="spoofing-report.html">Check my domain</a></p>
-        </article>
-
-        <article class="card tone-webscan">
-          <h3>What your attacker sees first</h3>
-          <p>TLS, certificates, security headers, cookies, DNS hygiene and exposed content on the public
-            face of your estate &mdash; graded against the standards that define each one.</p>
-          <p class="small dim">Needs a domain name. Nothing else.</p>
-          <p class="mb0"><a class="btn btn-primary" href="surface-report.html">Scan my site</a></p>
         </article>
       </div>
     </div>
@@ -468,96 +407,7 @@
            architecture diagram — it is the reason ShareCare's exposure shows up as CompliancePortal's
            evidence without anyone exporting a spreadsheet.</p>
       </div>
-      <div class="grid grid-3">
-        <article class="card">
-          <h3>A finding becomes evidence</h3>
-          <p>ShareCare finds an external share. SecurityPortal finds a Conditional Access gap. Both land in
-             CompliancePortal already tagged to the controls they satisfy — so the thing you fixed is the
-             thing your auditor sees, with no export in between.</p>
-        </article>
-        <article class="card">
-          <h3>Each product asks for its own consent</h3>
-          <p>Every product has its own Entra app, scoped to what that product needs — so nothing inherits
-             permissions it has no use for, and revoking one product revokes exactly one. Adding a product is
-             a second consent, through the same onboarding you already know.</p>
-        </article>
-        <article class="card">
-          <h3>Every product answers to the same trail</h3>
-          <p>Whatever any product checked, changed or waived is in one hash-chained record you can show a
-             client or an auditor. Waivers expire on their own; nothing quietly stays green.</p>
-        </article>
-      </div>
       <div class="btn-row"><a class="btn btn-ghost" href="platform.html">More on the platform</a></div>
-    </div>
-  </section><section>
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Licensing</span>
-        <h2>What each licence includes: see it, govern it, act on it</h2>
-        <p>Most products are sold on one ladder. You buy the depth you actually want, and the step that writes
-           to your tenant is always a deliberate, separate decision.</p>
-      </div>
-      <div class="flavours">
-        <div class="flavour">
-          <div class="tier">Tier 1</div>
-          <h3>Visibility</h3>
-          <div class="verb">See it</div>
-          <ul class="checklist">
-            <li>Full inventory and continuous scanning</li>
-            <li>Risk scoring and findings</li>
-            <li>Reporting and exports</li>
-            <li><strong>Read-only.</strong> Nothing is written to your tenant</li>
-          </ul>
-        </div>
-        <div class="flavour featured">
-          <span class="badge-top">Most common</span>
-          <div class="tier">Tier 2</div>
-          <h3>Governance</h3>
-          <div class="verb">Govern it</div>
-          <ul class="checklist">
-            <li>Everything in Visibility</li>
-            <li>Policies, campaigns and access reviews</li>
-            <li>Approvals, waivers and risk acceptance with expiry</li>
-            <li>Evidence packs and fleet views</li>
-          </ul>
-        </div>
-        <div class="flavour">
-          <div class="tier">Tier 3</div>
-          <h3>Automation</h3>
-          <div class="verb">Act on it</div>
-          <ul class="checklist">
-            <li>Everything in Governance</li>
-            <li>Automated remediation and write-back</li>
-            <li>Gated twice — by the license <em>and</em> by the connector's own consent</li>
-          </ul>
-        </div>
-      </div>
-      <div class="note plain">
-        <p class="mb0"><strong>Scanning is never metered.</strong> No per-scan pricing, no charging per finding,
-          no hard cap that stops a scan for a commercial reason. You are billed on the size of the estate —
-          a number you already know before you buy.</p>
-      </div>
-      <div class="btn-row"><a class="btn btn-primary" href="pricing.html">See the license flavours</a></div>
-    </div>
-  </section><section>
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow" style="color: var(--t-webscan)">Before any of that</span>
-        <h2>One product needs nothing from you at all</h2>
-        <p><a href="products/webscan.html">WebScan</a> reads what any anonymous visitor reads. No tenant, no
-          Entra app, no admin consent, no onboarding, no call. Send one URL and it goes looking for the rest —
-          then grades everything it finds, with the standard behind each failure and the fix.</p>
-      </div>
-      <div class="oneline tone-webscan">
-        <strong>And it does not stop being free.</strong> The complete scanner is included with every
-        SeQontrol tenant — one URL at a time, fire and forget, for as long as you keep the tenant and with no
-        expiry date on it. The licence buys what happens after the scan: history, schedules, alerts,
-        evidence.
-      </div>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="surface-report.html">Scan my site, free</a>
-        <a class="btn btn-ghost" href="products/webscan.html">What it checks</a>
-      </div>
     </div>
   </section><section class="band">
     <div class="wrap">
@@ -596,6 +446,39 @@
             <a href="security.html">What we do with the access</a>.</p>
         </article>
       </div>
+    </div>
+  </section><section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Licensing</span>
+        <h2>What each licence includes: see it, govern it, act on it</h2>
+        <p>Most products are sold on one ladder. You buy the depth you actually want, and the step that writes
+           to your tenant is always a deliberate, separate decision.</p>
+      </div>
+      <div class="flavours">
+        <div class="flavour">
+          <div class="tier">Tier 1</div>
+          <h3>Visibility</h3>
+          <div class="verb">See it</div>
+        </div>
+        <div class="flavour featured">
+          <span class="badge-top">Most common</span>
+          <div class="tier">Tier 2</div>
+          <h3>Governance</h3>
+          <div class="verb">Govern it</div>
+        </div>
+        <div class="flavour">
+          <div class="tier">Tier 3</div>
+          <h3>Automation</h3>
+          <div class="verb">Act on it</div>
+        </div>
+      </div>
+      <div class="note plain">
+        <p class="mb0"><strong>Scanning is never metered.</strong> No per-scan pricing, no charging per finding,
+          no hard cap that stops a scan for a commercial reason. You are billed on the size of the estate —
+          a number you already know before you buy.</p>
+      </div>
+      <div class="btn-row"><a class="btn btn-primary" href="pricing.html">See the license flavours</a></div>
     </div>
   </section><section class="cta">
     <div class="wrap">

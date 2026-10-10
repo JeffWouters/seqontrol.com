@@ -149,6 +149,29 @@
         not yet remediable, the product’s own page says so — and
         <a href="../limits.html">the limits page</a> collects every one of these in one place, because we would
         rather label it plainly than let you find out in month two.</p>
+
+      <h3 style="margin-top:3rem">What actually gets crawled</h3>
+      <p class="muted" style="max-width:62ch">Every surface below is read app-only, on a schedule, and
+        scored into one findings store. Dashed means detected but not yet remediable app-only — the
+        distinction is stated rather than glossed.</p>
+      <div class="coverage">
+        <div class="plane tone-sharecare"><b>SharePoint</b><span>Sites, links, permissions — site roles detect only</span></div>
+        <div class="plane tone-sharecare"><b>OneDrive</b><span>Shares, revoke app-only</span></div>
+        <div class="plane tone-sharecare"><b>Teams</b><span>Membership, guest access</span></div>
+        <div class="plane tone-sharecare"><b>Entra ID</b><span>App consents, grants</span></div>
+        <div class="plane off tone-sharecare"><b>Exchange</b><span>Forwarding — detect only</span></div>
+        <div class="plane off tone-sharecare"><b>Power Platform</b><span>Detect only</span></div>
+        <div class="plane tone-sharecare"><b>Power BI</b><span>Sharing surface</span></div>
+        <div class="plane tone-security"><b>Conditional Access</b><span>Coverage and gaps</span></div>
+        <div class="plane tone-security"><b>Log Analytics</b><span>Where logs are exported</span></div>
+        <div class="plane tone-webscan"><b>Public web surface</b><span>TLS, headers, DNS</span></div>
+        <div class="plane tone-mailtrust"><b>Email auth</b><span>SPF, DKIM, DMARC, BIMI</span></div>
+        <div class="plane tone-compliance"><b>Google Cloud &amp; AWS</b><span>Read-only connectors — not released yet</span></div>
+        <div class="plane tone-sharecare"><b>Box</b><span>Links, revoke app-only</span></div>
+        <div class="plane off tone-sharecare"><b>Slack Connect</b><span>Detect only</span></div>
+      </div>
+      <p class="coverage-note">Google Workspace is the next plane. What is not here is not scanned —
+        <a href="../limits.html">the full list of what we do not do</a>.</p>
     </div>
   </section>
 

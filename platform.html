@@ -191,6 +191,56 @@
         through the shared Graph connector. MailTrust and PosturePortal do not: MailTrust authorises DNS
         providers directly and ingests DMARC reports from a mailbox, and PosturePortal connects to nothing at
         all — it reads the findings the others have already written.</p>
+
+      <h3 style="margin-top:3rem">Why running two products costs less than running two tools</h3>
+      <div class="grid grid-3">
+        <article class="card">
+          <h4>A finding becomes evidence</h4>
+          <p>ShareCare finds an external share. SecurityPortal finds a Conditional Access gap. Both land in
+             CompliancePortal already tagged to the controls they satisfy — so the thing you fixed is the
+             thing your auditor sees, with no export in between.</p>
+        </article>
+        <article class="card">
+          <h4>Each product asks for its own consent</h4>
+          <p>Every product has its own Entra app, scoped to what that product needs — so nothing inherits
+             permissions it has no use for, and revoking one product revokes exactly one. Adding a product is
+             a second consent, through the same onboarding you already know.</p>
+        </article>
+        <article class="card">
+          <h4>Every product answers to the same trail</h4>
+          <p>Whatever any product checked, changed or waived is in one hash-chained record you can show a
+             client or an auditor. Waivers expire on their own; nothing quietly stays green.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h3 style="margin-top:3rem">What happens to what it finds</h3>
+      <div class="flow" role="group" aria-labelledby="flow-heading" style="margin-bottom:1rem">
+        <h2 class="sr-only" id="flow-heading">How SeQontrol works</h2>
+        <div class="flow-step">
+          <span class="flow-num">1</span>
+          <div><h3>Connect</h3><p>An app-only Entra app per product, each asking only for what that product needs. Same onboarding flow every time.</p></div>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">2</span>
+          <div><h3>See</h3><p>Each scanning product reads through that connection and writes into one shared findings store.</p></div>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">3</span>
+          <div><h3>Prove</h3><p>Findings carry control tags, so a security finding becomes compliance evidence without a second integration.</p></div>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">4</span>
+          <div><h3>Fix</h3><p>Remediation is simulate-then-execute, with grace windows, approvals and undo where the plane allows it.</p></div>
+        </div>
+        <div class="flow-step">
+          <span class="flow-num">5</span>
+          <div><h3>Govern</h3><p>Waivers expire, approvals are recorded, and the audit trail is hash-chained. Findings are live records that change as the estate changes; what is chained is the trail of what was done and the evidence snapshots taken from it.</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
