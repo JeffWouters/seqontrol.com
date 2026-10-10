@@ -243,15 +243,16 @@ entries in `build_legal.py`); a test lists them.
 
 Needs the Azure CLI, **Owner** (or User Access Administrator plus Contributor) on the resource group,
 because the template creates role assignments and one narrow custom role for sending mail, and an EU
-region where Flex Consumption runs
-(`az functionapp list-flexconsumption-locations`; the privacy page says "in the EU", not which region).
+region where Flex Consumption runs. The template defaults to **Sweden Central**; to move it, check
+`az functionapp list-flexconsumption-locations` first (the privacy page says "in the EU", not which
+region, so any EU region keeps it true).
 
 1. **Infrastructure.** Creates the function app, storage (shared keys off), Application Insights, a
    user-assigned identity with data-plane roles only, and Azure Communication Services with its data
    held in Europe:
 
    ```
-   az group create -n rg-seqontrol-forms -l westeurope
+   az group create -n rg-seqontrol-forms -l swedencentral
    az deployment group create -g rg-seqontrol-forms -f infra/forms/main.bicep
    ```
 

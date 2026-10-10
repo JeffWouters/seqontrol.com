@@ -3,7 +3,7 @@
 //
 // Deploy into an empty resource group in an EU region (README, "Form backend"):
 //
-//   az group create -n rg-seqontrol-forms -l westeurope
+//   az group create -n rg-seqontrol-forms -l swedencentral
 //   az deployment group create -g rg-seqontrol-forms -f infra/forms/main.bicep
 //
 // Mail is a second step, because ACS will not link a domain whose DNS records are not in place yet.
@@ -16,8 +16,8 @@
 
 targetScope = 'resourceGroup'
 
-@description('Region for everything except ACS, which is global with its data held in Europe. Flex Consumption is not in every region: check `az functionapp list-flexconsumption-locations`.')
-param location string = resourceGroup().location
+@description('Region for everything except ACS, which is global with its data held in Europe. Sweden Central by choice; Flex Consumption is not in every region, so check `az functionapp list-flexconsumption-locations` before changing it.')
+param location string = 'swedencentral'
 
 @description('Base name for the resources.')
 @minLength(3)
