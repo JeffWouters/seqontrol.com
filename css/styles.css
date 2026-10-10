@@ -845,6 +845,17 @@ tbody tr:hover td { background: rgba(108, 79, 223, .03); }
 }
 .product-licence .after { margin: .9rem 0 0; font-size: .94rem; color: var(--muted); }
 
+/* ------------------------------------------------- provider strip */
+/* One line on each product page for the MSP reading it: what changes across a book, and where it is. */
+.provider-strip {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem;
+  border: 1px solid var(--border-soft); border-radius: var(--radius); background: var(--tint);
+  padding: 1.2rem 1.5rem;
+}
+.provider-strip p { margin: 0; max-width: 62ch; color: var(--muted); }
+.provider-strip p strong { color: var(--text); }
+.provider-strip .btn { flex: none; }
+
 /* ---------------------------------------------------------------- notes */
 
 .note {

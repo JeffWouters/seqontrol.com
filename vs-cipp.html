@@ -110,6 +110,20 @@
         you now own: the app registrations, the secret rotation, the upgrade path, the blast radius. That
         is a reasonable trade for free. It is worth being deliberate that you have made it.</p>
 
+      <h2>What we ask for, since you will ask</h2>
+      <p>You already know what CIPP holds across your book, so what a second tool wants is a fair question.
+        Each product has its own Entra application and its own admin consent, scoped to what that product
+        reads. Scanning is app-only and read-first; remediation is a separate consent on top of it, and
+        every read-only product keeps working without it. Revoking one product's consent revokes exactly
+        one product's Graph access. <a href="security.html">The access, in full</a>, and
+        <a href="limits.html">what it does not cover yet</a>.</p>
+
+      <h2>Across a book</h2>
+      <p>The evidence is per client; the work of keeping it is not. One console across every client
+        tenant, capacity pooled across the book rather than forty minimum charges, and partner margin built
+        into the plan &mdash; so the evidence layer is a line you resell beside CIPP rather than a cost you
+        absorb. <a href="for-msps.html">The provider model</a>.</p>
+
       <h2>What we will not claim</h2>
       <p>We are not cheaper than free, and we will not pretend the comparison is close on that axis. We do
         not do tenant administration, and adding it would make us worse at the thing we are for.</p>
@@ -117,6 +131,14 @@
         those, it is maintained by people who know this platform properly, and a provider running it is
         making a defensible engineering decision. We are asking for the budget line next to it, not
         instead of it.</p>
+
+      <h2>Where to start</h2>
+      <p>Pick the client you worry about most and see what it is already exposing, before anyone grants
+        anything more than the scan needs.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="exposure-report.html">Get the free exposure report</a>
+        <a class="btn btn-ghost" href="for-msps.html">See the provider model</a>
+      </div>
     </div>
   </section>
 

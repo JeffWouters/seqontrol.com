@@ -82,7 +82,7 @@
         priced per managed tenant so you can mark it up and resell it.
       </p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="contact.html">Talk about the partner model</a>
+        <a class="btn btn-primary" href="contact.html?topic=msp">Talk about the partner model</a>
         <a class="btn btn-ghost" href="pricing.html">Licensing</a>
       </div>
     </div>
@@ -183,10 +183,6 @@
 
 
       <div class="note plain">
-        <h3>Fleet benchmarking</h3>
-        <p class="small muted mb0">Rank every client's exposure against the rest of your book. "These eight clients
-          are one anonymous link away from a Copilot leak" is a conversation that sells remediation work — and it
-          only exists if one tool sees every tenant.</p>
         <h3>Quarterly reviews</h3>
         <p class="small muted mb0">PosturePortal — still in development — becomes the client-facing artefact:
           one board per client, annotated and saved, instead of an afternoon of assembling exports by hand.</p>
@@ -229,7 +225,7 @@
           <li><strong>Prove.</strong> Show the fleet benchmark. Quantified risk across named clients is a
             conversation that closes remediation work on its own.</li>
           <li><strong>Expand.</strong> Add products per tenant through entitlements. Each one is its own admin
-            consent through the same onboarding flow, so it can be quoted as a fixed, repeatable step.</li>
+            consent through the same onboarding flow, so it can be quoted as a fixed, repeatable step. <a href="limits.html#consent">What each consent does and does not cover</a>.</li>
           <li><strong>Retain.</strong> The audit trail, the scheduled scans and the evidence packs become what you
             show <em>your</em> clients. The switching cost is the client relationship, not just the tool.</li>
         </ol>
@@ -276,6 +272,54 @@
           product’s Graph access — the Exchange management role, the Azure reader assignment, the
           Power Platform registration and each DNS authorisation are separate, and come off separately.</p>
       </div>
+      <p class="small muted mb0">Every other limit, including the ones that only show up in month two, is on
+        <a href="limits.html">one page</a>.</p>
+    </div>
+  </section>
+
+  <section id="questions">
+    <div class="wrap">
+      <div class="faq">
+        <div>
+          <span class="eyebrow">Before the first call</span>
+          <h2>Questions providers ask first.</h2>
+          <p class="muted">The four that come up in nearly every conversation with a provider, answered here so
+            the call can start somewhere more useful.</p>
+        </div>
+        <div>
+          <details open>
+            <summary>&ldquo;We already run CIPP.&rdquo;</summary>
+            <p>Keep running it. CIPP administers tenants and it is free; nothing here replaces that, and running
+              both is a normal setup rather than an awkward one.</p>
+            <p>What it was not built to do is keep a control-tagged record that something held over time, per
+              client, that you can hand to an insurer or an auditor. <a href="vs-cipp.html">The honest split</a>.</p>
+          </details>
+          <details>
+            <summary>&ldquo;Microsoft already gives us most of this.&rdquo;</summary>
+            <p>For a single tenant with no reporting obligation, largely true, and you should start there.
+              Secure Score is a number per tenant, and the native reports sit per workload.</p>
+            <p>What a book of clients needs is one shape of view across all of them and evidence that a control
+              held over a period. <a href="vs-secure-score.html">The four specific gaps</a>.</p>
+          </details>
+          <details>
+            <summary>&ldquo;Do you write to our clients&rsquo; tenants?&rdquo;</summary>
+            <p>Not unless you grant it. Scanning is app-only and read-first. Remediation is a separate consent on
+              top of the read grant, and every read-only product keeps working without it.</p>
+            <p>If you grant it, an opt-in approval gate can make each action wait for the client&rsquo;s sign-off,
+              and every session inside a client tenant lands in the hash-chained audit trail.
+              <a href="security.html">What we do with the access</a>.</p>
+          </details>
+          <details>
+            <summary>&ldquo;What happens if we stop?&rdquo;</summary>
+            <p>Revoke a product&rsquo;s admin consent and that product loses its access to that tenant; nothing
+              else does. Withdrawing write consent stops every write path and leaves the findings and evidence
+              intact.</p>
+            <p>The adjacent grants &mdash; Exchange role, Azure reader, Power Platform registration, DNS
+              authorisations &mdash; come off separately, and retention defaults per data class are not written
+              down yet. <a href="limits.html">Both are on the limits page</a>.</p>
+          </details>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -285,7 +329,7 @@
       <p>A scoped assessment across the clients you already worry about, with a fleet benchmark you can take
         straight into the next review.</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="contact.html">Talk to us</a>
+        <a class="btn btn-primary" href="contact.html?topic=msp">Talk to us</a>
         <a class="btn btn-ghost" href="products/index.html">See the products</a>
       </div>
     </div>
