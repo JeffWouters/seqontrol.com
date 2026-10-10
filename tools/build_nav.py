@@ -274,7 +274,7 @@ def lazy_footer(src: str) -> str:
 # more and every fallback resolved to the literal "mailto:{contact}" - a dead link on the only
 # conversion path the site has. Stamped here instead, from the one constant that defines it, so the
 # address cannot drift from the five forms that use it.
-from build_legal import CONTACT  # noqa: E402
+from build_legal import CONTACT, SIGNUP  # noqa: E402
 
 CONTACT_FORM_RE = re.compile(r'<form id="contact-form"([^>]*)>')
 
@@ -420,6 +420,9 @@ def navlinks(pad: str, pre: str, up: str) -> str:
         out.append(f'{pad}  <li class="has-sub"><a href="{up}{href}">{label}</a>')
         out.append(subnav(pad + "    ", pre) if kind == "products" else pricing_sub(pad + "    ", up))
         out.append(f'{pad}  </li>')
+    # The one action on every page. Kept last so it sits at the right edge on desktop and at the foot
+    # of the opened menu on a phone, where the .nav-links .btn rule already styles it.
+    out.append(f'{pad}  <li class="nav-cta"><a class="btn btn-primary" href="{SIGNUP}">Sign up</a></li>')
     out.append(f'{pad}</ul>')
     out.append(pad[:-2] + "</nav>")
     return "\n".join(out)

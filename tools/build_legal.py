@@ -65,6 +65,19 @@ CONTACT = 'jeff@jeffops.com'
 # other one true.
 SUPPORT = 'support@seqontrol.com'
 
+# Where someone signs up. Written down once for the same reason as CONTACT: build_nav.py puts it in
+# every page's header, build_guides.py and this file put it in closing bands, and verify.py fails any
+# hand-written link to the app that does not match it exactly.
+SIGNUP = 'https://app.seqontrol.com/'
+
+# A page someone reaches from search used to end with nothing to do next. The comparison pages now
+# close on the same band the product pages use; a page can pass its own heading, line and buttons.
+COMPARE_CLOSING = dict(
+    h2="Try it on your own estate",
+    p="Sign up and connect a tenant when you are ready, or check a domain first &mdash; that one needs "
+      "nothing from your tenant at all.",
+    buttons=[("Sign up", SIGNUP), ("Scan a domain first", "spoofing-report.html")])
+
 
 def mailto(to: str, cc: str = '', subject: str = '', body: str = '') -> str:
     """An href for a pre-filled mail, encoded so it survives both the URL and the HTML.
@@ -231,6 +244,10 @@ PAGES = {
         </ul>
         <p class="after">There is no seat minimum and no platform floor: a twelve-person company pays for twelve people, and nothing is added on top. What each tier unlocks is in the table below.</p>
 <!--CAPS:sharecare-->
+        <div class="btn-row">
+          <a class="btn btn-primary" href="{signup}">Sign up</a>
+          <a class="btn btn-ghost" href="products/sharecare.html">What ShareCare does</a>
+        </div>
       </div>
       <div class="product-licence tone-security" role="tabpanel" id="panel-security" aria-labelledby="tab-security" tabindex="0">
         <header>
@@ -244,6 +261,10 @@ PAGES = {
         </div>
         <p class="after"><b>What you get</b> — read-only Microsoft 365 and Entra posture scans, on demand or daily, with findings history across managed tenants.</p>
 <!--CAPS:securityportal-->
+        <div class="btn-row">
+          <a class="btn btn-primary" href="{signup}">Sign up</a>
+          <a class="btn btn-ghost" href="products/securityportal.html">What SecurityPortal does</a>
+        </div>
       </div>
       <div class="product-licence tone-condaccess" role="tabpanel" id="panel-condaccess" aria-labelledby="tab-condaccess" tabindex="0">
         <header>
@@ -306,6 +327,10 @@ PAGES = {
         </div>
         <p class="after">Scanning is never counted &mdash; only sites you chose to keep, once per billing period each, however often they run.</p>
 <!--CAPS:webscan-->
+        <div class="btn-row">
+          <a class="btn btn-primary" href="{signup}">Sign up</a>
+          <a class="btn btn-ghost" href="products/webscan.html">What WebScan does</a>
+        </div>
       </div>
       <div class="product-licence tone-mailtrust" role="tabpanel" id="panel-mailtrust" aria-labelledby="tab-mailtrust" tabindex="0">
         <header>
@@ -358,6 +383,10 @@ PAGES = {
           <p class="mb0">DNS write-back is live for <strong>Azure DNS and DNSimple</strong>. Anywhere else, Automation gives you a staged rollout and the exact records to apply yourself &mdash; guidance, not automation. That is why the tier is $40 rather than the $50 the capability would be worth if it wrote everywhere. Cloudflare and Route 53 are next, and the price moves when they ship, not before.</p>
         </div>
 <!--CAPS:mailtrust-->
+        <div class="btn-row">
+          <a class="btn btn-primary" href="{signup}">Sign up</a>
+          <a class="btn btn-ghost" href="products/mailtrust.html">What MailTrust does</a>
+        </div>
       </div>
       <div class="product-licence tone-compliance" role="tabpanel" id="panel-compliance" aria-labelledby="tab-compliance" tabindex="0">
         <header>
@@ -412,6 +441,9 @@ PAGES = {
           <p class="mb0"><strong>Assessments do not run on a schedule yet.</strong> You raise one when you want one. What <em>is</em> continuous is the evidence underneath &mdash; SecurityPortal, ShareCare, WebScan and MailTrust scan on their own schedules, and their control-tagged findings are what an assessment reuses.</p>
         </div>
 <!--CAPS:complianceportal-->
+        <div class="btn-row">
+          <a class="btn btn-ghost" href="products/complianceportal.html">What CompliancePortal does</a>
+        </div>
       </div>
       <div class="product-licence tone-soon" role="tabpanel" id="panel-quoted" aria-labelledby="tab-quoted" tabindex="0">
         <header>
@@ -509,7 +541,7 @@ PAGES = {
           greater-of rather than added on top.</li>
       </ul>
 
-      <h2>Your own tenant, if you are a partner</h2>
+      <h2 id="partner-tenant">Your own tenant, if you are a partner</h2>
       <p><strong>$50 a month, every released product, every tier, on the tenant you run your own business from.</strong>
         The same estate computes somewhere between $260 and $640 at list; this is deliberately below what a
         tenant costs us to run.</p>
@@ -517,7 +549,7 @@ PAGES = {
         slide, and will find our mistakes before your clients do.</p>
       <ul>
         <li>Your <strong>own</strong> tenant &mdash; the domain on your provider agreement, checked against it.</li>
-        <li>Requires an active provider agreement. It is a partner benefit, not a tier to sign up for.</li>
+        <li>Requires a provider agreement, accepted online when you <a href="{signup}">sign up as a provider</a>. It is a partner benefit, not a tier you can buy on its own.</li>
         <li>Everything included, up to 50 users. Past that it becomes ordinary pricing, because past that you
           are not a small business running a tool, you are an estate using one.</li>
         <li>Not for client tenants, and not resellable. Client tenants are priced as client tenants.</li>
@@ -664,16 +696,18 @@ PAGES = {
              "infrastructure — with the standard behind every failure and the fix next to it. No tenant, "
              "no consent, no onboarding.",
         hero_cta=True,
+        hero_signup="Sign up and scan it yourself",
         form=dict(topic="Free public surface scan",
                   button="Scan my site",
                   estate_label="Site",
                   estate_hint="https://yourcompany.com — or a prospect's site"),
         body="""
       <h2>The one you can start with today</h2>
-      <p>Every other assessment on this site needs an administrator to consent to something. This one does
+      <p>Most assessments on this site need an administrator to consent to something. This one does
         not. WebScan reads what any anonymous visitor can read, so there is nothing to install, nothing to
         approve, and no reason to involve anyone before you know whether there is a problem.</p>
-      <p>Send a URL. You get the grade back, usually the same working day.</p>
+      <p>Send a URL and you get the grade back, usually the same working day &mdash; or
+        <a href="{signup}">sign up</a> and run the same scan yourself, on demand.</p>
 
       <h2>What you get back</h2>
       <ul>
@@ -715,6 +749,11 @@ PAGES = {
 """),
 
     "vs-cipp.html": dict(
+        closing=dict(
+            h2="Start with the client you worry about most",
+            p="Sign up as a provider &mdash; the provider agreement is accepted online, at sign-up &mdash; and "
+              "run it on your own tenant first, or see the provider model before you do.",
+            buttons=[("Sign up", SIGNUP), ("See the provider model", "for-msps.html")]),
         eyebrow="Comparison",
         h1="CIPP and SeQontrol: run both",
         lede="If you run CIPP, keep running it. Here is what it does that we do not, and the one thing "
@@ -774,17 +813,10 @@ PAGES = {
         those, it is maintained by people who know this platform properly, and a provider running it is
         making a defensible engineering decision. We are asking for the budget line next to it, not
         instead of it.</p>
-
-      <h2>Where to start</h2>
-      <p>Pick the client you worry about most and see what it is already exposing, before anyone grants
-        anything more than the scan needs.</p>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="exposure-report.html">Get the free exposure report</a>
-        <a class="btn btn-ghost" href="for-msps.html">See the provider model</a>
-      </div>
 """),
 
     "vs-m365-governance.html": dict(
+        closing=COMPARE_CLOSING,
         eyebrow="Comparison",
         h1="SeQontrol and the Microsoft 365 governance tools",
         lede="Syskit Point, CoreView, AvePoint and Varonis all report on Microsoft 365 permissions and "
@@ -840,6 +872,7 @@ PAGES = {
 """),
 
     "vs-grc-platforms.html": dict(
+        closing=COMPARE_CLOSING,
         eyebrow="Comparison",
         h1="SeQontrol and the GRC platforms",
         lede="Vanta, Drata, Secureframe and their peers do something we deliberately do not. Here is "
@@ -881,6 +914,7 @@ PAGES = {
 """),
 
     "vs-secure-score.html": dict(
+        closing=COMPARE_CLOSING,
         eyebrow="Comparison",
         h1="SeQontrol and Microsoft's native tooling",
         lede="Secure Score, Purview and SharePoint Advanced Management already ship with your "
@@ -1224,13 +1258,17 @@ PAGES = {
       <p>If this notice changes materially, the change is visible in the site's public commit
         history — the whole site is a public repository, which is a stronger guarantee than a
         "last updated" date we control.</p>
+
+      <h2>What each product reads</h2>
+      <p>The grant each product asks for, and what it can and cannot see, is set out product by product
+        in <a href="platform.html#connections">the connection table on the platform page</a>.</p>
 """),
 
     "terms.html": dict(
         eyebrow="Terms",
         h1="Terms, in language you can actually check",
-        lede="These cover the website. A signed agreement governs the service itself; ask and we "
-             "will send it before you commit to anything.",
+        lede="These cover the website. The service has its own agreement, which you accept when you "
+             "sign up; ask and we will send it before you commit to anything.",
         body="""
       <h2>The website</h2>
       <p>You may read, quote and link to anything here. The words, the brand and the artwork belong
@@ -1242,9 +1280,11 @@ PAGES = {
         it — that is a commitment we would rather be held to than a disclaimer.</p>
 
       <h2>The service</h2>
-      <p>Use of the platform is governed by a written agreement, not by this page. That agreement
-        covers availability, support, liability, processing terms and termination. We will send it
-        before you are asked to commit, not after.</p>
+      <p>Use of the platform is governed by its own agreement, not by this page: the one you accept
+        when you sign up at <a href="{signup}">app.seqontrol.com</a>, including the provider agreement
+        if you sign up as a provider, or a signed agreement where one is in place. It covers
+        availability, support, liability, processing terms and termination. Ask and we will send it
+        before you commit, not after.</p>
       <p>Two things worth stating plainly here, because they shape everything else:</p>
       <ul>
         <li><strong>SeQontrol provides readiness and evidence, not an audit opinion.</strong> Your
@@ -1326,6 +1366,11 @@ PAGES = {
       <p>Machine-readable contact details are published at
         <a href=".well-known/security.txt">/.well-known/security.txt</a>.</p>
 
+      <h2>Check it against your own tenant</h2>
+      <p>Every product's grant is listed in <a href="platform.html#connections">the connection table on
+        the platform page</a>. When you want to see it for yourself, <a href="{signup}">sign up</a> and
+        connect one product; nothing beyond that product's own grant is asked for until you add another.</p>
+
       <!-- TO FILL IN before this page carries real weight:
              · hosting region(s) for product data
              · subprocessor list (hosting, mail, error reporting)
@@ -1337,6 +1382,29 @@ PAGES = {
 
 
 
+def hero_buttons(spec: dict) -> str:
+    """A free-assessment page's hero: the form's own button, led by sign-up where the page offers both."""
+    req = spec["form"]["button"]
+    if spec.get("hero_signup"):
+        return ('      <div class="btn-row">'
+                f'<a class="btn btn-primary" href="{SIGNUP}">{spec["hero_signup"]}</a>'
+                f'<a class="btn btn-ghost" href="#request">Or send us a URL</a></div>\n')
+    return f'      <div class="btn-row"><a class="btn btn-primary" href="#request">{req}</a></div>\n'
+
+
+def closing_band(closing) -> str:
+    if not closing:
+        return ""
+    btns = "\n".join(
+        f'        <a class="btn {"btn-primary" if i == 0 else "btn-ghost"}" href="{href}">{label}</a>'
+        for i, (label, href) in enumerate(closing["buttons"]))
+    return ('  <section class="cta">\n    <div class="wrap">\n'
+            f'      <h2>{closing["h2"]}</h2>\n'
+            f'      <p>{closing["p"]}</p>\n'
+            f'      <div class="btn-row">\n{btns}\n      </div>\n'
+            '    </div>\n  </section>\n\n')
+
+
 def build(name: str, spec: dict) -> None:
     head_open, after_head, footer = chrome()
 
@@ -1345,7 +1413,7 @@ def build(name: str, spec: dict) -> None:
     # literal text "SeQontrol is built by {operator}" to every visitor who opened it. A placeholder
     # is only substituted on the fields somebody remembered to substitute, which is not a property
     # worth relying on; both prose fields now go through the same substitution.
-    fields = dict(contact=CONTACT, support=SUPPORT, awkward_question=AWKWARD_QUESTION,
+    fields = dict(contact=CONTACT, support=SUPPORT, awkward_question=AWKWARD_QUESTION, signup=SIGNUP,
                   operator=OPERATOR, entity=ENTITY,
                   kvk=KVK, address=ADDRESS_INLINE,
                   address_html='<br>'.join(ADDRESS_LINES),
@@ -1382,12 +1450,13 @@ def build(name: str, spec: dict) -> None:
         + f'      <p class="lede">{spec["lede"]}</p>\n'
         # A free-assessment page puts its form at the bottom, under the explanation. The button
         # takes someone who already knows they want it straight there instead of past four sections.
-        + (f'      <div class="btn-row"><a class="btn btn-primary" href="#request">'
-           f'{spec["form"]["button"]}</a></div>\n' if spec.get("hero_cta") else "")
+        + (hero_buttons(spec) if spec.get("hero_cta") else "")
         + "    </div>\n  </section>\n\n"
         + '  <section>\n    <div class="wrap wrap-narrow">\n'
         + body
-        + "    </div>\n  </section>\n\n</main>\n\n"
+        + "    </div>\n  </section>\n\n"
+        + closing_band(spec.get("closing"))
+        + "</main>\n\n"
         + footer
         + '<script src="js/site.js"></script>\n'
         + (FORM_SCRIPT.replace("{contact}", CONTACT) if spec.get("form") else "")

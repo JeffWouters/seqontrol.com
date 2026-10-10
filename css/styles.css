@@ -335,6 +335,13 @@ section.tight { padding-block: clamp(2.2rem, 4vw, 3.2rem); }
 }
 .nav-links a:hover { color: var(--text); text-decoration: none; }
 .nav-links a[aria-current="page"] { color: var(--text); border-bottom-color: var(--accent); }
+/* The header's Sign up button. Overrides the plain nav-link styling it would otherwise inherit, and is
+   white like every other primary button on navy. */
+.nav-links a.btn {
+  padding: .5rem 1rem; min-height: 40px; font-size: .92rem; border: 0;
+  background: #FFFFFF; color: #151C4F;
+}
+.nav-links a.btn:hover { background: #E0DAFF; color: #151C4F; }
 
 .nav-toggle {
   display: none; background: var(--surface); border: 1px solid var(--border-control);
@@ -359,6 +366,7 @@ section.tight { padding-block: clamp(2.2rem, 4vw, 3.2rem); }
   .nav-links.open { display: flex; }
   .nav-links a { display: block; padding: .78rem 0; border-bottom: 1px solid var(--border-soft); }
   .nav-links .btn { margin-top: .9rem; text-align: center; border-bottom: 0; }
+  .nav-links a.btn { display: flex; padding: .78rem 1rem; }
 }
 
 /* ---------------------------------------------------------------- buttons */
@@ -389,6 +397,8 @@ section.tight { padding-block: clamp(2.2rem, 4vw, 3.2rem); }
 .cta > .wrap .btn-ghost:hover, .navy-panel .btn-ghost:hover { background: var(--surface); }
 
 .btn-row { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.9rem; }
+/* A short qualifying line under a hero's buttons: what the primary action actually gets you. */
+.btn-row + .small { margin: 1rem 0 0; max-width: 62ch; color: var(--muted); }
 
 .arrow-link { display: inline-flex; align-items: center; gap: .35rem; font-weight: 700; font-size: .95rem; }
 .arrow-link::after { content: "→"; font-family: system-ui, sans-serif; transition: transform .15s ease; }
