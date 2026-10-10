@@ -6,7 +6,8 @@ drift from the rest of the site. Only the <main> differs.
 
 FACTS THIS SCRIPT DOES NOT KNOW — fill them in before relying on these pages:
   · the VAT number, if one is issued (the KvK number is recorded below)
-  · the subprocessor list beyond Azure itself — the hosting region IS recorded (West Europe)
+  · the hosting region is stated as "in the EU" by choice (2026-10-11); subprocessors are
+    Microsoft (Azure) and Stripe, listed on the privacy page
   · retention periods for product data, if they differ from what is stated
 Everything else here is either verifiable from the platform code or is a
 commitment the site already makes elsewhere.
@@ -1131,12 +1132,12 @@ PAGES = {
       </div>
 
 <div class="note honest">
-        <h2>We have not written down our own assurance yet</h2>
-        <p class="mb0">Product data lives in <a href="privacy.html">Microsoft Azure, West Europe</a>, and that
-          much is published. What is not: a subprocessor list, retention defaults per data class, and whatever
-          certifications we do or do not hold. If your procurement needs those before you can buy, ask early
-          &mdash; the honest answer today is that they are not written down, and we would rather say so here
-          than have you discover it in a security questionnaire.</p>
+        <h2>Not all of our own assurance is written down yet</h2>
+        <p class="mb0">Product data lives in <a href="privacy.html">Microsoft Azure, in the EU</a>; the
+          subprocessors are named on the same page, and <a href="security.html">the security page</a> says
+          plainly that we hold no certifications yet. What is not written down: retention defaults per data
+          class while a subscription runs. If your procurement needs that before you can buy, ask early
+          &mdash; we would rather say so here than have you discover it in a security questionnaire.</p>
       </div>
 
       <h2>Why this page exists</h2>
@@ -1244,13 +1245,23 @@ PAGES = {
 
       <h2>Where it is kept</h2>
       <p>Everything SeQontrol stores about your tenant — findings, evidence, scan history and the
-        audit trail — lives in <strong>Microsoft Azure, West Europe region</strong>, which is in the
-        Netherlands. Same jurisdiction as the company that operates it. It is not replicated to a
+        audit trail — lives in <strong>Microsoft Azure, in the EU</strong>. It is not replicated to a
         region outside the EU.</p>
-      <p class="mb0">Two things that follow, and are worth being explicit about. Microsoft is
-        therefore a processor for the hosting itself. And the data in your own Microsoft 365 tenant
-        never moves — SeQontrol reads it where it already is; what lives in West Europe is the
-        findings and evidence produced from that reading, not a copy of your estate.</p>
+      <p>Two things that follow, and are worth being explicit about. Microsoft is therefore a
+        processor for the hosting itself. And the data in your own Microsoft 365 tenant never moves —
+        SeQontrol reads it where it already is; what lives in Azure is the findings and evidence
+        produced from that reading, not a copy of your estate.</p>
+
+      <h2>Who else handles it</h2>
+      <p>Two subprocessors, and only two:</p>
+      <ul>
+        <li><strong>Microsoft (Azure)</strong> &mdash; hosting, storage and the platform itself, in the
+          EU, as above.</li>
+        <li><strong>Stripe</strong> &mdash; payments. Card details go to Stripe and never reach us; we see
+          what Stripe reports back about a payment, not the card.</li>
+      </ul>
+      <p class="mb0">If that list changes, this page changes with it, and the change is visible in the
+        site&rsquo;s public history.</p>
 
       <h2>How long it is kept</h2>
       <p>Findings and evidence are retained for the period your licence sets, because the value of
@@ -1393,9 +1404,7 @@ PAGES = {
         connect one product; nothing beyond that product's own grant is asked for until you add another.</p>
 
       <!-- TO FILL IN before this page carries real weight:
-             · hosting region(s) for product data
-             · subprocessor list (hosting, mail, error reporting)
-             · retention defaults per data class  -->
+             · retention defaults per data class while a subscription runs  -->
 """),
 }
 
