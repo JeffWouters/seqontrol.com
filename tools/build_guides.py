@@ -143,7 +143,9 @@ GUIDES = [
         <li><strong>Raise the percentage as the reports stay clean</strong>, then move to
           <code>p=reject</code>.</li>
         <li><strong>Keep watching.</strong> New senders appear whenever someone buys something. A domain
-          that reached enforcement and stopped being monitored drifts back into breakage.</li>
+          that reached enforcement and stopped being monitored drifts back into breakage. Keeping that watch
+          across every domain, and writing the record changes for supported DNS providers, is what
+          <a href="products/mailtrust.html">MailTrust</a> does.</li>
       </ol>
 
       <h2>Three mistakes worth avoiding</h2>
@@ -167,7 +169,7 @@ GUIDES = [
         h1="Evidence auditors accept, and evidence they merely tolerate",
         lede="A screenshot proves a setting was correct on the day somebody remembered to take it. "
              "Most compliance evidence is exactly that, and everyone involved knows it.",
-        offer=("exposure-report.html", "See what your scans already prove",
+        offer=("exposure-report.html", "See what your tenant could already prove",
                "Start with a free assessment and find out what evidence you already have."),
         body="""
       <h2>The problem with the screenshot</h2>
@@ -223,7 +225,7 @@ GUIDES = [
 
 INDEX = dict(
     eyebrow="Guides",
-    h1="Guides",
+    h1="Microsoft 365 security guides",
     lede="What we have learned building this, written to be useful on its own. No gates, no forms in "
          "the middle, no email required to read the good part.",
 )

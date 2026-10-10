@@ -161,13 +161,9 @@ PRODUCTS = [
               ("Findings history and reports", [Y]),
               ("Fleet-wide across managed tenants", [Y]),
               ("Write access to your tenant", [N])],
-        after=("<strong>Why a per-tenant minimum on a per-user product.</strong> Roughly half of what this "
-               "checks does not shrink with headcount — a 20-seat tenant has about as many Conditional Access "
-               "policies, app registrations and configuration settings as a 2,000-seat one, and every one is "
-               "evaluated either way. Per-user alone would price a full posture scan of a small tenant at "
-               "thirty dollars. The floor bites below 34 users with a ShareCare tier, below 15 standalone, and "
-               "does nothing above that.<br><br>"
-               "One tier, not a ladder: SecurityPortal is scan-only, so there is no write access to sell on a "
+        # Why the per-tenant minimum exists is explained once, in the panel note build_legal.py writes
+        # above this block; it used to be stated here as well, word for word.
+        after=("One tier, not a ladder: SecurityPortal is scan-only, so there is no write access to sell on a "
                "higher tier. Remediation lives in the products built to write safely. The log-analytics checks "
                "need the tenant to export activity logs; without that export they report &ldquo;not "
                "assessed&rdquo; rather than a pass. The public web and domain surface is "
@@ -245,11 +241,8 @@ PRODUCTS = [
               "nobody makes.</strong> Keeping a scan and running it on a schedule were separate tiers; but a "
               "saved site nobody re-scans is a stale record, and a schedule that keeps nothing is a cron job "
               "with no output. Pro grants both.<br><br>"
-              "<strong>The free tier is the whole scanner, and that is deliberate.</strong> Every check, the "
-              "same severity-weighted score a paid run produces. What it does not do is remember: one URL at "
-              "a time, fire and forget, nothing written down when the scan finishes. That is what makes it "
-              "free to give away rather than a trial with an expiry date — and it is auto-granted to every "
-              "tenant rather than sold."),
+              "<strong>The free tier is the whole scanner, and that is deliberate.</strong> It is not a trial "
+              "with an expiry date: it is auto-granted to every tenant, and what it does not do is remember."),
         after=("Counted per site rather than per domain, because a site is what gets scanned: one domain can "
                "front several, and each is its own configuration to grade. Nothing caps how many sites you "
                "may add; the count is trued up, never a hard stop.<br><br>"
@@ -258,9 +251,7 @@ PRODUCTS = [
                "they include active vulnerability testing that WebScan does not do. At the other end the free "
                "graders charge nothing and retain nothing. The gap between those two is where this sits, and "
                "it was empty.<br><br>"
-               "WebScan never writes anywhere — DNS write-back belongs to MailTrust, which also owns SPF, "
-               "DKIM and DMARC; those are mail authentication rather than web surface and are not duplicated "
-               "here."),
+               "WebScan never writes anywhere; SPF, DKIM and DMARC belong to MailTrust."),
     ),
     dict(
         key="complianceportal", name="CompliancePortal", tone="--t-compliance", status=None,
@@ -301,21 +292,14 @@ PRODUCTS = [
               ("Attestation and sign-off, with four-eyes and expiry", [Y, Y, Y]),
               ("Automated evidence capture", [Y, Y, Y]),
               ("Control ownership and remediation tasks", [Y, Y, Y])],
-        after=("<strong>Two questions, two axes, so neither answer is bought to get the other.</strong> How many "
-               "frameworks you need is scope. Whether you want sign-off and automatic capture is depth. Until "
-               "now those shared one number, which meant a company doing SOC 2 alone had to buy every framework "
-               "in the catalogue to reach attestation — paying for twenty-three regimes it would never open, to "
-               "get one capability. Attested is half again the band price at any band instead.<br><br>"
-               "<strong>Not called Automation, and not an accident.</strong> On the ladder products that word "
+        # Scope versus depth, and why assessments are not scheduled yet, are each explained once in the
+        # panel notes build_legal.py writes; this block used to repeat both.
+        after=("<strong>Not called Automation, and not an accident.</strong> On the ladder products that word "
                "is the tier that writes to your tenant. CompliancePortal writes nothing — it maps, scores, "
                "evidences and attests. Automated evidence <em>capture</em> reads from the estate; it does not "
                "act on it.<br><br>"
-               "<strong>Assessments do not yet run on a schedule.</strong> They are raised on demand and the "
-               "product has no recurring cadence to sell, which is why that row is empty in all three bands "
-               "rather than quietly ticked. What <em>is</em> continuous is the evidence underneath: "
-               "SecurityPortal, ShareCare, WebScan and MailTrust scan on their own schedules, and their "
-               "control-tagged findings are what an assessment reuses. The scope still holds either way — this "
-               "proves the technical controls on the platforms SeQontrol connects to, not a whole-company "
+               "The scheduled-assessment row is empty in all three bands rather than quietly ticked. And the "
+               "scope holds either way — this proves the technical controls on the platforms SeQontrol connects to, not a whole-company "
                "compliance programme."),
     ),
     dict(
@@ -364,26 +348,16 @@ PRODUCTS = [
               ("Multi-domain fleet view", [N, Y, Y]),
               "Write access",
               ("DNS write-back for supported providers", [N, N, Y])],
-        note=("<strong>A parked domain is not priced like a sending one.</strong> Most organisations own far "
-              "more domains than they send from — acquisitions, retired brands, defensive and typo registrations "
-              "— and those are exactly the ones worth spoofing, because no real mail flows so nothing breaks and "
-              "nobody notices. Charging full rate for them would make the rational decision <em>protect fewer "
-              "domains</em>, which is the behaviour this product exists to prevent. So a parked domain is $3, "
-              "five come with every sending domain, and the classification is measured rather than asserted: a "
-              "domain is parked when it has produced no DMARC report volume and no DKIM signing for a full "
-              "period. Start sending from it and it reclassifies itself.<br><br>"
-              "<strong>Report volume carries an allowance.</strong> Ingesting, parsing and storing DMARC "
+        # The parked-domain rate and the $40 Automation price are explained once each, in the panel notes
+        # build_legal.py writes; this block used to repeat both.
+        note=("<strong>Report volume carries an allowance.</strong> Ingesting, parsing and storing DMARC "
               "aggregate reports is a real cost that scales with how much mail a domain sends, not with how many "
               "domains you have — so each domain includes an allowance sized to normal sending volume, and "
               "unusually high-volume domains buy additional blocks. Same test as the deliverability allowance: a "
               "genuine external cost, optional, and bursty. Posture, findings and reports stay uncapped."),
         after=("No tier caps how many domains you may add — the count is a commercial measurement, trued up on "
                "the next invoice, never a hard stop. Ingesting DMARC reports needs a mailbox to receive them; "
-               "that is part of onboarding.<br><br><strong>Automation is priced at $40 rather than higher, and "
-               "the reason is honest:</strong> DNS write-back is live for Azure DNS and DNSimple only. If your "
-               "DNS is anywhere else, that tier gives you a staged rollout and guided records to apply "
-               "yourself, not automation — so it is not priced as though it wrote them for you. Cloudflare and "
-               "Route 53 are the next two, and the price goes up when they land rather than before."),
+               "that is part of onboarding."),
     ),
     dict(
         key="dredd", name="Dredd", tone="--t-dredd", status=None,

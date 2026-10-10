@@ -4,7 +4,8 @@ Twitter cards and JSON-LD. Also regenerates sitemap.xml.
 
 Titles and descriptions are hand-written per page and live here rather than
 being derived from the copy — generated ones read like generated ones. Titles
-are kept under 60 characters and descriptions between 110 and 160 so neither is
+lead with what someone would search for and end with the brand, if it fits at all; they are kept
+under 60 characters and descriptions between 110 and 160 so neither is
 truncated in a result listing.
 
 Run: python tools/build_seo.py
@@ -24,152 +25,152 @@ SITE = "https://seqontrol.com"
 # page -> (title, description, breadcrumb label or None)
 META = {
     "index.html": (
-        "SeQontrol - Microsoft 365 - See what is over-shared",
+        "Microsoft 365 exposure, posture and DMARC for MSPs | SeQontrol",
         "See what your Microsoft 365 tenants over-share, how their posture scores and who can spoof "
         "their domains, for one estate or a whole client book.",
         None),
     "platform.html": (
-        "SeQontrol - Platform - The layer under every product",
+        "One platform under every product | SeQontrol",
         "One tenancy model, one findings store and a hash-chained audit trail — with a separate, "
         "scoped Entra app and consent for each product.",
         "Platform"),
     "for-msps.html": (
-        "SeQontrol - For MSPs - Every client or tenant, one screen",
-        "Built provider-first: one console across every client tenant, pooled capacity, fleet "
-        "benchmarking, and partner margin built into the plan.",
+        "Microsoft 365 security for MSPs: every client, one console",
+        "One console across every client tenant: exposure, posture, email authentication and "
+        "evidence, with capacity pooled across the book and partner margin built in.",
         "For MSPs"),
     "contact.html": (
-        "SeQontrol - Contact - Talk to the people who built it",
+        "Contact SeQontrol: talk to the people who built it",
         "Book a walkthrough, request a scoped assessment, or get a quote against your actual "
         "estate. You get a reply from the people who built it.",
         "Contact"),
     "guides/index.html": (
-        "SeQontrol - Guides - Microsoft 365 security and compliance",
+        "Microsoft 365 security guides: Copilot, DMARC, audit evidence",
         "Practical guides on Copilot exposure, DMARC enforcement and compliance evidence — written to "
         "be useful whether or not you ever buy anything.",
         "Guides"),
     "guides/what-copilot-can-reach.html": (
-        "SeQontrol - Guide - What Copilot can actually reach",
+        "What Microsoft 365 Copilot can reach, and how to check",
         "Copilot surfaces anything a user can already open. What that means in practice, and how to "
         "find your real blast radius before you roll it out.",
         "What Copilot can reach"),
     "guides/dmarc-without-breaking-mail.html": (
-        "SeQontrol - Guide - DMARC without breaking mail",
+        "DMARC from p=none to p=reject without breaking email",
         "How to get a domain from p=none to p=reject without dropping legitimate mail: sender "
         "inventory, staged policy, and the mistakes that stall most DMARC projects.",
         "DMARC without breaking mail"),
     "guides/evidence-auditors-accept.html": (
-        "SeQontrol - Guide - Evidence auditors accept",
+        "Microsoft 365 compliance evidence auditors actually accept",
         "Why screenshots are tolerated rather than trusted, what continuous control evidence looks "
         "like, and which controls can never be automated by any tool.",
         "Evidence auditors accept"),
     "pricing.html": (
-        "SeQontrol - Pricing - What sets your number",
+        "SeQontrol pricing: per user, per domain, MSP partner rates",
         "Every published SeQontrol price: per user, per site, per domain or per tenant, with the "
         "volume bands, the provider rates and what is never metered.",
         "Pricing"),
     "spoofing-report.html": (
-        "SeQontrol - Free report - Who is sending as you",
+        "Free DMARC and email spoofing check | SeQontrol",
         "A free check of your domain's email authentication: SPF, DKIM, DMARC, BIMI and MTA-STS, plus "
         "every source currently sending mail as you.",
         "Free spoofing check"),
     "vs-cipp.html": (
-        "SeQontrol - vs CIPP - Where each one wins",
+        "CIPP vs SeQontrol: keep CIPP, add evidence and external scans",
         "CIPP manages Microsoft 365 tenants and is free. SeQontrol produces control-tagged evidence. "
         "The honest split for providers already running it.",
         "Comparison"),
     "vs-m365-governance.html": (
-        "SeQontrol - vs M365 governance tools",
+        "Syskit, CoreView, AvePoint, Varonis vs SeQontrol",
         "How SeQontrol compares with Microsoft 365 permission and governance specialists, and when "
         "one of those is the better buy.",
         "Comparison"),
     "vs-grc-platforms.html": (
-        "SeQontrol - vs GRC platforms - Where each one wins",
+        "Vanta, Drata, Secureframe vs SeQontrol for Microsoft 365",
         "How SeQontrol compares with questionnaire-first GRC platforms on Microsoft 365 control "
         "evidence, and where those platforms are the better choice.",
         "vs GRC platforms"),
     "vs-secure-score.html": (
-        "SeQontrol - vs Secure Score - What native tooling misses",
+        "Is Microsoft Secure Score enough? Native M365 vs SeQontrol",
         "How SeQontrol differs from Microsoft Secure Score and native Microsoft 365 reporting, and "
         "when the native tools are enough on their own.",
         "vs Secure Score"),
     "exposure-report.html": (
-        "SeQontrol - Free report - What Copilot can reach",
+        "Free Microsoft 365 Copilot oversharing report | SeQontrol",
         "A free, scoped scan of your Microsoft 365 tenant: what is shared externally, what is "
         "over-shared internally, and exactly what to revoke first.",
         "Free exposure report"),
     "limits.html": (
-        "SeQontrol - Limits - What this does not do",
+        "What SeQontrol does not do: every limit, stated up front",
         "The planes we detect but do not fix yet, what is not on sale yet, where the "
         "Microsoft-first scope ends, and why readiness is not an audit opinion.",
         "Limits"),
     "about.html": (
-        "SeQontrol - About - Why this exists",
+        "About SeQontrol: who builds it and why",
         "Who builds SeQontrol, why a Microsoft 365 security and compliance platform was worth "
         "building, and what we will and will not claim about it.",
         "About"),
     "privacy.html": (
-        "SeQontrol - Privacy - What we collect and why",
+        "SeQontrol privacy: what we collect and why",
         "What SeQontrol collects from this website and from a connected tenant, why, how long it "
         "is kept, and who to contact about it.",
         "Privacy"),
     "terms.html": (
-        "SeQontrol - Terms - The plain version",
+        "SeQontrol terms: the plain version",
         "The terms covering use of the SeQontrol website and, in outline, the service — written to "
         "be read rather than to be scrolled past.",
         "Terms"),
     "security.html": (
-        "SeQontrol - Security - What we do with your access",
+        "SeQontrol security: what we do with your tenant access",
         "The access SeQontrol asks for, what it does with it, how the audit trail works, and how "
         "to report a vulnerability.",
         "Security"),
     "surface-report.html": (
-        "SeQontrol - Free scan - Your public surface, graded",
+        "Free website security scan: TLS, headers, DNS | SeQontrol",
         "A free grade of your public web surface: TLS, HTTP headers, cookies, DNS, content and "
         "infrastructure, each failure with the standard it breaks and the fix.",
         "Free surface scan"),
     "products/index.html": (
-        "SeQontrol - Products - Each stands alone, all connect",
-        "Eight products on one platform: ShareCare, SecurityPortal, WebScan, CompliancePortal, "
-        "PosturePortal, MailTrust, Dredd and ConditionalAccessPortal.",
+        "Products and prices: Microsoft 365 security | SeQontrol",
+        "Four Microsoft 365 security products you can run today and four on the way: what each "
+        "answers, whether it writes to your tenant, and what it costs.",
         "Products"),
     "products/sharecare.html": (
-        "SeQontrol - ShareCare - Who can reach what, and why",
+        "ShareCare: Microsoft 365 oversharing and Copilot exposure",
         "See what Microsoft 365 over-shares, externally and to Copilot, across every tenant you "
         "manage — then remediate it safely, with a grace window and undo.",
         "ShareCare"),
     "products/securityportal.html": (
-        "SeQontrol - SecurityPortal - Posture that arrives as evidence",
+        "SecurityPortal: Microsoft 365 and Entra posture, scored",
         "Continuous Microsoft 365 and Entra security posture on a ladder you climb with scan "
         "evidence, every finding tagged to the control it proves.",
         "SecurityPortal"),
     "products/conditionalaccessportal.html": (
-        "SeQontrol - ConditionalAccessPortal - Coming soon",
+        "ConditionalAccessPortal: Conditional Access paths, coming soon",
         "What your Conditional Access policies actually let through: every policy inventoried, the "
         "access paths mapped, each edge labelled by the authority behind it.",
         "ConditionalAccessPortal"),
     "products/complianceportal.html": (
-        "SeQontrol - CompliancePortal - Coming soon",
+        "CompliancePortal: Microsoft 365 control evidence (coming soon)",
         "Controls proven by scans, not screenshots: findings your other products already produce, "
         "mapped onto the frameworks you are assessed against and kept current.",
         "CompliancePortal"),
     "products/postureportal.html": (
-        "SeQontrol - PosturePortal - In development",
+        "PosturePortal: one posture board per tenant (in development)",
         "The read-only board that answers \u201chow are we doing\u201d without opening five products: "
         "findings, risk and coverage per tenant and across a whole fleet.",
         "PosturePortal"),
     "products/dredd.html": (
-        "SeQontrol - Dredd - In development",
+        "Dredd: configuration drift governance (in development)",
         "Configuration governance rather than posture scoring: not \u201cthis is unwise\u201d but "
         "\u201cthis is not what you approved\u201d, with two answers \u2014 revert it, or ratify it.",
         "Dredd"),
     "products/webscan.html": (
-        "SeQontrol - WebScan - What your attacker sees first",
+        "WebScan: free website security grading, from TLS to DNS",
         "Grade the public face of every domain you own — TLS, headers, cookies, DNS, content and "
         "infrastructure — against the standards that define it. Free to run.",
         "WebScan"),
     "products/mailtrust.html": (
-        "SeQontrol - MailTrust - SPF, DKIM, DMARC and more, enforced",
+        "MailTrust: DMARC enforcement for every domain you manage",
         "Take every domain from DMARC monitoring to safe enforcement: real sender inventory, a "
         "staged rollout, and the DNS records written in-product.",
         "MailTrust"),
@@ -247,10 +248,14 @@ def software_ld(name: str, desc: str, url: str) -> str:
 }}"""
 
 
-def breadcrumb_ld(label: str, url: str, in_products: bool) -> str:
+def breadcrumb_ld(label: str, url: str, in_products: bool, in_guides: bool = False) -> str:
     items = [('Home', SITE + '/')]
     if in_products and label != "Products":
         items.append(("Products", f"{SITE}/products/"))
+    # A guide's visible breadcrumb reads Guides, so its structured one has to pass through Guides too;
+    # it used to jump from Home straight to the guide.
+    if in_guides and label != "Guides":
+        items.append(("Guides", f"{SITE}/guides/"))
     items.append((label, url))
     listing = ",\n    ".join(
         f'{{ "@type": "ListItem", "position": {i}, "name": "{n}", "item": "{u}" }}'
@@ -342,7 +347,7 @@ def apply(rel: str) -> None:
     if in_products and rel != "products/index.html":
         ld.append(software_ld(crumb, desc, url))
     if crumb:
-        ld.append(breadcrumb_ld(crumb, url, in_products))
+        ld.append(breadcrumb_ld(crumb, url, in_products, rel.startswith("guides/")))
     for block in ld:
         blocks.append('<script type="application/ld+json">\n' + block + "\n</script>")
 
