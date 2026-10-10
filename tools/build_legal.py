@@ -191,7 +191,7 @@ PAGES = {
             <tr><th scope="row">ShareCare</th><td>Microsoft 365 users</td></tr>
             <tr><th scope="row">SecurityPortal</th><td>Users, at a lower rate with any ShareCare tier &middot; $50 monthly tenant minimum</td></tr>
             <tr><th scope="row">ConditionalAccessPortal</th><td>Users, with the same $50 monthly tenant minimum as SecurityPortal</td></tr>
-            <tr><th scope="row">WebScan</th><td>Monitored sites &middot; free on every tenant</td></tr>
+            <tr><th scope="row">WebScan</th><td>Monitored sites &middot; free with every SeQontrol account</td></tr>
             <tr><th scope="row">MailTrust</th><td>Sending domains; parked domains at a lower rate, five included with each</td></tr>
             <tr><th scope="row">CompliancePortal</th><td>Per tenant, banded by how many frameworks are in scope</td></tr>
             <tr><th scope="row">Dredd</th><td>Monitored configuration scope &mdash; quoted, not listed</td></tr>
@@ -298,7 +298,7 @@ PAGES = {
         <div class="table-wrap table-scroll" tabindex="0">
           <table class="matrix">
             <thead>
-              <tr><th scope="col">&nbsp;</th><th class="tier-head" scope="col">Free<small>on every tenant</small></th><th class="tier-head" scope="col">Pro<small>kept and scheduled</small></th></tr>
+              <tr><th scope="col">&nbsp;</th><th class="tier-head" scope="col">Free<small>with every account</small></th><th class="tier-head" scope="col">Pro<small>kept and scheduled</small></th></tr>
             </thead>
             <tbody>
               <tr><th scope="row">List</th><td>$0</td><td>$20</td></tr>
@@ -313,7 +313,7 @@ PAGES = {
         </ul>
         <div class="note plain">
           <h3>WebScan is priced on its own</h3>
-          <p class="mb0">A tenant that arrived through a free scan is one we would not otherwise have, and putting a minimum in front of them would eat the funnel it sits downstream of. Nothing is added when a second product applies from that point.</p>
+          <p class="mb0">An account that arrived through a free scan is one we would not otherwise have, and putting a minimum in front of them would eat the funnel it sits downstream of. Nothing is added when a second product applies from that point.</p>
         </div>
         <div class="note plain">
           <h3>Discovered subdomains are free, and stay free until you say otherwise</h3>
@@ -1372,6 +1372,12 @@ PAGES = {
       <p>Machine-readable contact details are published at
         <a href=".well-known/security.txt">/.well-known/security.txt</a>.</p>
 
+      <h2>Certifications</h2>
+      <p>None yet. SeQontrol does not hold ISO 27001, SOC 2 or any other certification today, and
+        nothing on this site should be read as implying one. What it can show instead is the access it
+        asks for, set out above and in <a href="platform.html#connections">the connection table</a>,
+        and <a href="limits.html">the limits</a>, written down before you have to ask.</p>
+
       <h2>Check it against your own tenant</h2>
       <p>Every product's grant is listed in <a href="platform.html#connections">the connection table on
         the platform page</a>. When you want to see it for yourself, <a href="{signup}">sign up</a> and
@@ -1380,8 +1386,7 @@ PAGES = {
       <!-- TO FILL IN before this page carries real weight:
              · hosting region(s) for product data
              · subprocessor list (hosting, mail, error reporting)
-             · retention defaults per data class
-             · certifications held, if any (say none rather than implying)  -->
+             · retention defaults per data class  -->
 """),
 }
 

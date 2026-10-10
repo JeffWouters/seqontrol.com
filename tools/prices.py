@@ -50,7 +50,7 @@ SUMMARY = {
     },
     "webscan": {
         "unit": "per monitored site / month",
-        "rows": [("Free, on every tenant", "$0"), ("Pro", "$20")],
+        "rows": [("Free, with every account", "$0"), ("Pro", "$20")],
         "note": "Pro keeps results and history, schedules scans and alerts.",
     },
     "mailtrust": {
