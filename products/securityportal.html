@@ -113,7 +113,7 @@
 
         <h2>Why it matters</h2>
         <p>A native secure score is one number per tenant. It is not mapped to the frameworks your clients and
-            auditors cite, it is partly licensing-gated, and it has no concept of a provider managing forty
+            auditors cite, it is partly licensing-gated, and it has no concept of a provider managing sixty
             tenants. It also stops at the boundary of the tenant, which is not where your risk stops —
             <a href="webscan.html">WebScan</a> covers the public side, and both file their findings in the same
             place.</p>
@@ -166,6 +166,10 @@
           <a href="../pricing.html#security">see the figures</a></li></ul>
         <h3>Writes to your tenant?</h3>
         <ul><li>No. Assessment and evidence only.</li></ul>
+        <h3>Needs</h3>
+        <ul><li>An admin consent for its own Entra app, read scope only. The log-based checks also need a Log
+          Analytics workspace and a reader role on it; without them those checks report &ldquo;not
+          assessed&rdquo; rather than a pass. <a href="../platform.html#connections">What connecting involves</a>.</li></ul>
         <h3>Covers</h3>
         <ul>
           <li>Conditional Access coverage</li>
@@ -316,7 +320,7 @@
         <article class="card">
           <h3>"We already track our secure score."</h3>
           <p>That is one number, for one tenant. Can you show a control-level gap, the tier it is blocking, and
-            the evidence an auditor would accept, across thirty clients, from one screen?</p>
+            the evidence an auditor would accept, across sixty clients, from one screen?</p>
         </article>
         <article class="card">
           <h3>"Isn't posture just a checklist?"</h3>

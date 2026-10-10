@@ -841,6 +841,12 @@ PAGES = {
         here than have you discover it after a trial.</p>
 
       <h2>What we are better at</h2>
+      <p><strong>Small tenants, and a lot of them.</strong> This is the sharpest split. The
+        governance specialists often sell with a seat minimum or an enterprise contract; the average
+        tenant a provider manages is nowhere near that. If your book is sixty clients of twenty-odd
+        users, most of this category cannot sell to you at all, and the ones that can are priced for a
+        single large estate rather than a fleet of small ones. <a href="for-msps.html">How a book of
+        clients is priced here</a>.</p>
       <p><strong>Producing evidence rather than a report.</strong> A permission report tells you what
         is true today. What an auditor, an insurer or a customer questionnaire wants is that a control
         held over a period, at control granularity, with the exceptions named and time-boxed. Our
@@ -853,11 +859,6 @@ PAGES = {
         Conditional Access coverage, application consents, email authentication and a public web
         surface — and those live in four different tools, or in one platform with one console, one
         findings store, one audit trail and one bill. Each product connects with its own admin consent.</p>
-      <p><strong>Small tenants, and a lot of them.</strong> This is the sharpest split. The
-        governance specialists often sell with a seat minimum or an enterprise contract; the average
-        tenant a provider manages is nowhere near that. If your book is sixty clients of twenty-odd
-        users, most of this category cannot sell to you at all, and the ones that can are priced for a
-        single large estate rather than a fleet of small ones.</p>
 
       <h2>On price, plainly</h2>
       <p>Per seat, on the permissions job alone, the specialists are cheaper. We are not going to
@@ -939,7 +940,10 @@ PAGES = {
           does not tell an auditor which control held, or produce evidence that it held over a
           period.</li>
         <li><strong>Per workload, per tenant.</strong> Sharing sits in one report, identity in
-          another, mail flow in a third — and none of them span the clients a provider manages.</li>
+          another, mail flow in a third, each inside one tenant. For a provider that means opening
+          every client in turn: Microsoft 365 Lighthouse rolls up some identity and device signals, but
+          not the sharing surface and not control evidence. <a href="for-msps.html">What a provider
+          gets instead</a>.</li>
         <li><strong>No outside-in view.</strong> Nothing in a Microsoft 365 licence scans your public web and domain
           surface, which is where a good deal of exposure actually lives — that is
           <a href="products/webscan.html">WebScan</a>, and running it costs nothing.</li>
@@ -974,7 +978,7 @@ PAGES = {
           allow editing, guests who have not signed in for months, and the resources each can reach.</li>
         <li><strong>The internal over-exposure</strong> — organisation-wide links and company-wide
           groups such as "Everyone except external users". These are the patterns that make Copilot
-          surface far more than anyone intended, and they are invisible in native reports.</li>
+          surface far more than anyone intended, and they do not show up together in any native report.</li>
         <li><strong>Risky grants beyond files</strong> — over-permissioned OAuth applications, and
           mail forwarding to domains nobody in your organisation owns.</li>
         <li><strong>A remediation order</strong> — not a CSV of everything, but what to revoke first,
@@ -1080,6 +1084,9 @@ PAGES = {
 
 <div class="note honest">
         <h2>Subdomain discovery is not a complete estate</h2>
+        <p><strong>In one line:</strong> the list of hostnames WebScan shows is what it has seen so far, not
+          everything you own, and a host it has never seen usually turns up at its next certificate
+          renewal. The detail follows.</p>
         <p>WebScan finds hostnames two ways, and only one of them is immediate. The names carried on the
           certificate your site serves at scan time are read straight away &mdash; though a wildcard
           certificate names a shape rather than hosts and yields nothing to enumerate, and a shared CDN or
@@ -1222,8 +1229,9 @@ PAGES = {
 {form_privacy}
 
       <h2>What the product reads</h2>
-      <p>Once you connect a Microsoft 365 tenant, SeQontrol reads configuration and metadata through
-        app-only Microsoft Graph permissions in order to produce findings. Concretely, that means
+      <p>Once you connect a Microsoft 365 tenant, SeQontrol reads configuration and metadata, mostly
+        through app-only Microsoft Graph permissions, with some planes (Exchange administration, DNS)
+        connected separately, in order to produce findings. Concretely, that means
         things like sharing links, permission assignments, group memberships, application consents,
         Conditional Access policies and DNS records.</p>
       <p><strong>It is metadata about access, not the contents of your files.</strong> SeQontrol
