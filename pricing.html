@@ -60,6 +60,7 @@
       <li><a href="for-msps.html">For MSPs</a></li>
       <li><a href="guides/index.html">Guides</a></li>
       <li><a href="contact.html">Contact</a></li>
+      <li class="nav-cta"><a class="btn btn-primary" href="https://app.seqontrol.com/">Sign up</a></li>
     </ul>
   </nav>
 </header>
@@ -179,6 +180,10 @@
           <p class="mb0"><strong>Estate size is a quote-time band, not a meter.</strong> The invoice stays on seats, but at quote time we ask roughly how large the SharePoint and OneDrive estate is — storage volume and site count. Almost every tenant sits in the standard band. A tenant whose estate is far larger than its seat count suggests — the 40-user firm with twelve terabytes — is banded accordingly, so it is priced for what it actually costs to crawl rather than discovering that later. Nothing about this is metered, gated or counted after the fact.</p>
         </div>
         <p class="after">Counted on users rather than on shares or resources — metering the resource count would punish the messiest estates, which are exactly the ones that need it most, and it could not be quoted before a discovery scan. Write-back is live for OneDrive permissions and sharing links; Exchange forwarding, SharePoint site roles, Power Platform and delegated-admin relationships are detected but not yet revoked app-only.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://app.seqontrol.com/">Sign up</a>
+          <a class="btn btn-ghost" href="products/sharecare.html">What ShareCare does</a>
+        </div>
       </div>
       <div class="product-licence tone-security" role="tabpanel" id="panel-security" aria-labelledby="tab-security" tabindex="0">
         <header>
@@ -221,6 +226,10 @@
           </table>
         </div>
         <p class="after">One tier, not a ladder: SecurityPortal is scan-only, so there is no write access to sell on a higher tier. Remediation lives in the products built to write safely. The log-analytics checks need the tenant to export activity logs; without that export they report &ldquo;not assessed&rdquo; rather than a pass. The public web and domain surface is <a href="products/webscan.html">WebScan</a>, licensed separately and free to run.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://app.seqontrol.com/">Sign up</a>
+          <a class="btn btn-ghost" href="products/securityportal.html">What SecurityPortal does</a>
+        </div>
       </div>
       <div class="product-licence tone-condaccess" role="tabpanel" id="panel-condaccess" aria-labelledby="tab-condaccess" tabindex="0">
         <header>
@@ -367,6 +376,10 @@
           <p class="mb0"><strong>Two licences, not a ladder, and the reason is that the ladder sold a distinction nobody makes.</strong> Keeping a scan and running it on a schedule were separate tiers; but a saved site nobody re-scans is a stale record, and a schedule that keeps nothing is a cron job with no output. Pro grants both.<br><br><strong>The free tier is the whole scanner, and that is deliberate.</strong> It is not a trial with an expiry date: it is auto-granted to every tenant, and what it does not do is remember.</p>
         </div>
         <p class="after">Counted per site rather than per domain, because a site is what gets scanned: one domain can front several, and each is its own configuration to grade. Nothing caps how many sites you may add; the count is trued up, never a hard stop.<br><br><strong>Pro is $20, against paid comparables that start around three times that.</strong> They run from roughly $60 per asset per month to several hundred, and they include active vulnerability testing that WebScan does not do. At the other end the free graders charge nothing and retain nothing. The gap between those two is where this sits, and it was empty.<br><br>WebScan never writes anywhere; SPF, DKIM and DMARC belong to MailTrust.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://app.seqontrol.com/">Sign up</a>
+          <a class="btn btn-ghost" href="products/webscan.html">What WebScan does</a>
+        </div>
       </div>
       <div class="product-licence tone-mailtrust" role="tabpanel" id="panel-mailtrust" aria-labelledby="tab-mailtrust" tabindex="0">
         <header>
@@ -460,6 +473,10 @@
           <p class="mb0"><strong>Report volume carries an allowance.</strong> Ingesting, parsing and storing DMARC aggregate reports is a real cost that scales with how much mail a domain sends, not with how many domains you have — so each domain includes an allowance sized to normal sending volume, and unusually high-volume domains buy additional blocks. Same test as the deliverability allowance: a genuine external cost, optional, and bursty. Posture, findings and reports stay uncapped.</p>
         </div>
         <p class="after">No tier caps how many domains you may add — the count is a commercial measurement, trued up on the next invoice, never a hard stop. Ingesting DMARC reports needs a mailbox to receive them; that is part of onboarding.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="https://app.seqontrol.com/">Sign up</a>
+          <a class="btn btn-ghost" href="products/mailtrust.html">What MailTrust does</a>
+        </div>
       </div>
       <div class="product-licence tone-compliance" role="tabpanel" id="panel-compliance" aria-labelledby="tab-compliance" tabindex="0">
         <header>
@@ -556,6 +573,9 @@
           </table>
         </div>
         <p class="after"><strong>Not called Automation, and not an accident.</strong> On the ladder products that word is the tier that writes to your tenant. CompliancePortal writes nothing — it maps, scores, evidences and attests. Automated evidence <em>capture</em> reads from the estate; it does not act on it.<br><br>The scheduled-assessment row is empty in all three bands rather than quietly ticked. And the scope holds either way — this proves the technical controls on the platforms SeQontrol connects to, not a whole-company compliance programme.</p>
+        <div class="btn-row">
+          <a class="btn btn-ghost" href="products/complianceportal.html">What CompliancePortal does</a>
+        </div>
       </div>
       <div class="product-licence tone-soon" role="tabpanel" id="panel-quoted" aria-labelledby="tab-quoted" tabindex="0">
         <header>
@@ -683,7 +703,7 @@
           greater-of rather than added on top.</li>
       </ul>
 
-      <h2>Your own tenant, if you are a partner</h2>
+      <h2 id="partner-tenant">Your own tenant, if you are a partner</h2>
       <p><strong>$50 a month, every released product, every tier, on the tenant you run your own business from.</strong>
         The same estate computes somewhere between $260 and $640 at list; this is deliberately below what a
         tenant costs us to run.</p>
@@ -691,7 +711,7 @@
         slide, and will find our mistakes before your clients do.</p>
       <ul>
         <li>Your <strong>own</strong> tenant &mdash; the domain on your provider agreement, checked against it.</li>
-        <li>Requires an active provider agreement. It is a partner benefit, not a tier to sign up for.</li>
+        <li>Requires a provider agreement, accepted online when you <a href="https://app.seqontrol.com/">sign up as a provider</a>. It is a partner benefit, not a tier you can buy on its own.</li>
         <li>Everything included, up to 50 users. Past that it becomes ordinary pricing, because past that you
           are not a small business running a tool, you are an estate using one.</li>
         <li>Not for client tenants, and not resellable. Client tenants are priced as client tenants.</li>

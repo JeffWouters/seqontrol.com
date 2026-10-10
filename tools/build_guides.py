@@ -21,6 +21,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _chrome import SOURCE, chrome  # noqa: E402
 from build_seo import META  # noqa: E402
+from build_legal import SIGNUP  # noqa: E402
 
 
 def seo(spec: dict) -> tuple[str, str]:
@@ -226,8 +227,9 @@ GUIDES = [
 INDEX = dict(
     eyebrow="Guides",
     h1="Microsoft 365 security guides",
-    lede="What we have learned building this, written to be useful on its own. No gates, no forms in "
-         "the middle, no email required to read the good part.",
+    lede="What we have learned building this, written to be useful on its own &mdash; for admins, and for "
+         "providers running the same checks across many tenants. No gates, no forms in the middle, no email "
+         "required to read the good part.",
 )
 
 
@@ -251,16 +253,32 @@ def depth_fix(html: str) -> str:
     return html
 
 
+BAND_LINE = {
+    "exposure-report.html": "Sign up and connect your own tenant, or ask for the free exposure report and "
+                            "a person will run it with you.",
+    "spoofing-report.html": "Sign up and connect a tenant when you are ready, or start with the free domain "
+                            "check, which reads only what your DNS already publishes.",
+}
+
+
 def page(spec, body_html, offer=None) -> str:
     head_open, after_head, footer = chrome()
-    offer_html = ""
+    # Every guide, and the index, ends on one closing band: sign up, or the free check that fits the
+    # guide. It sits after the article, never inside it, so "no forms in the middle" stays true.
+    # It replaced an in-body offer box that only ever offered the free report.
     if offer:
         href, label, line = offer
-        offer_html = (
-            '\n      <div class="note plain">\n'
-            f'        <h2>{line}</h2>\n'
-            f'        <p class="mb0"><a class="btn btn-primary" href="../{href}">{label}</a></p>\n'
-            "      </div>\n")
+    else:
+        href, label, line = ("spoofing-report.html", "Scan a domain first",
+                             "Try any of it on your own estate")
+    band = (
+        '  <section class="cta">\n    <div class="wrap">\n'
+        f'      <h2>{line}</h2>\n'
+        f'      <p>{BAND_LINE[href]}</p>\n'
+        '      <div class="btn-row">\n'
+        f'        <a class="btn btn-primary" href="{SIGNUP}">Sign up</a>\n'
+        f'        <a class="btn btn-ghost" href="../{href}">{label}</a>\n'
+        '      </div>\n    </div>\n  </section>\n\n')
     html = (
         head_open
         # From build_seo.META, not from this file's own copy. build_seo.apply() overwrites both on
@@ -283,8 +301,10 @@ def page(spec, body_html, offer=None) -> str:
         + f'      <p class="lede">{spec["lede"]}</p>\n'
         + "    </div>\n  </section>\n\n"
         + '  <section>\n    <div class="wrap wrap-narrow">\n'
-        + body_html + offer_html
-        + "    </div>\n  </section>\n\n</main>\n\n"
+        + body_html
+        + "    </div>\n  </section>\n\n"
+        + band
+        + "</main>\n\n"
         + footer
         + '<script src="../js/site.js"></script>\n</body>\n</html>\n'
     )

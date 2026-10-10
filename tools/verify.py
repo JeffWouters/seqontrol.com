@@ -40,7 +40,22 @@ def fail(page: str, msg: str) -> None:
 
 # --------------------------------------------------------------------- links
 
+def _signup_url() -> str:
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    from build_legal import SIGNUP  # noqa: E402
+    return SIGNUP
+
+
+# Every link into the app has to be the one in build_legal.SIGNUP. Hand-written pages carry it as a
+# literal, so this is what keeps a typo, a stray path or an old host from shipping on one page only.
+APP_LINK_RE = re.compile(r'href="(https?://app\.seqontrol\.com[^"]*)"')
+
+
 def check_links(page: str, src: str) -> None:
+    signup = _signup_url()
+    for url in APP_LINK_RE.findall(src):
+        if url != signup:
+            fail(page, f"app link {url!r} is not build_legal.SIGNUP ({signup!r})")
     for url in re.findall(r'(?:href|src)="([^"]+)"', src):
         if url.startswith(("http://", "https://", "mailto:", "tel:", "//", "#", "data:")):
             continue
