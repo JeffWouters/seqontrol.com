@@ -8,7 +8,8 @@ FACTS THIS SCRIPT DOES NOT KNOW — fill them in before relying on these pages:
   · the VAT number, if one is issued (the KvK number is recorded below)
   · the hosting region is stated as "in the EU" by choice (2026-10-11); subprocessors are
     Microsoft (Azure) and Stripe, listed on the privacy page
-  · retention periods for product data, if they differ from what is stated
+  · retention follows Dutch and European law by choice (2026-10-11); the one record that outlives
+    a subscription is the billing record, kept seven years for Dutch tax law (AWR art. 52)
 Everything else here is either verifiable from the platform code or is a
 commitment the site already makes elsewhere.
 
@@ -1132,12 +1133,12 @@ PAGES = {
       </div>
 
 <div class="note honest">
-        <h2>Not all of our own assurance is written down yet</h2>
+        <h2>What our own assurance rests on today</h2>
         <p class="mb0">Product data lives in <a href="privacy.html">Microsoft Azure, in the EU</a>; the
-          subprocessors are named on the same page, and <a href="security.html">the security page</a> says
-          plainly that we hold no certifications yet. What is not written down: retention defaults per data
-          class while a subscription runs. If your procurement needs that before you can buy, ask early
-          &mdash; we would rather say so here than have you discover it in a security questionnaire.</p>
+          subprocessors, and how long data is kept &mdash; as Dutch and European law set it &mdash; are on
+          the same page. <a href="security.html">The security page</a> says plainly that we hold no
+          certifications yet. If your procurement needs one before you can buy, ask early &mdash; we would
+          rather say so here than have you discover it in a security questionnaire.</p>
       </div>
 
       <h2>Why this page exists</h2>
@@ -1272,6 +1273,11 @@ PAGES = {
         included. Export what you want to keep before the end date.</p>
       <p>Contact-form correspondence is kept for as long as the conversation is useful, and deleted
         on request.</p>
+      <p>Underneath all of this is the law we operate under, which is Dutch and European: personal data
+        is kept no longer than the purpose it was collected for needs, as the GDPR requires, and no
+        shorter than Dutch law requires. That adds one record which outlives a subscription: invoices
+        and payment records, which Dutch tax law requires us to keep for seven years. They say who paid
+        what, and when; nothing from your tenant is in them.</p>
 
       <h2>Your rights</h2>
       <p>You can ask what we hold about you, ask for it to be corrected, ask for it to be deleted, or
@@ -1403,8 +1409,6 @@ PAGES = {
         the platform page</a>. When you want to see it for yourself, <a href="{signup}">sign up</a> and
         connect one product; nothing beyond that product's own grant is asked for until you add another.</p>
 
-      <!-- TO FILL IN before this page carries real weight:
-             · retention defaults per data class while a subscription runs  -->
 """),
 }
 
