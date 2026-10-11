@@ -528,7 +528,7 @@ PAGES = {
 
       <h2 style="margin-top:3rem">What you pay for</h2>
       <p><strong>Every price on this page is in euros, per month, excluding VAT.</strong> VAT is added where
-        it applies.</p>
+        it applies, and SeQontrol is sold to <a href="terms.html#business-only">businesses only</a>.</p>
       <p><strong>There is no platform minimum.</strong> You pay for the products you hold, in the unit each one
         counts, at any size. The tenancy, auth, audit trail, findings store, reporting and scheduling that every
         product runs on are included rather than charged separately. A 30-user tenant on ShareCare Visibility
@@ -1317,6 +1317,8 @@ PAGES = {
         if you sign up as a provider, or a signed agreement where one is in place. It covers
         availability, support, liability, processing terms and termination. Ask and we will send it
         before you commit, not after.</p>
+      <p id="business-only"><strong>SeQontrol is sold to businesses only.</strong> Signing up means you act for an
+        organisation, not as a consumer, which is also why every price is shown excluding VAT.</p>
       <p>Two things worth stating plainly here, because they shape everything else:</p>
       <ul>
         <li><strong>SeQontrol provides readiness and evidence, not an audit opinion.</strong> Your
