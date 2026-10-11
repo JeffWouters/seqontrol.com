@@ -1286,8 +1286,10 @@ PAGES = {
       <h2>Your SeQontrol account</h2>
       <p>To run an account we keep the names and email addresses of its users and of people you invite,
         such as auditors, a record of sign-ins, support correspondence, and invoices and payment records.
-        We use it to give you access, to support you and to bill you, because our agreement with you
-        requires it; invoices also because Dutch tax law does. For this data we are the controller.</p>
+        We use it to give you access, to support you and to bill you: for you, because our agreement
+        requires it; for the people you invite, because we have a legitimate interest in giving them the
+        access you asked for; and for invoices, also because Dutch tax law requires it. For this data we
+        are the controller.</p>
       <p>It is kept while the account exists and deleted when the account is closed, except invoices
         and payment records, which are kept for seven years.</p>
 
