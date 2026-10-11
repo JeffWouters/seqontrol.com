@@ -1372,6 +1372,11 @@ PAGES = {
         <li><strong>Tenant isolation.</strong> Each tenant owns its own connectors, findings,
           governance records and history. There is no shared tenant data. Templates may seed a
           tenant, but instantiated records belong to that tenant.</li>
+        <li><strong>Encrypted in transit and at rest.</strong> Data is encrypted on its way to and from
+          the platform, and where it is stored.</li>
+        <li><strong>Multi-factor sign-in for staff.</strong> Everyone at SeQontrol signs in to the
+          platform and to Azure with multi-factor authentication.</li>
+        <li><strong>Daily backups.</strong> Stored data is backed up every day.</li>
         <li><strong>Tamper-evident audit.</strong> The audit trail is hash-chained, so a record that
           was altered after the fact can be shown to have been altered. Support access through
           impersonation is recorded in it like anything else.</li>
