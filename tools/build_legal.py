@@ -1239,6 +1239,10 @@ PAGES = {
         Conditional Access policies and DNS records.</p>
       <p><strong>It is metadata about access, not the contents of your files.</strong> SeQontrol
         records that a document is shared with an external address; it does not read the document.</p>
+      <p>Content reaches SeQontrol only when you send it: DMARC reports delivered to the mailbox we
+        provide for them, the test messages a deliverability check sends and receives, and, in products
+        that accept them, documents you upload as evidence or a Git repository you connect. It is kept
+        and deleted with the rest of your findings and evidence.</p>
       <p>Scanning is read-only. Anything that writes back to your tenant — revoking a permission,
         publishing a DNS record, restoring an approved configuration — requires a separate, explicit
         consent that is distinct from the read grant, and can be withdrawn without losing the
@@ -1278,6 +1282,14 @@ PAGES = {
         shorter than Dutch law requires. That adds one record which outlives a subscription: invoices
         and payment records, which Dutch tax law requires us to keep for seven years. They say who paid
         what, and when; nothing from your tenant is in them.</p>
+
+      <h2>Your SeQontrol account</h2>
+      <p>To run an account we keep the names and email addresses of its users and of people you invite,
+        such as auditors, a record of sign-ins, support correspondence, and invoices and payment records.
+        We use it to give you access, to support you and to bill you, because our agreement with you
+        requires it; invoices also because Dutch tax law does. For this data we are the controller.</p>
+      <p>It is kept while the account exists and deleted when the account is closed, except invoices
+        and payment records, which are kept for seven years.</p>
 
       <h2>Your rights</h2>
       <p>You can ask what we hold about you, ask for it to be corrected, ask for it to be deleted, or
@@ -1363,8 +1375,10 @@ PAGES = {
         <li><strong>Write access is separate.</strong> Remediation requires its own explicit consent
           on top of the read grant. Withdrawing it stops all write paths and leaves your findings and
           evidence intact.</li>
-        <li><strong>Metadata, not content.</strong> We read who can reach what. We do not read your
-          documents or your mail.</li>
+        <li><strong>Metadata, not content.</strong> We read who can reach what, not what your
+          documents and mailboxes contain. Content reaches us only when you send it: DMARC reports
+          delivered to us, the test messages a deliverability check sends, and, in products that accept
+          them, evidence you upload or a Git repository you connect.</li>
       </ul>
 
       <h2>How the platform is built</h2>
