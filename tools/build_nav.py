@@ -76,10 +76,6 @@ TRUST = [
     ("terms.html",    "Terms"),
 ]
 
-# Absolute, so unlike every other list here these take no depth prefix.
-ELSEWHERE = [
-    ("https://jeffops.com", "JeffOps"),
-]
 
 # The top-level nav, owned here for the same reason as everything else below. It was uniform in
 # CONTENT across all 32 pages and varied only by relative depth, which is exactly the thing this file
@@ -311,9 +307,6 @@ FOOTER = re.compile(r'( *)<h2>Products</h2>\n *<ul>.*?</ul>', re.S)
 COMPANY_RE = re.compile(r'( *)<h2>Company</h2>\n *<ul>.*?</ul>', re.S)
 COMPARE_RE = re.compile(r'( *)<h2>Compare</h2>\n *<ul>.*?</ul>', re.S)
 TRUST_RE = re.compile(r'( *)<h2>Trust</h2>\n *<ul>.*?</ul>', re.S)
-ELSEWHERE_RE = re.compile(r'( *)<h2>Elsewhere</h2>\n *<ul>.*?</ul>', re.S)
-
-
 def status_block(pad: str, label: str | None) -> str:
     css, badge, text = STATUS[label]
     return (f'{pad}<h3>Status</h3>\n'
@@ -401,15 +394,6 @@ def trust(pad: str, up: str) -> str:
     return "\n".join(out)
 
 
-def elsewhere(pad: str) -> str:
-    """No `up` argument: these are absolute URLs and take no depth prefix."""
-    out = [f'{pad}<h2>Elsewhere</h2>', f'{pad}<ul>']
-    for href, name in ELSEWHERE:
-        out.append(f'{pad}  <li><a href="{href}">{name}</a></li>')
-    out.append(f'{pad}</ul>')
-    return "\n".join(out)
-
-
 def pricing_sub(pad: str, up: str) -> str:
     out = [f'{pad}<ul class="subnav">']
     for href, name in PRICING_SUB:
@@ -492,7 +476,6 @@ def main() -> None:
             out = COMPANY_RE.sub(lambda m: company(m.group(1), up), out)
             out = COMPARE_RE.sub(lambda m: compare(m.group(1), up), out)
             out = TRUST_RE.sub(lambda m: trust(m.group(1), up), out)
-            out = ELSEWHERE_RE.sub(lambda m: elsewhere(m.group(1)), out)
 
             if rel == "404.html":
                 out = absolutise(out)

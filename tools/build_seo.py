@@ -209,9 +209,7 @@ ORG = """{
   "name": "SeQontrol",
   "url": "https://seqontrol.com/",
   "logo": "https://seqontrol.com/assets/seqontrol-symbol.png",
-  "description": "A multi-tenant platform for Microsoft 365 security, compliance and configuration governance.",
-  "parentOrganization": { "@type": "Organization", "name": "JeffOps", "url": "https://jeffops.com/" },
-  "sameAs": ["https://jeffops.com/"]
+  "description": "A multi-tenant platform for Microsoft 365 security, compliance and configuration governance."
 }"""
 
 WEBSITE = """{
