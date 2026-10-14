@@ -141,8 +141,8 @@ META = {
         "ShareCare"),
     "products/securityportal.html": (
         "SecurityPortal: Microsoft 365 and Entra posture, scored",
-        "Continuous Microsoft 365 and Entra security posture on a ladder you climb with scan "
-        "evidence, every finding tagged to the control it proves.",
+        "Microsoft 365 and Entra security posture on a ladder you climb with scan "
+        "evidence, every finding linked to the security or compliance control it validates.",
         "SecurityPortal"),
     "products/conditionalaccessportal.html": (
         "ConditionalAccessPortal: Conditional Access paths, coming soon",
