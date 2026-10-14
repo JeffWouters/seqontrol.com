@@ -118,6 +118,70 @@
       ? wantDoor : doors[0].getAttribute('data-door'));
   }
 
+  // --- product carousel (home page) -------------------------------------------
+  // Progressive, like the tabs below: the markup ships every slide visible and the controls hidden.
+  // Here the slides become one-at-a-time. Inactive slides are hidden with visibility rather than
+  // [hidden] so they keep their place in the shared grid cell and the box never changes height.
+  // No autoplay: the slide changes only when somebody asks it to.
+  Array.prototype.forEach.call(document.querySelectorAll('[data-carousel]'), function (root) {
+    var tabs = [].slice.call(root.querySelectorAll('[role="tab"]'));
+    var slides = [].slice.call(root.querySelectorAll('[role="tabpanel"]'));
+    var count = root.querySelector('.carousel-count');
+    if (!tabs.length || tabs.length !== slides.length) return;
+    var current = 0;
+
+    function show(index, moveFocus) {
+      current = (index + slides.length) % slides.length;
+      tabs.forEach(function (tab, i) {
+        var on = i === current;
+        tab.setAttribute('aria-selected', String(on));
+        tab.setAttribute('tabindex', on ? '0' : '-1');
+        if (on) { slides[i].removeAttribute('data-inactive'); slides[i].removeAttribute('aria-hidden'); }
+        else { slides[i].setAttribute('data-inactive', ''); slides[i].setAttribute('aria-hidden', 'true'); }
+        // Keep focusable content in hidden slides out of the tab order.
+        [].forEach.call(slides[i].querySelectorAll('a, [tabindex]'), function (el) {
+          if (on) {
+            if (el.hasAttribute('data-carousel-tabindex')) {
+              el.setAttribute('tabindex', el.getAttribute('data-carousel-tabindex'));
+              el.removeAttribute('data-carousel-tabindex');
+            } else if (el.getAttribute('tabindex') === '-1' && el.tagName === 'A') {
+              el.removeAttribute('tabindex');
+            }
+          } else {
+            if (el.hasAttribute('tabindex') && !el.hasAttribute('data-carousel-tabindex')) {
+              el.setAttribute('data-carousel-tabindex', el.getAttribute('tabindex'));
+            }
+            el.setAttribute('tabindex', '-1');
+          }
+        });
+      });
+      if (count) count.textContent = (current + 1) + ' / ' + slides.length;
+      if (moveFocus) tabs[current].focus();
+    }
+
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () { show(i); });
+      tab.addEventListener('keydown', function (e) {
+        var next = null;
+        if (e.key === 'ArrowRight') next = i + 1;
+        else if (e.key === 'ArrowLeft') next = i - 1;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = tabs.length - 1;
+        if (next === null) return;
+        e.preventDefault();
+        show(next, true);
+      });
+    });
+    [].forEach.call(root.querySelectorAll('[data-carousel-step]'), function (btn) {
+      btn.addEventListener('click', function () {
+        show(current + parseInt(btn.getAttribute('data-carousel-step'), 10));
+      });
+    });
+
+    root.setAttribute('data-carousel-ready', '');
+    show(0);
+  });
+
   // --- tabs -----------------------------------------------------------------
   // Progressive: the markup ships with every panel visible and the tab strip
   // hidden by CSS. Only once this runs does the container get
