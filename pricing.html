@@ -78,6 +78,235 @@
   <section>
     <div class="wrap wrap-narrow">
 
+
+      <section class="calc" id="calculator" data-calculator data-contact="support@seqontrol.com" aria-labelledby="calc-title">
+        <h2 id="calc-title">Estimate your monthly cost</h2>
+        <p>Pick who it is for, enter rough numbers and choose what you need. The figures are the ones in the
+          tables below: euros per month, excluding VAT.</p>
+        <p class="calc-nojs small dim">The calculator needs JavaScript. Every figure it uses is in the tables below.</p>
+
+        <div class="calc-app" hidden>
+          <ol class="calc-steps">
+            <li><button type="button" data-goto="1"><span>01</span> Who it is for</button></li>
+            <li><button type="button" data-goto="2"><span>02</span> Your environment</button></li>
+            <li><button type="button" data-goto="3"><span>03</span> What you need</button></li>
+            <li><button type="button" data-goto="4"><span>04</span> Your estimate</button></li>
+            <li><button type="button" data-goto="5"><span>05</span> Keep a copy</button></li>
+          </ol>
+
+          <div class="calc-grid">
+            <div class="calc-main">
+
+              <fieldset class="calc-panel" data-step="1">
+                <legend><span class="calc-legend">Who is this for?</span></legend>
+                <p class="calc-sub">This decides which prices apply. Providers pool users, sites and domains across their clients.</p>
+                <div class="calc-choices">
+                  <label for="calc-aud-one" class="calc-choice"><input id="calc-aud-one" type="radio" name="calc-aud" value="one" checked>
+                    <span><span class="calc-kicker">Customer</span><b>I manage one Microsoft 365 environment</b>
+                    <span>Retail prices, per user, site and domain.</span></span></label>
+                  <label for="calc-aud-multi" class="calc-choice"><input id="calc-aud-multi" type="radio" name="calc-aud" value="multi">
+                    <span><span class="calc-kicker">MSP</span><b>I manage multiple environments</b>
+                    <span>Pooled across your book. Partner rates from ten managed tenants.</span></span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="calc-panel" data-step="2">
+                <legend><span class="calc-legend">Your environment</span></legend>
+                <p class="calc-sub">Rough numbers are fine. These are the units the products count; nothing here is metered by scan or finding.</p>
+                <div class="calc-fields">
+            <div class="field calc-field" data-multi-only>
+              <label for="calc-tenants">Client tenants you manage</label>
+              <input id="calc-tenants" type="number" inputmode="numeric" min="0" step="1" value="20">
+              <p class="hint">Partner rates and pooled compliance start at ten.</p>
+            </div>
+            <div class="field calc-field">
+              <label for="calc-users">Microsoft 365 users</label>
+              <input id="calc-users" type="number" inputmode="numeric" min="0" step="1" value="250">
+              <p class="hint">Licensed users in the tenant.</p>
+            </div>
+            <div class="field calc-field">
+              <label for="calc-sites">Websites to monitor</label>
+              <input id="calc-sites" type="number" inputmode="numeric" min="0" step="1" value="3">
+              <p class="hint">Only counted on WebScan Pro. Scanning one URL at a time is free.</p>
+            </div>
+            <div class="field calc-field">
+              <label for="calc-sending">Domains you send mail from</label>
+              <input id="calc-sending" type="number" inputmode="numeric" min="0" step="1" value="2">
+              <p class="hint">Counted on MailTrust.</p>
+            </div>
+            <div class="field calc-field">
+              <label for="calc-parked">Parked domains</label>
+              <input id="calc-parked" type="number" inputmode="numeric" min="0" step="1" value="10">
+              <p class="hint">Domains you own but never send from. Five included per sending domain.</p>
+            </div>
+                </div>
+                <label for="calc-own" class="calc-own" data-multi-only><input id="calc-own" type="checkbox" name="calc-own" checked>
+                  <span><b>Include your own tenant</b>: every released product, every tier, up to 50 users, at a flat
+                  <span class="calc-price" data-price="own_tenant.price"></span> a month. A partner benefit; it needs a provider agreement.</span></label>
+                <p class="calc-error" role="alert" hidden></p>
+              </fieldset>
+
+              <fieldset class="calc-panel" data-step="3">
+                <legend><span class="calc-legend">What do you need to answer?</span></legend>
+                <p class="calc-sub">Pick the questions you are being asked. Each adds the product that answers it, at the tier we would start with, and says why. Change the tier or remove it.</p>
+                <div class="calc-products">
+            <div class="calc-product" data-product="sharecare">
+              <label for="calc-p-sharecare" class="calc-add">
+                <input id="calc-p-sharecare" type="checkbox" name="calc-p-sharecare" checked>
+                <span><span class="calc-pname">ShareCare</span> <span class="calc-status">Available</span>
+                  <span class="calc-q">What is over-shared, and what can Copilot reach?</span></span>
+              </label>
+              <div class="calc-detail">
+              <fieldset class="calc-tiers" data-tiers="sharecare">
+                <legend class="sr-only">ShareCare tier</legend>
+                <label for="calc-tier-sharecare-vis"><input id="calc-tier-sharecare-vis" type="radio" name="calc-tier-sharecare" value="vis"><span>Visibility <span class="calc-price" data-price="sharecare.tiers.vis"></span></span></label>
+                <label for="calc-tier-sharecare-gov"><input id="calc-tier-sharecare-gov" type="radio" name="calc-tier-sharecare" value="gov"><span>Governance <span class="calc-price" data-price="sharecare.tiers.gov"></span></span></label>
+                <label for="calc-tier-sharecare-auto"><input id="calc-tier-sharecare-auto" type="radio" name="calc-tier-sharecare" value="auto"><span>Automation <span class="calc-price" data-price="sharecare.tiers.auto"></span></span></label>
+              </fieldset>
+                <p class="calc-why" data-why="sharecare"></p>
+              </div>
+            </div>
+            <div class="calc-product" data-product="security">
+              <label for="calc-p-security" class="calc-add">
+                <input id="calc-p-security" type="checkbox" name="calc-p-security" checked>
+                <span><span class="calc-pname">SecurityPortal</span> <span class="calc-status">Available</span>
+                  <span class="calc-q">Is the tenant configured safely?</span></span>
+              </label>
+              <div class="calc-detail">
+                <p class="calc-why" data-why="security"></p>
+              </div>
+            </div>
+            <div class="calc-product" data-product="webscan">
+              <label for="calc-p-webscan" class="calc-add">
+                <input id="calc-p-webscan" type="checkbox" name="calc-p-webscan" checked>
+                <span><span class="calc-pname">WebScan</span> <span class="calc-status">Available</span>
+                  <span class="calc-q">What do our public-facing systems look like to an attacker?</span></span>
+              </label>
+              <div class="calc-detail">
+              <fieldset class="calc-tiers" data-tiers="webscan">
+                <legend class="sr-only">WebScan tier</legend>
+                <label for="calc-tier-webscan-free"><input id="calc-tier-webscan-free" type="radio" name="calc-tier-webscan" value="free"><span>Free <span class="calc-price">€0</span></span></label>
+                <label for="calc-tier-webscan-pro"><input id="calc-tier-webscan-pro" type="radio" name="calc-tier-webscan" value="pro"><span>Pro <span class="calc-price" data-price="webscan.pro" data-suffix=" / site"></span></span></label>
+              </fieldset>
+                <p class="calc-why" data-why="webscan"></p>
+              </div>
+            </div>
+            <div class="calc-product" data-product="mailtrust">
+              <label for="calc-p-mailtrust" class="calc-add">
+                <input id="calc-p-mailtrust" type="checkbox" name="calc-p-mailtrust" checked>
+                <span><span class="calc-pname">MailTrust</span> <span class="calc-status">Available</span>
+                  <span class="calc-q">Can someone spoof us, and how do we stop it safely?</span></span>
+              </label>
+              <div class="calc-detail">
+              <fieldset class="calc-tiers" data-tiers="mailtrust">
+                <legend class="sr-only">MailTrust tier</legend>
+                <label for="calc-tier-mailtrust-vis"><input id="calc-tier-mailtrust-vis" type="radio" name="calc-tier-mailtrust" value="vis"><span>Visibility <span class="calc-price" data-price="mailtrust.tiers.vis"></span></span></label>
+                <label for="calc-tier-mailtrust-gov"><input id="calc-tier-mailtrust-gov" type="radio" name="calc-tier-mailtrust" value="gov"><span>Governance <span class="calc-price" data-price="mailtrust.tiers.gov"></span></span></label>
+                <label for="calc-tier-mailtrust-auto"><input id="calc-tier-mailtrust-auto" type="radio" name="calc-tier-mailtrust" value="auto"><span>Automation <span class="calc-price" data-price="mailtrust.tiers.auto"></span></span></label>
+              </fieldset>
+                <p class="calc-why" data-why="mailtrust"></p>
+              </div>
+            </div>
+            <div class="calc-product" data-product="compliance">
+              <label for="calc-p-compliance" class="calc-add">
+                <input id="calc-p-compliance" type="checkbox" name="calc-p-compliance">
+                <span><span class="calc-pname">CompliancePortal</span> <span class="calc-status soon">Coming soon</span>
+                  <span class="calc-q">Can we prove the technical controls held, continuously?</span></span>
+              </label>
+              <div class="calc-detail">
+              <fieldset class="calc-tiers" data-tiers="compliance">
+                <legend class="sr-only">CompliancePortal frameworks in scope</legend>
+                <label for="calc-tier-compliance-1"><input id="calc-tier-compliance-1" type="radio" name="calc-tier-compliance" value="1"><span>1 framework</span></label>
+                <label for="calc-tier-compliance-3"><input id="calc-tier-compliance-3" type="radio" name="calc-tier-compliance" value="3"><span>3 frameworks</span></label>
+                <label for="calc-tier-compliance-all"><input id="calc-tier-compliance-all" type="radio" name="calc-tier-compliance" value="all"><span>Unlimited</span></label>
+                <label for="calc-attested"><input id="calc-attested" type="checkbox" name="calc-attested"><span>With sign-off (Attested)</span></label>
+              </fieldset>
+                <p class="calc-why" data-why="compliance"></p>
+              </div>
+            </div>
+            <div class="calc-product" data-product="condaccess">
+              <label for="calc-p-condaccess" class="calc-add">
+                <input id="calc-p-condaccess" type="checkbox" name="calc-p-condaccess">
+                <span><span class="calc-pname">ConditionalAccessPortal</span> <span class="calc-status soon">Coming soon</span>
+                  <span class="calc-q">Do our Conditional Access policies actually cover what we think?</span></span>
+              </label>
+              <div class="calc-detail">
+              <fieldset class="calc-tiers" data-tiers="condaccess">
+                <legend class="sr-only">ConditionalAccessPortal tier</legend>
+                <label for="calc-tier-condaccess-vis"><input id="calc-tier-condaccess-vis" type="radio" name="calc-tier-condaccess" value="vis"><span>Visibility <span class="calc-price" data-price="condaccess.tiers.vis"></span></span></label>
+                <label for="calc-tier-condaccess-gov"><input id="calc-tier-condaccess-gov" type="radio" name="calc-tier-condaccess" value="gov"><span>Governance <span class="calc-price" data-price="condaccess.tiers.gov"></span></span></label>
+                <label for="calc-tier-condaccess-auto"><input id="calc-tier-condaccess-auto" type="radio" name="calc-tier-condaccess" value="auto"><span>Automation <span class="calc-price" data-price="condaccess.tiers.auto"></span></span></label>
+              </fieldset>
+                <p class="calc-why" data-why="condaccess"></p>
+              </div>
+            </div>
+                </div>
+                <p class="small dim">Dredd and PosturePortal are still in development and carry no price, so they are not in the calculator.</p>
+              </fieldset>
+
+              <div class="calc-panel" data-step="4" role="group" aria-labelledby="calc-s4">
+                <h3 id="calc-s4" class="calc-legend">Your estimate</h3>
+                <p class="calc-sub" data-out="intro"></p>
+                <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="Your estimate">
+                  <table class="calc-table">
+                    <thead><tr><th scope="col">Product</th><th scope="col">Counted on</th><th scope="col">Rate</th><th scope="col" class="num">Per month</th></tr></thead>
+                    <tbody data-out="lines"></tbody>
+                    <tfoot>
+                      <tr><th scope="row" colspan="3">Per month, excluding VAT</th><td class="num" data-out="monthly"></td></tr>
+                      <tr class="calc-year"><th scope="row" colspan="3">Per year: twelve months, no annual discount</th><td class="num" data-out="annual"></td></tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="calc-later" hidden>
+                  <h4>On release, not in the total</h4>
+                  <p class="small dim">Built and running, not on sale yet. The price is published so it is settled before it ships.</p>
+                  <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="On release, not in the total">
+                    <table class="calc-table"><thead><tr><th scope="col">Product</th><th scope="col">Counted on</th><th scope="col">Rate</th><th scope="col" class="num">Per month</th></tr></thead>
+                    <tbody data-out="later"></tbody></table>
+                  </div>
+                </div>
+                <h4>What does not change this number</h4>
+                <ul class="calc-unchanged">
+                  <li>How often you scan, how many findings you have, how much you remediate or export.</li>
+                  <li>How many products you take: there is no suite discount, and none is applied above.</li>
+                  <li>How you pay: monthly, no minimum term, cancel any month.</li>
+                </ul>
+              </div>
+
+              <div class="calc-panel" data-step="5" role="group" aria-labelledby="calc-s5">
+                <h3 id="calc-s5" class="calc-legend">Keep a copy <span class="dim">(optional)</span></h3>
+                <p class="calc-sub">You already have the number. Nothing below asks for your details.</p>
+                <div class="calc-actions">
+                  <button type="button" class="btn btn-primary" data-act="print">Print or save as PDF</button>
+                  <button type="button" class="btn btn-ghost" data-act="copy">Copy the estimate</button>
+                  <a class="btn btn-ghost" data-act="mail" href="mailto:support@seqontrol.com">Ask us about this estimate</a>
+                </div>
+                <p class="small dim" data-out="copied" role="status"></p>
+                <p class="small dim">Asking opens your mail app with the estimate filled in. A person replies, usually the same working day.</p>
+              </div>
+
+              <div class="calc-nav">
+                <button type="button" class="btn btn-ghost" data-nav="back">Back</button>
+                <button type="button" class="btn btn-primary" data-nav="next">Next</button>
+              </div>
+            </div>
+
+            <aside class="calc-total" aria-label="Running total">
+              <p class="calc-kicker">Per month, excl. VAT</p>
+              <p class="calc-sum" data-out="monthly" aria-live="polite"></p>
+              <p class="calc-sum-year"><span data-out="annual"></span> a year</p>
+              <ul data-out="summary"></ul>
+              <p class="calc-later-note" data-out="laternote" hidden></p>
+              <p class="calc-basis" data-out="basis"></p>
+              <p class="calc-basis"><a href="#calc-disclaimer">Indicative only: see the note below.</a></p>
+            </aside>
+          </div>
+        </div>
+
+        <p class="calc-disclaimer" id="calc-disclaimer"><strong>Indicative only.</strong> This calculator, and every price on this website, is given for information and without obligation: no rights can be derived from it. Prices and calculations can contain errors and can change. What you pay is set by the quote or order you accept and the service agreement that comes with it, and where a price shown on this website is evidently wrong, we are not bound by it.</p>
+        <script type="application/json" id="calc-data">{"sharecare":{"tiers":{"vis":2,"gov":4,"auto":6.5},"volume":[[2000,30],[500,20],[100,10]]},"security":{"with_sharecare":1.5,"standalone":3.5,"tenant_min":50},"webscan":{"pro":20},"mailtrust":{"tiers":{"vis":15,"gov":30,"auto":40},"parked":3,"parked_included":5,"partner":{"tiers":{"vis":5,"gov":10,"auto":13},"parked":1,"min_tenants":10}},"own_tenant":{"price":50,"max_users":50},"condaccess":{"tiers":{"vis":0.6,"gov":1,"auto":1.5},"tenant_min":50},"compliance":{"bands":{"1":[300,450],"3":[600,900],"all":[900,1350]},"partner":{"framework":750,"all":3000,"per_tenant":{"evidence":50,"attested":75},"min_tenants":10}}}</script>
+      </section>
+
       <h2>What each product counts</h2>
       <p>Every product is priced on the thing that actually drives its cost and its value to you. Those are not
         the same unit, and forcing them into one would misprice most of the portfolio.</p>

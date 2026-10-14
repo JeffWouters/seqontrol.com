@@ -29,6 +29,7 @@ Run: python tools/build_legal.py
 from __future__ import annotations
 
 import io
+import json
 import os
 import re
 import sys
@@ -37,6 +38,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from _chrome import SOURCE, chrome  # noqa: E402
 from build_seo import META  # noqa: E402
 from build_frameworks import FRAMEWORK_COUNT  # noqa: E402
+from prices import CALCULATOR  # noqa: E402
 
 
 # "twenty-three regimes" is FRAMEWORK_COUNT minus the one the buyer actually wants. Spelled out
@@ -182,6 +184,7 @@ PAGES = {
                   estate_label="Your environment",
                   estate_hint="e.g. 150 users, 2 domains — or 60 managed tenants"),
         body="""
+<!--CALCULATOR-->
       <h2>What each product counts</h2>
       <p>Every product is priced on the thing that actually drives its cost and its value to you. Those are not
         the same unit, and forcing them into one would misprice most of the portfolio.</p>
@@ -1438,6 +1441,201 @@ def closing_band(closing) -> str:
             '    </div>\n  </section>\n\n')
 
 
+
+# --------------------------------------------------------------------------- pricing calculator
+# The calculator at the top of pricing.html. The markup is here; the behaviour is in js/site.js
+# ([data-calculator]); the figures are tools/prices.py CALCULATOR, serialised into the JSON block below
+# so the script never carries a price of its own. Without JavaScript the steps stay hidden and the
+# note under the heading points at the tables, which hold every figure the calculator uses.
+#
+# THE DISCLAIMER IS UNREVIEWED. It was added on 14 October 2026 at Jeff's request, after the lawyer
+# review of 19 August, and has not been seen by the lawyer. Send it with the agreements.
+CALC_DISCLAIMER = (
+    "<strong>Indicative only.</strong> This calculator, and every price on this website, is given for "
+    "information and without obligation: no rights can be derived from it. Prices and calculations can "
+    "contain errors and can change. What you pay is set by the quote or order you accept and the service "
+    "agreement that comes with it, and where a price shown on this website is evidently wrong, we are "
+    "not bound by it."
+)
+
+
+def calculator_html() -> str:
+    data = json.dumps(CALCULATOR, separators=(",", ":")).replace("</", "<\\/")
+    tier3 = lambda key, label: f"""
+              <fieldset class="calc-tiers" data-tiers="{key}">
+                <legend class="sr-only">{label} tier</legend>
+                <label><input type="radio" name="calc-tier-{key}" value="vis"><span>Visibility <span class="calc-price" data-price="{key}.tiers.vis"></span></span></label>
+                <label><input type="radio" name="calc-tier-{key}" value="gov"><span>Governance <span class="calc-price" data-price="{key}.tiers.gov"></span></span></label>
+                <label><input type="radio" name="calc-tier-{key}" value="auto"><span>Automation <span class="calc-price" data-price="{key}.tiers.auto"></span></span></label>
+              </fieldset>"""
+    def product(key, name, question, status, inner, checked):
+        soon = status != "Available"
+        return f"""
+            <div class="calc-product" data-product="{key}">
+              <label class="calc-add">
+                <input type="checkbox" name="calc-p-{key}"{" checked" if checked else ""}>
+                <span><span class="calc-pname">{name}</span> <span class="calc-status{" soon" if soon else ""}">{status}</span>
+                  <span class="calc-q">{question}</span></span>
+              </label>
+              <div class="calc-detail">{inner}
+                <p class="calc-why" data-why="{key}"></p>
+              </div>
+            </div>"""
+    webscan_tiers = """
+              <fieldset class="calc-tiers" data-tiers="webscan">
+                <legend class="sr-only">WebScan tier</legend>
+                <label><input type="radio" name="calc-tier-webscan" value="free"><span>Free <span class="calc-price">€0</span></span></label>
+                <label><input type="radio" name="calc-tier-webscan" value="pro"><span>Pro <span class="calc-price" data-price="webscan.pro" data-suffix=" / site"></span></span></label>
+              </fieldset>"""
+    compliance_tiers = """
+              <fieldset class="calc-tiers" data-tiers="compliance">
+                <legend class="sr-only">CompliancePortal frameworks in scope</legend>
+                <label><input type="radio" name="calc-tier-compliance" value="1"><span>1 framework</span></label>
+                <label><input type="radio" name="calc-tier-compliance" value="3"><span>3 frameworks</span></label>
+                <label><input type="radio" name="calc-tier-compliance" value="all"><span>Unlimited</span></label>
+                <label><input type="checkbox" name="calc-attested"><span>With sign-off (Attested)</span></label>
+              </fieldset>"""
+    products = (
+        product("sharecare", "ShareCare", "What is over-shared, and what can Copilot reach?", "Available", tier3("sharecare", "ShareCare"), True)
+        + product("security", "SecurityPortal", "Is the tenant configured safely?", "Available", "", True)
+        + product("webscan", "WebScan", "What do our public-facing systems look like to an attacker?", "Available", webscan_tiers, True)
+        + product("mailtrust", "MailTrust", "Can someone spoof us, and how do we stop it safely?", "Available", tier3("mailtrust", "MailTrust"), True)
+        + product("compliance", "CompliancePortal", "Can we prove the technical controls held, continuously?", "Coming soon", compliance_tiers, False)
+        + product("condaccess", "ConditionalAccessPortal", "Do our Conditional Access policies actually cover what we think?", "Coming soon", tier3("condaccess", "ConditionalAccessPortal"), False)
+    )
+    field = lambda id_, label, hint, value, extra="": f"""
+            <div class="field calc-field"{extra}>
+              <label for="{id_}">{label}</label>
+              <input id="{id_}" type="number" inputmode="numeric" min="0" step="1" value="{value}">
+              <p class="hint">{hint}</p>
+            </div>"""
+    return _label_wrapped(f"""
+      <section class="calc" id="calculator" data-calculator data-contact="{CONTACT}" aria-labelledby="calc-title">
+        <h2 id="calc-title">Estimate your monthly cost</h2>
+        <p>Pick who it is for, enter rough numbers and choose what you need. The figures are the ones in the
+          tables below: euros per month, excluding VAT.</p>
+        <p class="calc-nojs small dim">The calculator needs JavaScript. Every figure it uses is in the tables below.</p>
+
+        <div class="calc-app" hidden>
+          <ol class="calc-steps">
+            <li><button type="button" data-goto="1"><span>01</span> Who it is for</button></li>
+            <li><button type="button" data-goto="2"><span>02</span> Your environment</button></li>
+            <li><button type="button" data-goto="3"><span>03</span> What you need</button></li>
+            <li><button type="button" data-goto="4"><span>04</span> Your estimate</button></li>
+            <li><button type="button" data-goto="5"><span>05</span> Keep a copy</button></li>
+          </ol>
+
+          <div class="calc-grid">
+            <div class="calc-main">
+
+              <fieldset class="calc-panel" data-step="1">
+                <legend><span class="calc-legend">Who is this for?</span></legend>
+                <p class="calc-sub">This decides which prices apply. Providers pool users, sites and domains across their clients.</p>
+                <div class="calc-choices">
+                  <label class="calc-choice"><input type="radio" name="calc-aud" value="one" checked>
+                    <span><span class="calc-kicker">Customer</span><b>I manage one Microsoft 365 environment</b>
+                    <span>Retail prices, per user, site and domain.</span></span></label>
+                  <label class="calc-choice"><input type="radio" name="calc-aud" value="multi">
+                    <span><span class="calc-kicker">MSP</span><b>I manage multiple environments</b>
+                    <span>Pooled across your book. Partner rates from ten managed tenants.</span></span></label>
+                </div>
+              </fieldset>
+
+              <fieldset class="calc-panel" data-step="2">
+                <legend><span class="calc-legend">Your environment</span></legend>
+                <p class="calc-sub">Rough numbers are fine. These are the units the products count; nothing here is metered by scan or finding.</p>
+                <div class="calc-fields">{field("calc-tenants", "Client tenants you manage", "Partner rates and pooled compliance start at ten.", 20, ' data-multi-only')}{field("calc-users", "Microsoft 365 users", "Licensed users in the tenant.", 250)}{field("calc-sites", "Websites to monitor", "Only counted on WebScan Pro. Scanning one URL at a time is free.", 3)}{field("calc-sending", "Domains you send mail from", "Counted on MailTrust.", 2)}{field("calc-parked", "Parked domains", "Domains you own but never send from. Five included per sending domain.", 10)}
+                </div>
+                <label class="calc-own" data-multi-only><input type="checkbox" name="calc-own" checked>
+                  <span><b>Include your own tenant</b>: every released product, every tier, up to 50 users, at a flat
+                  <span class="calc-price" data-price="own_tenant.price"></span> a month. A partner benefit; it needs a provider agreement.</span></label>
+                <p class="calc-error" role="alert" hidden></p>
+              </fieldset>
+
+              <fieldset class="calc-panel" data-step="3">
+                <legend><span class="calc-legend">What do you need to answer?</span></legend>
+                <p class="calc-sub">Pick the questions you are being asked. Each adds the product that answers it, at the tier we would start with, and says why. Change the tier or remove it.</p>
+                <div class="calc-products">{products}
+                </div>
+                <p class="small dim">Dredd and PosturePortal are still in development and carry no price, so they are not in the calculator.</p>
+              </fieldset>
+
+              <div class="calc-panel" data-step="4" role="group" aria-labelledby="calc-s4">
+                <h3 id="calc-s4" class="calc-legend">Your estimate</h3>
+                <p class="calc-sub" data-out="intro"></p>
+                <div class="table-wrap table-scroll" tabindex="0">
+                  <table class="calc-table">
+                    <thead><tr><th scope="col">Product</th><th scope="col">Counted on</th><th scope="col">Rate</th><th scope="col" class="num">Per month</th></tr></thead>
+                    <tbody data-out="lines"></tbody>
+                    <tfoot>
+                      <tr><th scope="row" colspan="3">Per month, excluding VAT</th><td class="num" data-out="monthly"></td></tr>
+                      <tr class="calc-year"><th scope="row" colspan="3">Per year: twelve months, no annual discount</th><td class="num" data-out="annual"></td></tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="calc-later" hidden>
+                  <h4>On release, not in the total</h4>
+                  <p class="small dim">Built and running, not on sale yet. The price is published so it is settled before it ships.</p>
+                  <div class="table-wrap table-scroll" tabindex="0">
+                    <table class="calc-table"><thead><tr><th scope="col">Product</th><th scope="col">Counted on</th><th scope="col">Rate</th><th scope="col" class="num">Per month</th></tr></thead>
+                    <tbody data-out="later"></tbody></table>
+                  </div>
+                </div>
+                <h4>What does not change this number</h4>
+                <ul class="calc-unchanged">
+                  <li>How often you scan, how many findings you have, how much you remediate or export.</li>
+                  <li>How many products you take: there is no suite discount, and none is applied above.</li>
+                  <li>How you pay: monthly, no minimum term, cancel any month.</li>
+                </ul>
+              </div>
+
+              <div class="calc-panel" data-step="5" role="group" aria-labelledby="calc-s5">
+                <h3 id="calc-s5" class="calc-legend">Keep a copy <span class="dim">(optional)</span></h3>
+                <p class="calc-sub">You already have the number. Nothing below asks for your details.</p>
+                <div class="calc-actions">
+                  <button type="button" class="btn btn-primary" data-act="print">Print or save as PDF</button>
+                  <button type="button" class="btn btn-ghost" data-act="copy">Copy the estimate</button>
+                  <a class="btn btn-ghost" data-act="mail" href="mailto:{CONTACT}">Ask us about this estimate</a>
+                </div>
+                <p class="small dim" data-out="copied" role="status"></p>
+                <p class="small dim">Asking opens your mail app with the estimate filled in. A person replies, usually the same working day.</p>
+              </div>
+
+              <div class="calc-nav">
+                <button type="button" class="btn btn-ghost" data-nav="back">Back</button>
+                <button type="button" class="btn btn-primary" data-nav="next">Next</button>
+              </div>
+            </div>
+
+            <aside class="calc-total" aria-label="Running total">
+              <p class="calc-kicker">Per month, excl. VAT</p>
+              <p class="calc-sum" data-out="monthly" aria-live="polite"></p>
+              <p class="calc-sum-year"><span data-out="annual"></span> a year</p>
+              <ul data-out="summary"></ul>
+              <p class="calc-later-note" data-out="laternote" hidden></p>
+              <p class="calc-basis" data-out="basis"></p>
+              <p class="calc-basis"><a href="#calc-disclaimer">Indicative only: see the note below.</a></p>
+            </aside>
+          </div>
+        </div>
+
+        <p class="calc-disclaimer" id="calc-disclaimer">{CALC_DISCLAIMER}</p>
+        <script type="application/json" id="calc-data">{data}</script>
+      </section>
+""")
+
+
+def _label_wrapped(src: str) -> str:
+    """Give each input wrapped in a <label> an id and the label a matching for=, so the association is
+    explicit (verify.py's label check, and older assistive tech, want the explicit form)."""
+    def fix(m):
+        label_attrs, gap, input_attrs = m.group(1), m.group(2), m.group(3)
+        name = re.search(r'name="([^"]+)"', input_attrs).group(1)
+        value = re.search(r'value="([^"]+)"', input_attrs)
+        fid = name + ("-" + value.group(1) if value else "")
+        return f'<label for="{fid}"{label_attrs}>{gap}<input id="{fid}" {input_attrs}>'
+    return re.sub(r'<label((?: [a-z-]+(?:="[^"]*")?)*)>(\s*)<input (?![^>]*\bid=)([^>]*)>', fix, src)
+
 def build(name: str, spec: dict) -> None:
     head_open, after_head, footer = chrome()
 
@@ -1452,6 +1650,8 @@ def build(name: str, spec: dict) -> None:
                   address_html='<br>'.join(ADDRESS_LINES),
                   others=OTHER_FRAMEWORKS)
     body = spec["body"].format(**fields)
+    # The calculator goes in after .format(): its JSON block is all braces.
+    body = body.replace("<!--CALCULATOR-->", calculator_html() if "<!--CALCULATOR-->" in body else "")
     spec = {**spec, "lede": spec["lede"].format(**fields)} if "lede" in spec else spec
 
     # An offer page carries its own form, so the ask sits where the intent is
