@@ -1264,6 +1264,19 @@ tbody tr:hover td { background: rgba(108, 79, 223, .03); }
 }
 .carousel-step:hover { border-color: var(--text); }
 .carousel-count { font-family: var(--mono); font-size: .8rem; color: var(--dim); min-width: 3.5rem; text-align: center; }
+.carousel-play { display: grid; place-items: center; margin-left: .4rem; }
+.carousel-play svg { fill: currentColor; }
+.carousel-play .icon-play { display: none; }
+.carousel-play[data-paused] .icon-pause { display: none; }
+.carousel-play[data-paused] .icon-play { display: block; }
+/* A thin line under the slide that fills over the interval, so it is visible that the slide is about
+   to change. Empty and still whenever rotation is not running. */
+.carousel-progress { display: none; }
+[data-carousel-ready] .carousel-progress {
+  display: block; height: 3px; margin-top: .6rem; border-radius: 3px; overflow: hidden; background: var(--border-soft);
+}
+.carousel-progress span { display: block; height: 100%; width: 0; background: var(--brand); }
+.carousel-progress[data-run] span { width: 100%; transition: width var(--carousel-interval, 10s) linear; }
 
 /* The home page's door-1 panel: argument left, the real ShareCare screen right. */
 .door-panel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; align-items: center; }
