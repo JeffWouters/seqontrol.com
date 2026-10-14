@@ -199,6 +199,12 @@ pointing at GitHub with no repository claiming it is exactly the takeover descri
 - The site makes no external requests at runtime, so there is no CDN, font host or analytics endpoint
   to allow-list, and nothing to break when a third party changes. If that ever changes, read
   [Third-party code](#third-party-code) first.
+- **Search engines.** The site is verified in Google Search Console and Bing Webmaster Tools, with
+  `sitemap.xml` submitted to both (2026-10-14). After every deploy to `main`, the `indexnow` job in
+  `deploy.yml` sends the pages that changed to IndexNow (Bing, Yandex and others; Google reads the
+  sitemap instead). `365386801392052bf24fb6390765394a.txt` at the root is the IndexNow key file: it
+  must stay there and contain only the key in `tools/indexnow.py`. Running the workflow by hand
+  sends every page.
 
 ## Security
 
