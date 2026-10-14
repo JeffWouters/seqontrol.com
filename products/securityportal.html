@@ -92,14 +92,13 @@
     <div class="wrap">
       <p class="breadcrumb"><a href="index.html">Products</a><span>/</span>SecurityPortal</p>
       <span class="eyebrow">Posture scanning · one of three</span>
-      <h1>Microsoft 365 and Entra posture, scored continuously</h1>
+      <h1>Microsoft 365 and Entra posture, scored on every scan</h1>
       <p class="lede">
-        SecurityPortal checks the identity and configuration posture of the Microsoft 365 and Entra estate —
-        then tags every finding so it becomes control evidence downstream instead of another dashboard
-        nobody exports. For the public side of the same organisation, see
+        SecurityPortal checks the identity and configuration posture of the Microsoft 365 and Entra environment —
+        then tags every finding so it becomes control evidence downstream. For the public side of the same organisation, see
         <a href="webscan.html">WebScan</a>.
       </p>
-      <div class="oneline"><strong>In one line:</strong> continuous posture across your whole client book, arriving as evidence rather than as a chart.</div>
+      
       <div class="btn-row">
         <a class="btn btn-primary" href="https://app.seqontrol.com/">Sign up</a>
         <a class="btn btn-ghost" href="../contact.html?topic=securityportal">Get a posture assessment</a>
@@ -117,8 +116,7 @@
             tenants. It also stops at the boundary of the tenant, which is not where your risk stops —
             <a href="webscan.html">WebScan</a> covers the public side, and both file their findings in the same
             place.</p>
-          <p>Regulatory regimes increasingly expect demonstrable, continuous controls. An annual penetration test
-            and a bare score no longer satisfy a client questionnaire, let alone an auditor.</p>
+          <p>Regulatory regimes increasingly expect demonstrable, continuous controls. Client questionnaires and auditors increasingly ask for control-level evidence, not a single score.</p>
       </div>
     </div>
   </section>
@@ -129,8 +127,7 @@
         <h2>What it does</h2>
         <ul class="checklist tone-security">
           <li><strong>Identity and configuration posture</strong> — Conditional Access coverage, MFA enforcement
-            including report-only and exclusion gaps, secure-configuration signals, and genuine
-            over-permissioned-application detection.</li>
+            including report-only and exclusion gaps, secure-configuration signals, and over-permissioned-application detection.</li>
           <li><strong>Log analytics checks</strong> — where the tenant exports activity logs, SecurityPortal runs
             query-based checks that a native score cannot produce: high-privilege application permissions that are
             genuinely unused, and per-user MFA usage as actually observed.</li>
@@ -198,7 +195,7 @@
         <p>The screens you will actually work in.</p>
       </div>
 
-      <h3>Posture you can argue with</h3>
+      <h3>Posture, tier by tier</h3>
       <p class="lede" style="max-width:730px">Not a single score. A ladder you climb by fixing things,
         checks tagged to the controls they satisfy, and an explicit count of what could not be
         assessed at all.</p>
@@ -219,7 +216,7 @@
           <b>Four tiers, and you can only be on one of them.</b> A percentage lets everyone pick the
           reading they prefer. A tier does not.
           <ol class="notes">
-            <li><b>Where the whole estate stands</b> — one domain of five has reached the top tier, so
+            <li><b>Where the whole environment stands</b> — one domain of five has reached the top tier, so
               that is what the tenant is, whatever the average says.</li>
             <li><b>The tier you are on, and why.</b> Not &ldquo;good&rdquo;: <em>no Critical
               failing</em>. The condition is written next to the claim.</li>
@@ -315,7 +312,7 @@
 
   <section>
     <div class="wrap">
-      <h2>Objections, answered straight</h2>
+      <h2>Common questions</h2>
       <div class="grid grid-2">
         <article class="card">
           <h3>"We already track our secure score."</h3>
@@ -330,12 +327,12 @@
         <article class="card">
           <h3>"Does it remediate?"</h3>
           <p>No. It assesses and evidences. Remediation lives in the products designed to write safely, and we are
-            explicit about which plane can do what.</p>
+            explicit about which workload can do what.</p>
         </article>
         <article class="card">
           <h3>"Why not a general cloud posture tool?"</h3>
           <p>Few combine Microsoft 365 identity posture, fleet economics and compliance evidence output
-            in one place — nor sit beside a scanner for the public surface that files into the same store.</p>
+            in one place — nor sit beside a scanner for public-facing systems that files into the same store.</p>
         </article>
       </div>
     </div>
@@ -376,8 +373,7 @@
     </a>
         <img class="footer-tagline" src="../assets/seqontrol-tagline-on-dark-320.png"
              alt="Secure. Compliant. Confident." width="260" height="12" decoding="async" loading="lazy">
-        <p class="blurb">Security, compliance and configuration governance for the Microsoft 365
-          estate.</p>
+        <p class="blurb">Security, compliance and configuration governance for Microsoft 365.</p>
       </div>
       <div>
         <h2>Products</h2>

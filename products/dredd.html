@@ -94,14 +94,14 @@
       <span class="eyebrow">Drift governance</span>
       <h1>Know when your tenant stops matching what you approved</h1>
       <p class="lede">
-        Dredd holds an estate against a configuration you approved — one you declared, or one you captured
+        Dredd holds an environment against a configuration you approved — one you declared, or one you captured
         from a tenant you already trust. Every change that was not approved becomes a finding with exactly
         two answers: revert it, or ratify it into the baseline. It is configuration governance rather than
         posture scoring — the question is not whether a setting is wise, but whether it is what you decided.
       </p>
       <div class="state-note tone-dredd">
         <p class="state-head"><span class="status soon">Under development</span> Still being written</p>
-        <p class="mb0">Real work is still happening on this one. It is not available, it carries no list price, and there is no date &mdash; a date invented to fill this space would be the first thing on this site you could catch us out on. Ask, and you will get an honest read on where it is.</p>
+        <p class="mb0">Real work is still happening on this one. It is not available, it carries no list price, and there is no release date yet. Ask and we will tell you where it stands.</p>
       </div>
       <div class="btn-row">
         <a class="btn btn-primary" href="../contact.html?topic=dredd">Tell me when it ships</a>
@@ -138,7 +138,7 @@
             take a tenant you already trust and capture its live state as the first version. Either way the
             result is a versioned artefact with an author and a date, rather than a shared understanding that
             leaves when the person holding it does.</li>
-          <li><strong>Drift, field by field</strong> — the live estate is compared against that baseline, and
+          <li><strong>Drift, field by field</strong> — the live environment is compared against that baseline, and
             a finding names the setting, the approved value, the current value and when the two parted
             company. "Something changed" is not a finding; it is a reason to go looking, and going looking is
             the work this exists to remove.</li>
@@ -150,7 +150,7 @@
             a reason. "Was this approved?" is then answered by a record rather than a recollection, which is
             the part a change-control question actually turns on.</li>
           <li><strong>Reverting writes to your tenant</strong> — approval-gated, and a separate opt-in on top
-            of the product's own admin consent. Dredd is one of the products that changes your estate rather
+            of the product's own admin consent. Dredd is one of the products that changes your environment rather
             than only reporting on it, which belongs on the page you read before buying and not in onboarding.</li>
           <li><strong>One baseline, many tenants</strong> — hold a whole client book against the same approved
             configuration, and ratify a client's legitimate exception against that client instead of relaxing
@@ -163,10 +163,8 @@
         </ul>
         <div class="note honest">
           <h3>What it will not do</h3>
-          <p>It will not tell you your baseline is a bad one. Ratify a weak configuration and Dredd holds the
-            estate to it without complaint — that is the whole bargain, and it is the difference from
-            <a href="securityportal.html">SecurityPortal</a>, which scores the same estate against a published
-            standard and has opinions for a living. Running one without the other leaves a real gap in either
+          <p>It will not tell you your baseline is a bad one. Ratify a weak configuration and Dredd holds the environment to it without complaint — that is the whole bargain, and it is the difference from
+            <a href="securityportal.html">SecurityPortal</a>, which scores the same environment against a published standard. Running one without the other leaves a real gap in either
             direction: a tenant that faithfully matches an unwise baseline, or a tenant that scores well and
             is nothing like what anyone signed off.</p>
           <p>Coverage is narrower than "your tenant", and naming it is more use than implying the rest.
@@ -185,7 +183,7 @@
         <ul><li><span class="status soon">Under development</span> Not yet available</li></ul>
         <h3>Metered on</h3>
         <ul><li>Monitored configuration scope — quoted rather than listed, because that unit is the one this
-          pricing model understands least and it is being set against real estates rather than guessed.
+          pricing model understands least and it is being set against real environments rather than guessed.
           <a href="../pricing.html#quoted">Why it carries no figure</a>.</li></ul>
         <h3>Writes to your tenant?</h3>
         <ul><li>Yes, when you revert — approval-gated, and a separate opt-in.</li></ul>
@@ -202,7 +200,7 @@
         </ul>
         <h3>Pairs with</h3>
         <ul>
-          <li><a href="securityportal.html">SecurityPortal</a> — scores the same estate against a standard, where Dredd holds it to your decision</li>
+          <li><a href="securityportal.html">SecurityPortal</a> — scores the same environment against a standard, where Dredd holds it to your decision</li>
           <li><a href="conditionalaccessportal.html">ConditionalAccessPortal</a> — the same idea for Conditional Access policy, held in Git (coming soon)</li>
           <li><a href="complianceportal.html">CompliancePortal</a> — ratified baselines and drift as change-control evidence (coming soon)</li>
         </ul>
@@ -220,7 +218,7 @@
           </thead>
           <tbody>
             <tr><th scope="row">A baseline you declare or capture</th><td>The approved configuration exists as an artefact with a version and an author, not as an assumption</td></tr>
-            <tr><th scope="row">Comparison of the live estate against it</th><td>Drift arrives as a finding, rather than at the next review or after the incident</td></tr>
+            <tr><th scope="row">Comparison of the live environment against it</th><td>Drift arrives as a finding, rather than at the next review or after the incident</td></tr>
             <tr><th scope="row">Field-level findings</th><td>What it was, what it is, and when it changed — enough to act on without opening an investigation first</td></tr>
             <tr><th scope="row">Two answers, no third</th><td>A difference ends as a revert or as a decision; nothing accumulates as "acknowledged"</td></tr>
             <tr><th scope="row">Ratification as a versioned change</th><td>"Was this approved?" is answered by a record with a name and a date on it</td></tr>
@@ -237,9 +235,8 @@
     <div class="wrap">
       <h2>Tell us what you would want held to a baseline</h2>
       <p>Dredd will be quoted rather than listed. Its unit is monitored configuration scope, which is the
-        metric this pricing model understands least, and it is being sized against real estates rather than
-        guessed at from a spreadsheet. Describe the scope you would want watched and you will get an honest
-        read on where the product actually is — which is worth more than a date we would have to invent.</p>
+        metric this pricing model understands least, and it is being sized against real environments rather than
+        guessed at from a spreadsheet. Describe the scope you would want watched and we will tell you where the product actually is.</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="../contact.html?topic=dredd">Describe your scope</a>
         <a class="btn btn-ghost" href="securityportal.html">Start with SecurityPortal today</a>
@@ -261,8 +258,7 @@
     </a>
         <img class="footer-tagline" src="../assets/seqontrol-tagline-on-dark-320.png"
              alt="Secure. Compliant. Confident." width="260" height="12" decoding="async" loading="lazy">
-        <p class="blurb">Security, compliance and configuration governance for the Microsoft 365
-          estate.</p>
+        <p class="blurb">Security, compliance and configuration governance for Microsoft 365.</p>
       </div>
       <div>
         <h2>Products</h2>

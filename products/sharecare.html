@@ -93,13 +93,13 @@
       <div>
         <p class="breadcrumb"><a href="index.html">Products</a><span>/</span>ShareCare</p>
         <span class="eyebrow">Data access governance</span>
-        <h1>See your Copilot blast radius. Then shrink it.</h1>
+        <h1>See what Copilot can reach in your tenants, and reduce it.</h1>
         <p class="lede">
           ShareCare answers the question every Microsoft 365 customer suddenly has to answer:
           <strong>what is shared with the outside world — or over-shared internally so Copilot can reach it —
           and who can fix it?</strong>
         </p>
-        <div class="oneline"><strong>In one line:</strong> see what is exposed across every tenant you manage, and safely fix it.</div>
+        
         <div class="btn-row">
           <a class="btn btn-primary" href="https://app.seqontrol.com/">Sign up</a>
           <a class="btn btn-ghost" href="../exposure-report.html">Get the free exposure report</a>
@@ -128,7 +128,7 @@
         <p>Copilot can summarise, surface and cite anything a user can technically reach. Sharing links created
             years ago, "Everyone" groups and inherited permissions that never mattered now decide what an AI
             assistant will hand to the wrong person. Security teams are being asked — often for the first time —
-            to prove the blast radius <em>before</em> the rollout, and keep it shrinking afterwards.</p>
+            to show how widely data is exposed <em>before</em> the rollout, and keep reducing it afterwards.</p>
           <p>Underneath that, the classic problems have not gone anywhere: anonymous link sprawl, stale guest
             access, and mailbox forwarding rules used for exfiltration. Native tooling reports these thinly, one
             workload at a time, one tenant at a time.</p>
@@ -141,13 +141,13 @@
       <div>
         <h2>What it does</h2>
         <ul class="checklist tone-sharecare">
-          <li><strong>Crawls seven Microsoft 365 planes</strong> of the estate app-only — SharePoint, OneDrive, Teams, Entra app
+          <li><strong>Crawls seven Microsoft 365 workloads</strong> app-only — SharePoint, OneDrive, Teams, Entra app
             consents, Exchange forwarding, Power Platform and Power BI. No agent, no user disruption.</li>
           <li><strong>Finds internal over-exposure</strong> — organisation-wide sharing links and whole-company
             groups such as "Everyone except external users". These are exactly the patterns that make Copilot
             surface data far more broadly than anyone intended.</li>
-          <li><strong>Scores real risk</strong> as sensitivity × exposure × blast radius rather than a flat
-            checklist, and keeps an identity-level score so one toxic guest surfaces across every share they touch.</li>
+          <li><strong>Scores real risk</strong> as sensitivity × exposure × reach rather than a flat
+            checklist, and keeps an identity-level score so one risky guest account shows up on every share it can reach.</li>
           <li><strong>Detects the dangerous specifics</strong> — anonymous edit links, dormant external guests
             measured by actual sign-in activity, over-permissioned OAuth applications, and mail forwarding to
             domains nobody owns.</li>
@@ -161,7 +161,7 @@
 
         <div class="note honest">
           <h3>What it does not do yet</h3>
-          <p>Some planes are read-only today: Exchange forwarding rules, SharePoint site roles, Power Platform and
+          <p>Some workloads are read-only today: Exchange forwarding rules, SharePoint site roles, Power Platform and
             delegated-admin relationships are detected but not revoked app-only. When ShareCare cannot safely act,
             it tells you the precise reason instead of guessing or silently skipping.</p>
           <p class="mb0">OneDrive permission revoke and sharing-link revoke are live today. Beyond Microsoft 365,
@@ -181,7 +181,7 @@
           <li><strong>Governance</strong> — policies, access reviews, approvals, waivers, evidence packs</li>
           <li><strong>Automation</strong> — remediation write-back</li>
         </ul>
-        <h3>Planes covered</h3>
+        <h3>Workloads covered</h3>
         <ul>
           <li>SharePoint · OneDrive · Teams</li>
           <li>Entra app consents</li>
@@ -258,13 +258,12 @@
         </div>
         </div>
         <figcaption>
-          <b>A scan that admits what it could not see.</b> Every plane reports for itself, and two of
+          <b>A scan that admits what it could not see.</b> Every workload reports for itself, and two of
           them report that they were never read.
           <ol class="notes">
-            <li><b>Not licensed.</b> The plane exists in your tenant but nothing here can reach it.
+            <li><b>Not licensed.</b> The workload exists in your tenant but nothing here can reach it.
               It is excluded from the score rather than counted as clean.</li>
-            <li><b>Not connected.</b> Same again for anything outside Microsoft 365. A silent pass on
-              a plane nobody scanned is the failure mode we refuse to ship.</li>
+            <li><b>Not connected.</b> Same again for anything outside Microsoft 365. A workload nobody scanned is never counted as a pass.</li>
           </ol>
         </figcaption>
       </figure>
@@ -347,7 +346,7 @@
 
   <section>
     <div class="wrap">
-      <h2>Objections, answered straight</h2>
+      <h2>Common questions</h2>
       <div class="grid grid-2">
         <article class="card">
           <h3>"Copilot has its own controls."</h3>
@@ -356,7 +355,7 @@
         </article>
         <article class="card">
           <h3>"Will scanning disrupt users?"</h3>
-          <p>The crawl is app-only and read-first. Remediation is simulate-then-execute with a grace window and
+          <p>The crawl is app-only, and a scan only reads. Remediation is simulate-then-execute with a grace window and
             undo, and it only runs on the tier you bought.</p>
         </article>
         <article class="card">
@@ -366,14 +365,13 @@
         </article>
         <article class="card">
           <h3>"Can it fix Exchange forwarding rules?"</h3>
-          <p>It detects them. App-only revoke for that plane needs Exchange PowerShell and is on the roadmap. We
-            would rather say that than imply coverage we do not have.</p>
+          <p>It detects them. App-only revoke for that workload needs Exchange PowerShell and is on the roadmap.</p>
         </article>
         <article class="card">
           <h3>"Microsoft already gives us SharePoint Advanced Management."</h3>
           <p>For one tenant administered as an ongoing discipline, it and the governance specialists are a
             reasonable buy. Where ShareCare differs is across many small tenants, and in keeping the record as
-            evidence. <a href="../vs-m365-governance.html">The honest split</a>.</p>
+            evidence. <a href="../vs-m365-governance.html">How the two compare</a>.</p>
         </article>
       </div>
     </div>
@@ -414,8 +412,7 @@
     </a>
         <img class="footer-tagline" src="../assets/seqontrol-tagline-on-dark-320.png"
              alt="Secure. Compliant. Confident." width="260" height="12" decoding="async" loading="lazy">
-        <p class="blurb">Security, compliance and configuration governance for the Microsoft 365
-          estate.</p>
+        <p class="blurb">Security, compliance and configuration governance for Microsoft 365.</p>
       </div>
       <div>
         <h2>Products</h2>

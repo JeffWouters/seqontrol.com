@@ -98,7 +98,7 @@
         keeps it there — <strong>across every domain and every tenant you manage</strong>. It closes the loop that
         report-only monitors leave open: it makes the DNS change.
       </p>
-      <div class="oneline"><strong>In one line:</strong> get every client's domain to enforcement safely, and fix the DNS without leaving the tool.</div>
+      
       <div class="btn-row">
         <a class="btn btn-primary" href="https://app.seqontrol.com/">Sign up</a>
         <a class="btn btn-ghost" href="../spoofing-report.html">Check my domain, free</a>
@@ -113,9 +113,9 @@
         <h2>Why it matters now</h2>
         <p>Email spoofing and business email compromise remain among the most common and most expensive attack
             routes, and DMARC enforcement is the proven defence. Yet most organisations sit at monitoring-only,
-            because getting to full rejection without blocking legitimate mail is genuinely frightening: it requires
+            because getting to full rejection without blocking legitimate mail is risky: it requires
             knowing every legitimate sender, fixing SPF and DKIM, and staging the policy.</p>
-          <p>Meanwhile the decision is being taken out of your hands. Major mailbox providers now require DMARC for
+          <p>Major mailbox providers now require DMARC for
             bulk senders, brand indicators in the inbox require enforced DMARC, and cyber-insurance questionnaires
             increasingly ask about it directly.</p>
       </div>
@@ -149,10 +149,9 @@
             so email authentication shows up on the board and as control evidence.</li>
         </ul>
         <div class="note honest">
-          <h3>The limits, stated plainly</h3>
+          <h3>The limits</h3>
           <p>In-product remediation covers the DNS providers we have OAuth2 connectors for today — Azure DNS and
-            DNSimple. Every other provider gets precise, guided manual steps until its connector ships. We would
-            rather name the two than imply all of them.</p>
+            DNSimple. Every other provider gets precise, guided manual steps until its connector ships.</p>
           <p class="mb0">One operational prerequisite: a mailbox to receive DMARC aggregate reports. That is
             standard for DMARC analysis generally, and setup is part of onboarding.</p>
         </div>
@@ -216,7 +215,7 @@
 
   <section>
     <div class="wrap">
-      <h2>Objections, answered straight</h2>
+      <h2>Common questions</h2>
       <div class="grid grid-2">
         <article class="card">
           <h3>"We already have a DMARC monitor."</h3>
@@ -226,7 +225,7 @@
         <article class="card">
           <h3>"Enforcement will block legitimate mail."</h3>
           <p>That is exactly why the product inventories every real sender from actual reports first, and stages
-            the policy. The safe path <em>is</em> the product.</p>
+            the policy.</p>
         </article>
         <article class="card">
           <h3>"Our DNS is somewhere you do not support."</h3>
@@ -277,8 +276,7 @@
     </a>
         <img class="footer-tagline" src="../assets/seqontrol-tagline-on-dark-320.png"
              alt="Secure. Compliant. Confident." width="260" height="12" decoding="async" loading="lazy">
-        <p class="blurb">Security, compliance and configuration governance for the Microsoft 365
-          estate.</p>
+        <p class="blurb">Security, compliance and configuration governance for Microsoft 365.</p>
       </div>
       <div>
         <h2>Products</h2>

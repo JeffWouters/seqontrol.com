@@ -76,7 +76,7 @@
   <section class="hero">
     <div class="wrap">
       <span class="pill">Products &amp; pricing</span>
-      <h1>Every product. Every price. One page.</h1>
+      <h1>What each product does, and what it costs</h1>
       <p class="lede">
         Four products you can run today and four on the way: what each one answers, whether it ever writes
         to your tenant, and what it costs. One console, one findings store and one audit trail underneath
@@ -106,7 +106,7 @@
             <tr>
               <td><a href="sharecare.html">ShareCare</a></td>
               <td>What is over-shared, and what can Copilot reach?</td>
-              <td>Yes — on the Automation tier, where the plane allows it</td>
+              <td>Yes — on the Automation tier, where the platform allows it</td>
               <td class="price-cell">
                 <!--PRICE:sharecare-->
                 <span class="unit">per Microsoft 365 user / month</span>
@@ -136,7 +136,7 @@
             </tr>
             <tr>
               <td><a href="webscan.html">WebScan</a></td>
-              <td>What does our public surface look like to an attacker?</td>
+              <td>What do our public-facing systems look like to an attacker?</td>
               <td>No — it never writes anywhere</td>
               <td class="price-cell">
                 <!--PRICE:webscan-->
@@ -167,7 +167,7 @@
             </tr>
             <tr>
               <td><a href="postureportal.html">PosturePortal</a> <span class="status soon">Under development</span></td>
-              <td>So what? What do I show the client or the board?</td>
+              <td>What do I show the client or the board?</td>
               <td>No — read-only by design</td>
               <td class="price-cell">
                 <!--PRICE:posture-->
@@ -224,10 +224,9 @@
       </div>
       <p class="small dim" style="margin-top:1rem">“Available” means it runs today and you can buy it, and four of the eight
         are: ShareCare, SecurityPortal, WebScan and MailTrust. “Coming soon” means built and running
-        but not on sale. “Under development” means not yet available. Where a plane is detected but
+        but not on sale. “Under development” means not yet available. Where a workload is detected but
         not yet remediable, the product’s own page says so — and
-        <a href="../limits.html">the limits page</a> collects every one of these in one place, because we would
-        rather label it plainly than let you find out in month two.</p>
+        <a href="../limits.html">the limits page</a> collects every one of these in one place.</p>
 
       <div class="note plain">
         <h3>Consent is the part that is not shared</h3>
@@ -239,9 +238,9 @@
       </div>
 
       <h3 style="margin-top:3rem">What actually gets crawled</h3>
-      <p class="muted" style="max-width:62ch">Every surface below that sits inside a tenant or a cloud
+      <p class="muted" style="max-width:62ch">Every area below that sits inside a tenant or a cloud
         account is read app-only, on a schedule, and scored into one findings store; the public web and
-        email-authentication surfaces are read from outside, with no grant at all. Dashed means detected but not yet remediable app-only — the
+        email-authentication areas are read from outside, with no grant at all. Dashed means detected but not yet remediable app-only — the
         distinction is stated rather than glossed.</p>
       <div class="coverage">
         <div class="plane tone-sharecare"><b>SharePoint</b><span>Sites, links, permissions — site roles detect only</span></div>
@@ -250,23 +249,23 @@
         <div class="plane tone-sharecare"><b>Entra ID</b><span>App consents, grants</span></div>
         <div class="plane off tone-sharecare"><b>Exchange</b><span>Forwarding — detect only</span></div>
         <div class="plane off tone-sharecare"><b>Power Platform</b><span>Detect only</span></div>
-        <div class="plane tone-sharecare"><b>Power BI</b><span>Sharing surface</span></div>
+        <div class="plane tone-sharecare"><b>Power BI</b><span>Sharing</span></div>
         <div class="plane tone-security"><b>Conditional Access</b><span>Coverage and gaps</span></div>
         <div class="plane tone-security"><b>Log Analytics</b><span>Where logs are exported</span></div>
-        <div class="plane tone-webscan"><b>Public web surface</b><span>TLS, headers, DNS</span></div>
+        <div class="plane tone-webscan"><b>Public-facing systems</b><span>TLS, headers, DNS</span></div>
         <div class="plane tone-mailtrust"><b>Email auth</b><span>SPF, DKIM, DMARC, BIMI</span></div>
         <div class="plane tone-compliance"><b>Google Cloud &amp; AWS</b><span>Read-only connectors — not released yet</span></div>
         <div class="plane tone-sharecare"><b>Box</b><span>Links, revoke app-only</span></div>
         <div class="plane off tone-sharecare"><b>Slack Connect</b><span>Detect only</span></div>
       </div>
-      <p class="coverage-note">Google Workspace is the next plane. What is not here is not scanned —
+      <p class="coverage-note">Google Workspace is next. What is not here is not scanned —
         <a href="../limits.html">the full list of what we do not do</a>.</p>
 
       <div class="grid grid-2 spaced">
         <article class="card on-navy">
           <span class="eyebrow">MSP &middot; Providers</span>
           <h3>Pricing for MSPs and MSSPs</h3>
-          <p>A partner tenant that runs every product on your own estate, provider rates for MailTrust that
+          <p>A partner tenant that runs every product on your own tenant, provider rates for MailTrust that
             pool domains across the book, and pooled CompliancePortal licences that charge once per framework
             rather than once per client. All of it is published.</p>
           <p class="mb0"><a class="btn btn-primary" href="../pricing.html">Provider pricing</a></p>
@@ -306,7 +305,7 @@
             <span class="kicker">Data access governance</span>
             <h3><a href="sharecare.html">ShareCare</a> <span class="status built">Available</span></h3>
             <p>What is shared outside, what is over-shared inside so Copilot can reach it, and who can fix it.
-              Crawls seven Microsoft 365 planes app-only, plus Box and Slack Connect, scores by sensitivity and blast radius, and remediates with a grace
+              Crawls seven Microsoft 365 workloads app-only, plus Box and Slack Connect, scores by sensitivity and reach, and remediates with a grace
               window and undo.</p>
             <a class="arrow-link" href="sharecare.html">ShareCare</a>
           </article>
@@ -314,14 +313,14 @@
           <article class="pcard tone-security">
             <span class="kicker">Posture scanning</span>
             <h3><a href="securityportal.html">SecurityPortal</a> <span class="status built">Available</span></h3>
-            <p>Continuous Microsoft 365 and Entra posture — Conditional Access coverage, MFA enforcement gaps,
+            <p>Microsoft 365 and Entra posture, scanned daily or on demand — Conditional Access coverage, MFA enforcement gaps,
               over-permissioned apps, risky sign-in patterns. Findings carry control tags so they land in
               CompliancePortal as evidence.</p>
             <a class="arrow-link" href="securityportal.html">SecurityPortal</a>
           </article>
 
           <article class="pcard tone-webscan">
-            <span class="kicker">External attack surface</span>
+            <span class="kicker">Public-facing systems</span>
             <h3><a href="webscan.html">WebScan</a> <span class="status built">Available</span></h3>
             <p>Finds and grades the public face of your organisation — subdomain discovery, certificate
               transparency, TLS, headers, cookies, DNS, exposed services and infrastructure. Needs no tenant
@@ -406,8 +405,7 @@
     </a>
         <img class="footer-tagline" src="../assets/seqontrol-tagline-on-dark-320.png"
              alt="Secure. Compliant. Confident." width="260" height="12" decoding="async" loading="lazy">
-        <p class="blurb">Security, compliance and configuration governance for the Microsoft 365
-          estate.</p>
+        <p class="blurb">Security, compliance and configuration governance for Microsoft 365.</p>
       </div>
       <div>
         <h2>Products</h2>

@@ -78,9 +78,7 @@
       <span class="eyebrow">The platform</span>
       <h1>One platform under every SeQontrol product</h1>
       <p class="lede">
-        Anyone can ship a scanner. What is hard — and what makes the next product cheap to add — is everything
-        a scanner has to sit on: <strong>one way to onboard, one findings store, one audit trail and one
-        licence model</strong>, shared by every product on the same Microsoft 365 estate.
+        Every SeQontrol product runs on the same base: <strong>one onboarding flow, one findings store, one audit trail and one licence model</strong>.
       </p>
     </div>
   </section>
@@ -100,14 +98,14 @@
             inside a managed tenant. Every product gets multi-client support without building it.</p>
         </article>
         <article class="card">
-          <h3>One connector plane, one Entra app per product</h3>
-          <p>Every product registers its connector through the same plane, with the same onboarding flow, the
+          <h3>One connector framework, one Entra app per product</h3>
+          <p>Every product registers its connector through the same framework, with the same onboarding flow, the
             same secret handling and the same audit trail. What is <em>not</em> shared is the grant: each
             product has its own Entra application and asks for its own consent, scoped to the permissions
             that product actually needs.</p>
           <p class="mb0">That is a deliberate trade. It means enabling a second product is a second consent
             rather than a switch — but it also means no product inherits another's permissions, and revoking
-            one revokes exactly one. The adjacent planes are separate again: Exchange admin, Power Platform,
+            one revokes exactly one. The adjacent services are separate again: Exchange admin, Power Platform,
             Azure and DNS each need their own one-time setup, and write-back is its own opt-in on top of the
             read grant.</p>
         </article>
@@ -124,26 +122,22 @@
             after the fact.</p>
           <p class="mb0">Worth being exact about what that covers: the chain protects the <strong>audit trail</strong>
             and the <strong>evidence snapshots</strong> taken from a point in time. Findings themselves are live
-            records — they open, change severity and close as the estate does. Chaining them would make them
+            records — they open, change severity and close as the environment does. Chaining them would make them
             immutable, which is the opposite of what a finding is for.</p>
         </article>
         <article class="card">
           <h3>Entitlements and metered billing</h3>
-          <p>A catalog of features gated per plan and wired to metered billing. Because packaging is a platform
-            capability rather than per-product plumbing, adding a product is a configuration change — not an
-            implementation project.</p>
+          <p>A catalog of features gated per plan and wired to metered billing. </p>
         </article>
         <article class="card">
           <h3>Scheduling, reporting, notifications</h3>
-          <p>Scheduled scans with live progress, a report engine that produces evidence packs, a notification
-            system, and a full feature-flag and experiment framework with four-eyes approval and scheduling.
+          <p>Scheduled scans with live progress, a report engine that produces evidence packs, and a notification system.
             Shared by every product rather than rebuilt in each one.</p>
         </article>
       </div>
 
       <h3 id="connections" style="margin-top:3rem">What connecting actually involves</h3>
-      <p class="muted">Onboarding is one flow you learn once, not one grant that covers everything. We would
-        rather be precise about that here than let you discover it during onboarding.</p>
+      <p class="muted">Onboarding is one flow you learn once, not one grant that covers everything.</p>
       <div class="table-wrap table-scroll" tabindex="0" role="group" aria-label="What connecting actually involves">
         <table>
           <thead>
@@ -172,7 +166,7 @@
             </tr>
             <tr>
               <th scope="row">Power Platform</th>
-              <td>A service principal registered by an administrator before the plane can be read</td>
+              <td>A service principal registered by an administrator before Power Platform can be read</td>
               <td>One-time setup</td>
             </tr>
             <tr>
@@ -235,11 +229,11 @@
         </div>
         <div class="flow-step">
           <span class="flow-num">4</span>
-          <div><h3>Fix</h3><p>Remediation is simulate-then-execute, with grace windows, approvals and undo where the plane allows it.</p></div>
+          <div><h3>Fix</h3><p>Remediation is simulate-then-execute, with grace windows, approvals and undo where the platform allows it.</p></div>
         </div>
         <div class="flow-step">
           <span class="flow-num">5</span>
-          <div><h3>Govern</h3><p>Waivers expire, approvals are recorded, and the audit trail is hash-chained. Findings are live records that change as the estate changes; what is chained is the trail of what was done and the evidence snapshots taken from it.</p></div>
+          <div><h3>Govern</h3><p>Waivers expire, approvals are recorded, and the audit trail is hash-chained. Findings are live records that change as the environment changes; what is chained is the trail of what was done and the evidence snapshots taken from it.</p></div>
         </div>
       </div>
     </div>
@@ -249,8 +243,8 @@
     <div class="wrap split">
       <div>
         <span class="eyebrow">Why it matters commercially</span>
-        <h2>The flywheel is structural, not a slogan</h2>
-        <p>Because the products share the platform, adding one to an estate you already run is a known, repeatable
+        <h2>Why adding a second product is a small step</h2>
+        <p>Because the products share the platform, adding one to an environment you already run is a known, repeatable
           step — its own consent, through the onboarding flow you have already done once — and it covers ground
           the others could not reach. More coverage, the same console, the same bill.</p>
         <p>That is what makes the expansion path real rather than aspirational: you buy one product because one
@@ -270,7 +264,7 @@
           <li>Multi-tenant .NET services</li>
           <li>Micro-frontend shell with per-product portals</li>
           <li>Shared design system across every portal</li>
-          <li>One palette, one component library — which is why the products look like one product</li>
+          
         </ul>
         <h3>Isolation</h3>
         <ul>
@@ -287,13 +281,13 @@
       <div class="section-head">
         <span class="eyebrow">Trust</span>
         <h2 id="trust">What we do with the access you give us</h2>
-        <p>A new vendor asking for read access to your entire Microsoft 365 estate should expect hard questions.
+        <p>A new vendor asking for read access to your entire Microsoft 365 environment should expect hard questions.
           Here are the answers before you ask.</p>
       </div>
       <div class="grid grid-3">
         <article class="card">
           <h3>Least privilege, app-only</h3>
-          <p>Scanning is app-only and read-first. Scopes are documented, and the connector's remediation consent
+          <p>Scanning is app-only, and a scan only reads. Scopes are documented, and the connector's remediation consent
             is separate from the read consent — so read access never silently becomes write access.</p>
         </article>
         <article class="card">
@@ -320,7 +314,7 @@
         </article>
         <article class="card">
           <h3>We never fake a pass</h3>
-          <p>Where a check cannot be assessed — no exported logs, an unsupported plane, a missing permission —
+          <p>Where a check cannot be assessed — no exported logs, an unsupported service, a missing permission —
             the product reports "not assessed" with the reason. It does not quietly score it green.</p>
         </article>
       </div>
@@ -352,8 +346,7 @@
     </a>
         <img class="footer-tagline" src="assets/seqontrol-tagline-on-dark-320.png"
              alt="Secure. Compliant. Confident." width="260" height="12" decoding="async" loading="lazy">
-        <p class="blurb">Security, compliance and configuration governance for the Microsoft 365
-          estate.</p>
+        <p class="blurb">Security, compliance and configuration governance for Microsoft 365.</p>
       </div>
       <div>
         <h2>Products</h2>

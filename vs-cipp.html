@@ -82,7 +82,7 @@
       <p>That is the recommendation, not a courtesy. <strong>CIPP is free and open source</strong>, and on
         multi-tenant administration it does things
         this platform does not attempt: standards deployment across a book, GDAP management, identity
-        lifecycle, offboarding, licence juggling, the daily operational surface of running Microsoft 365
+        lifecycle, offboarding, licence juggling, the daily operations of running Microsoft 365
         for other people.</p>
       <p>If your problem is "I need to administer sixty tenants without sixty browser tabs", that is
         CIPP, it costs nothing, and nothing here replaces it. Running both is a normal setup, not an
@@ -101,20 +101,20 @@
         how you know MFA was enforced in March rather than today. A management plane answers "what is it
         now". An assurance layer answers "what was it, and can you prove it".</p>
 
-      <h2>The other two differences, stated plainly</h2>
+      <h2>The other two differences</h2>
       <p><strong>Outside-in.</strong> CIPP works through the tenant. A good deal of what gets a client
         breached is not in the tenant at all &mdash; an expiring certificate, a spoofable domain, a forgotten
         subdomain pointing at a service somebody else now controls. Those need scanning from outside, with
         no credential, and that is a different kind of tool.</p>
       <p class="mb0"><strong>Who carries the risk.</strong> CIPP runs with your credentials in your Azure
         subscription, which is exactly right for a management plane and is also a security engineering job
-        you now own: the app registrations, the secret rotation, the upgrade path, the blast radius. That
+        you now own: the app registrations, the secret rotation, the upgrade path, the impact if it is compromised. That
         is a reasonable trade for free. It is worth being deliberate that you have made it.</p>
 
       <h2>What we ask for, since you will ask</h2>
       <p>You already know what CIPP holds across your book, so what a second tool wants is a fair question.
         Each product has its own Entra application and its own admin consent, scoped to what that product
-        reads. Scanning is app-only and read-first; remediation is a separate consent on top of it, and
+        reads. Scanning is app-only, and a scan only reads; remediation is a separate consent on top of it, and
         every read-only product keeps working without it. Revoking one product's consent revokes exactly
         one product's Graph access. <a href="security.html">The access, in full</a>, and
         <a href="limits.html">what it does not cover yet</a>.</p>
@@ -160,8 +160,7 @@
     </a>
         <img class="footer-tagline" src="assets/seqontrol-tagline-on-dark-320.png"
              alt="Secure. Compliant. Confident." width="260" height="12" decoding="async" loading="lazy">
-        <p class="blurb">Security, compliance and configuration governance for the Microsoft 365
-          estate.</p>
+        <p class="blurb">Security, compliance and configuration governance for Microsoft 365.</p>
       </div>
       <div>
         <h2>Products</h2>

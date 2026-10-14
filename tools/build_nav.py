@@ -179,8 +179,7 @@ STATE_NOTE = {
     "In dev": (
         "Still being written",
         "Real work is still happening on this one. It is not available, it carries no list price, "
-        "and there is no date &mdash; a date invented to fill this space would be the first thing on this "
-        "site you could catch us out on. Ask, and you will get an honest read on where it is."),
+        "and there is no release date yet. Ask and we will tell you where it stands."),
 }
 
 STATE_RE = re.compile(r'( *)<div class="state-note[^"]*">.*?</div>', re.S)
