@@ -147,3 +147,25 @@ jobs:
       - uses: actions/checkout@v7
       - name: Check the live site serves what was built
         run: bash tools/smoke_test.sh https://seqontrol.com
+
+  # Tell Bing and the other IndexNow engines which pages changed, so they recrawl them now instead of
+  # whenever they next pass by. It runs after the smoke test, so the engines are only pointed at pages
+  # the live site is already serving. A failed ping is a warning, never a failure: the deploy has
+  # happened, and the engines still find the change on their own schedule. See tools/indexnow.py.
+  indexnow:
+    needs: smoke
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # The diff between the previous and the new head needs both commits.
+          fetch-depth: 0
+      - name: Ping IndexNow with the pages that changed
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            python tools/indexnow.py "${{ github.event.before }}" "${{ github.sha }}"
+          else
+            python tools/indexnow.py --all
+          fi
