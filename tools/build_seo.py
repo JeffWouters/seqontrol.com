@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import datetime
 import glob
+import hashlib
 import io
 import os
 import re
@@ -307,6 +308,37 @@ CSP = ('<meta http-equiv="Content-Security-Policy" content="'
        '">')
 
 
+
+# ------------------------------------------------------------------ asset versions
+# GitHub Pages serves every file with Cache-Control: max-age=600 and no way to change it. A deploy that
+# changes the HTML and js/site.js together can therefore reach a browser as the NEW page with the OLD
+# script for up to ten minutes - which on 14 October 2026 showed the pricing calculator's no-script note
+# to the person who had just shipped it. Every reference to the stylesheet and the script carries a
+# short hash of the file's content, so a changed file is a new URL and a cached copy is never paired
+# with a page it was not built for. Content-derived, not time-derived, so CI's reproducibility diff
+# still holds.
+ASSET_RE = re.compile(r'((?:href|src)="(?:\.\./|/)?)(css/styles\.css|js/site\.js)(?:\?v=[0-9a-f]+)?"')
+
+
+def _asset_hash(name: str) -> str:
+    with open(os.path.join(ROOT, name), "rb") as fh:
+        return hashlib.sha256(fh.read()).hexdigest()[:10]
+
+
+def unversion_assets(src: str) -> str:
+    return ASSET_RE.sub(lambda m: f'{m.group(1)}{m.group(2)}"', src)
+
+
+def version_assets(src: str) -> str:
+    hashes = {}
+    def sub(m):
+        name = m.group(2)
+        if name not in hashes:
+            hashes[name] = _asset_hash(name)
+        return f'{m.group(1)}{name}?v={hashes[name]}"'
+    return ASSET_RE.sub(sub, src)
+
+
 def apply(rel: str) -> None:
     path = os.path.join(ROOT, rel.replace("/", os.sep))
     src = io.open(path, encoding="utf-8").read()
@@ -315,7 +347,7 @@ def apply(rel: str) -> None:
     in_products = rel.startswith("products/")
     prefix = "../" if "/" in rel else ""
 
-    src = strip_existing(src)
+    src = unversion_assets(strip_existing(src))
     src = re.sub(r"<title>.*?</title>", f"<title>{title}</title>", src, count=1, flags=re.S)
     src = re.sub(r'<meta name="description" content="[^"]*">',
                  f'<meta name="description" content="{desc}">', src, count=1)
@@ -352,7 +384,7 @@ def apply(rel: str) -> None:
     marker = f'<link rel="stylesheet" href="{prefix}css/styles.css">'
     assert marker in src, rel
     src = src.replace(marker, "\n".join(blocks) + "\n" + marker, 1)
-    io.open(path, "w", encoding="utf-8").write(src)
+    io.open(path, "w", encoding="utf-8").write(version_assets(src))
 
 
 def last_modified(rel: str) -> str:
@@ -415,7 +447,7 @@ def apply_csp_only(rel: str) -> None:
     src = io.open(path, encoding="utf-8").read()
     src = re.sub(r'\s*<meta http-equiv="Content-Security-Policy"[^>]*>', "", src)
     src = src.replace("<head>", "<head>\n" + CSP, 1)
-    io.open(path, "w", encoding="utf-8", newline="\n").write(src)
+    io.open(path, "w", encoding="utf-8", newline="\n").write(version_assets(unversion_assets(src)))
 
 
 if __name__ == "__main__":
