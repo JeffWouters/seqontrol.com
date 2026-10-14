@@ -69,18 +69,16 @@
 
   <section class="hero">
     <div class="wrap wrap-narrow">
-      <span class="eyebrow">Straight answers</span>
+      <span class="eyebrow">Limits</span>
       <h1>What SeQontrol does not do</h1>
-      <p class="lede">Every limit worth knowing, in one place — including the ones a sales call would normally leave until month two.</p>
+      <p class="lede">Every current limit in one place: consent, remediation coverage, unreleased products, WebScan discovery, scope and certifications.</p>
     </div>
   </section>
 
   <section>
     <div class="wrap wrap-narrow">
 
-      <p>Security software is bought on trust, and trust does not survive a discovered exaggeration.
-        So here is the unflattering version, in one place, rather than scattered through the pages
-        that are trying to persuade you.</p>
+      
 
 <div class="note honest">
         <h2 id="consent">Every product asks for its own consent</h2>
@@ -103,12 +101,11 @@
       </div>
 
 <div class="note honest">
-        <h2>Some planes detect but do not (yet?) fix</h2>
-        <p>Where one of our products remediates a plane app-only, it does. Exchange forwarding, SharePoint
+        <h2>Some workloads are detected but not yet fixed</h2>
+        <p>Where one of our products remediates a workload app-only, it does. Exchange forwarding, SharePoint
           site roles, Power Platform and delegated-admin relationships are detected and reported rather than
           written back.</p>
-        <p class="mb0">That is our gap, not Microsoft's, and this page used to say otherwise. Each of those
-          planes has a documented application-only write path &mdash; certificate-based Exchange Online
+        <p class="mb0">That is our gap, not Microsoft's, and this page used to say otherwise. Each of those has a documented application-only write path &mdash; certificate-based Exchange Online
           PowerShell, Sites.FullControl.All on the SharePoint admin APIs, a Power Platform service principal,
           DelegatedAdminRelationship.ReadWrite.All on Graph. In some cases we have not built the connector;
           in others we are unwilling to ask you for permission that broad in order to ship it. Either way the
@@ -126,15 +123,12 @@
           released. <a href="products/postureportal.html">PosturePortal</a> and
           <a href="products/dredd.html">Dredd</a> are still being written.</p>
         <p class="mb0">Two of them have no price. Dredd is quoted rather than listed, because its licence
-          unit is still being set; PosturePortal carries no number at all. And nothing unreleased has a date
-          &mdash; ask, and you get an honest read on where it stands rather than a quarter.</p>
+          unit is still being set; PosturePortal carries no number at all. And nothing unreleased has a date.</p>
       </div>
 
 <div class="note honest">
-        <h2>Subdomain discovery is not a complete estate</h2>
-        <p><strong>In one line:</strong> the list of hostnames WebScan shows is what it has seen so far, not
-          everything you own, and a host it has never seen usually turns up at its next certificate
-          renewal. The detail follows.</p>
+        <h2>Subdomain discovery is not a complete inventory</h2>
+        <p>The list of hostnames WebScan shows is what it has seen so far, not everything you own, and a host it has never seen usually turns up at its next certificate renewal.</p>
         <p>WebScan finds hostnames two ways, and only one of them is immediate. The names carried on the
           certificate your site serves at scan time are read straight away &mdash; though a wildcard
           certificate names a shape rather than hosts and yields nothing to enumerate, and a shared CDN or
@@ -150,8 +144,7 @@
           themselves do &mdash; they are retired and replaced on a schedule the whole industry runs on. More
           to the point: <strong>a log starts counting for us on the day we add it.</strong> Adding one widens
           what we will see from that day forward; we do not go back and replay what it recorded before.</p>
-        <p class="mb0">Which means an empty or short list is a statement about our coverage, not about your
-          estate, and nothing in the product will present it as one. Read it as &ldquo;what we have seen so
+        <p class="mb0">Which means an empty or short list is a statement about our coverage, not about your environment, and nothing in the product will present it as one. Read it as &ldquo;what we have seen so
           far&rdquo; and it is useful. Read it as &ldquo;what exists&rdquo; and it is wrong.</p>
       </div>
 
@@ -165,7 +158,7 @@
 
 <div class="note honest">
         <h2>We are Microsoft-first</h2>
-        <p class="mb0">Microsoft 365 and Entra are the deep estate. Box sharing ships today with app-only
+        <p class="mb0">Microsoft 365 and Entra are covered in depth. Box sharing ships today with app-only
           revoke; Slack Connect is detect-only until the admin APIs exist to act on. Google Cloud and AWS are
           read-only connectors in CompliancePortal, which is built and running but not released yet.
           Everything else is roadmap, and we will not pretend otherwise on a sales call.</p>
@@ -184,17 +177,14 @@
         <h2>What our own assurance rests on today</h2>
         <p class="mb0">Product data lives in <a href="privacy.html">Microsoft Azure, in the EU</a>; the
           subprocessors, and how long data is kept &mdash; as Dutch and European law set it &mdash; are on
-          the same page. <a href="security.html">The security page</a> says plainly that we hold no
-          certifications yet. If your procurement needs one before you can buy, ask early &mdash; we would
-          rather say so here than have you discover it in a security questionnaire.</p>
+          the same page. <a href="security.html">The security page</a> says that we hold no
+          certifications yet. If your procurement needs one before you can buy, ask early.</p>
       </div>
 
       <h2>Why this page exists</h2>
-      <p>Most vendors bury this and let you find out in month two. We would rather you knew before
-        the first call, because every one of these limits is something you would eventually hit —
+      <p>You should know these before the first call, because every one of these limits is something you would eventually hit —
         and finding out late costs you more than it costs us.</p>
-      <p>If one of them is a dealbreaker, tell us and we will say so plainly rather than sell around
-        it. <a href="mailto:support@seqontrol.com?subject=Dealbreaker%20question&amp;body=Hello%2C%0D%0A%0D%0AOne%20of%20the%20limits%20on%20your%20site%20may%20be%20a%20dealbreaker%20for%20us.%20The%20product%20and%20the%20limit%3A%0D%0A%0D%0AWhat%20we%20need%20instead%3A%0D%0A">Ask the awkward question</a>.</p>
+      <p>If one of them is a dealbreaker, tell us and we will say so. <a href="mailto:support@seqontrol.com?subject=Dealbreaker%20question&amp;body=Hello%2C%0D%0A%0D%0AOne%20of%20the%20limits%20on%20your%20site%20may%20be%20a%20dealbreaker%20for%20us.%20The%20product%20and%20the%20limit%3A%0D%0A%0D%0AWhat%20we%20need%20instead%3A%0D%0A">Ask the awkward question</a>.</p>
 
       <h2>If none of them stopped you</h2>
       <p>The quickest way to find out whether the rest holds up is to point it at something real. Two of
@@ -221,8 +211,7 @@
     </a>
         <img class="footer-tagline" src="assets/seqontrol-tagline-on-dark-320.png"
              alt="Secure. Compliant. Confident." width="260" height="12" decoding="async" loading="lazy">
-        <p class="blurb">Security, compliance and configuration governance for the Microsoft 365
-          estate.</p>
+        <p class="blurb">Security, compliance and configuration governance for Microsoft 365.</p>
       </div>
       <div>
         <h2>Products</h2>

@@ -91,7 +91,7 @@
   <section class="phero tone-webscan">
     <div class="wrap">
       <p class="breadcrumb"><a href="index.html">Products</a><span>/</span>WebScan</p>
-      <span class="eyebrow">External attack surface</span>
+      <span class="eyebrow">Public-facing systems</span>
       <h1>What your attacker sees first</h1>
       <p class="lede">
         WebScan finds the public face of your organisation — including the hosts nobody wrote down — and
@@ -99,7 +99,7 @@
         services, content and infrastructure. <strong>No Microsoft 365 connection, no consent, no agent</strong>:
         it sees what an anonymous visitor sees, and a free account runs the complete check set on demand.
       </p>
-      <div class="oneline"><strong>In one line:</strong> the outside-in half of your posture — free to run, priced only when you keep it.</div>
+      
       <div class="btn-row">
         <a class="btn btn-primary" href="https://app.seqontrol.com/">Sign up and scan your site</a>
         <a class="btn btn-ghost" href="../surface-report.html">Or send us a URL</a>
@@ -137,7 +137,7 @@
           <li><strong>Transport and certificates</strong> — TLS versions and cipher suites, the certificate
             chain and its expiry, HSTS, and a client handshake simulation that answers the question a version
             list cannot: which browsers and clients can actually connect.</li>
-          <li><strong>The HTTP surface</strong> — security headers, cookie flags, the redirect chain. Small
+          <li><strong>HTTP configuration</strong> — security headers, cookie flags, the redirect chain. Small
             configuration facts that are individually dull and collectively the difference between a
             contained mistake and a session hijack.</li>
           <li><strong>DNS hygiene</strong> — CAA, DNSSEC, nameserver and record hygiene. Who is allowed to
@@ -172,7 +172,7 @@
             is the accurate description.</p>
           <p class="mb0">What will not change: it never writes — not to your DNS, not to your web server. DNS
             write-back belongs to <a href="mailtrust.html">MailTrust</a>, which also owns SPF, DKIM and DMARC.
-            Those are mail authentication rather than web surface, and they will not be duplicated here.</p>
+            Those are mail authentication rather than web configuration, and they will not be duplicated here.</p>
         </div>
       </div>
 
@@ -238,7 +238,7 @@
         </figure>
 
         <div>
-          <h4>Four states, because three would be a lie</h4>
+          <h4>Four result states, kept apart</h4>
           <p>Passed, failed, not assessed and not applicable are kept apart. A check that could not run is
             never folded into either column — a grade that hides its own gaps is worse than no grade.</p>
           <ol class="notes">
@@ -269,7 +269,7 @@
             <tr><td>Four result states, kept apart</td><td>An unreadable check never becomes a quiet pass</td></tr>
             <tr><td>Scheduled scans and retained history</td><td>Proof the configuration held between audits</td></tr>
             <tr><td>Waivers with mandatory expiry</td><td>Accepting a risk is recorded and re-surfaces, not buried</td></tr>
-            <tr><td>Control tags on every finding</td><td>The external surface is recorded against the controls it proves, ready for CompliancePortal when it ships</td></tr>
+            <tr><td>Control tags on every finding</td><td>Public-facing systems are recorded against the controls they prove, ready for CompliancePortal when it ships</td></tr>
             <tr><td>Fleet view across domains and tenants</td><td>Rank a client book by public exposure in one screen</td></tr>
           </tbody>
         </table>
@@ -279,7 +279,7 @@
 
   <section>
     <div class="wrap">
-      <h2>Objections, answered straight</h2>
+      <h2>Common questions</h2>
       <div class="grid grid-2">
         <article class="card">
           <h3>"Free tools already grade my TLS."</h3>
@@ -313,7 +313,7 @@
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">Free and Pro</span>
-        <h2>A scan you do not keep cannot prove anything</h2>
+        <h2>What Free does and what Pro adds</h2>
         <p>The free tier is a complete scanner, not a teaser — every check, every result, on one site three
           times a day. What it does not do is remember, and remembering is the whole of the paid product.
           Two licences: scan it, or keep it.</p>
@@ -422,7 +422,7 @@
   <section class="tight">
     <div class="wrap">
       <div class="provider-strip">
-        <p><strong>Scanning sites for clients?</strong> One fleet view of every client&rsquo;s public surface, sites pooled across your book and partner margin &mdash; and a free surface scan to take into a prospect meeting.</p>
+        <p><strong>Scanning sites for clients?</strong> One fleet view of every client&rsquo;s public-facing systems, sites pooled across your book and partner margin &mdash; and a free surface scan to take into a prospect meeting.</p>
         <a class="btn btn-ghost" href="../for-msps.html">See the provider model</a>
       </div>
     </div>
@@ -454,8 +454,7 @@
     </a>
         <img class="footer-tagline" src="../assets/seqontrol-tagline-on-dark-320.png"
              alt="Secure. Compliant. Confident." width="260" height="12" decoding="async" loading="lazy">
-        <p class="blurb">Security, compliance and configuration governance for the Microsoft 365
-          estate.</p>
+        <p class="blurb">Security, compliance and configuration governance for Microsoft 365.</p>
       </div>
       <div>
         <h2>Products</h2>

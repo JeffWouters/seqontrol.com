@@ -85,7 +85,7 @@ FAMILIES = [
 
     ("first-party", "Our own",
      "A first-party set covering the things the standard frameworks under-specify for a Microsoft "
-     "365 estate. Every control in it is automatable — it was written against what the platform "
+     "365 environment. Every control in it is automatable — it was written against what the platform "
      "can actually observe.",
      [("JeffOps Beyond", 12, 12)]),
 ]

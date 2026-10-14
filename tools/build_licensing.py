@@ -114,8 +114,8 @@ PRODUCTS = [
               ("On-demand scan, whenever you want one", [Y, Y, Y]),
               ("Scheduled scan cadence", ["Daily", "Every 6 hours", "Hourly"]),
               "Inventory and detection",
-              ("Sharing and permission inventory across every connected plane", [Y, Y, Y]),
-              ("Risk scoring by sensitivity, exposure and blast radius", [Y, Y, Y]),
+              ("Sharing and permission inventory across every connected workload", [Y, Y, Y]),
+              ("Risk scoring by sensitivity, exposure and reach", [Y, Y, Y]),
               ("Findings history and reports", [Y, Y, Y]),
               ("Fleet view across managed tenants", [Y, Y, Y]),
               ("Oversharing detection — org-wide links and company-wide groups", [N, Y, Y]),
@@ -128,14 +128,14 @@ PRODUCTS = [
               ("Evidence packs", [N, Y, Y]),
               "Write access",
               ("Automated remediation write-back, with grace window and undo", [N, N, Y])],
-        note=("<strong>Estate size is a quote-time band, not a meter.</strong> The invoice stays on seats, but "
-              "at quote time we ask roughly how large the SharePoint and OneDrive estate is — storage volume and "
-              "site count. Almost every tenant sits in the standard band. A tenant whose estate is far larger "
+        note=("<strong>Environment size is a quote-time band, not a meter.</strong> The invoice stays on seats, but "
+              "at quote time we ask roughly how large the SharePoint and OneDrive environment is — storage volume and "
+              "site count. Almost every tenant sits in the standard band. A tenant whose environment is far larger "
               "than its seat count suggests — the 40-user firm with twelve terabytes — is banded accordingly, so "
               "it is priced for what it actually costs to crawl rather than discovering that later. Nothing about "
               "this is metered, gated or counted after the fact."),
         after=("Counted on users rather than on shares or resources — metering the resource count would punish "
-               "the messiest estates, which are exactly the ones that need it most, and it could not be quoted "
+               "the messiest environments, which are exactly the ones that need it most, and it could not be quoted "
                "before a discovery scan. Write-back is live for OneDrive permissions and sharing links; Exchange "
                "forwarding, SharePoint site roles, Power Platform and delegated-admin relationships are detected "
                "but not yet revoked app-only."),
@@ -166,7 +166,7 @@ PRODUCTS = [
         after=("One tier, not a ladder: SecurityPortal is scan-only, so there is no write access to sell on a "
                "higher tier. Remediation lives in the products built to write safely. The log-analytics checks "
                "need the tenant to export activity logs; without that export they report &ldquo;not "
-               "assessed&rdquo; rather than a pass. The public web and domain surface is "
+               "assessed&rdquo; rather than a pass. Public-facing web and domain systems are "
                "<a href=\"products/webscan.html\">WebScan</a>, licensed separately and free to run."),
     ),
     dict(
@@ -249,8 +249,7 @@ PRODUCTS = [
                "<strong>Pro is €20, against paid comparables that start around three times that.</strong> "
                "They run from there to several hundred per asset per month, and "
                "they include active vulnerability testing that WebScan does not do. At the other end the free "
-               "graders charge nothing and retain nothing. The gap between those two is where this sits, and "
-               "it was empty.<br><br>"
+               "graders charge nothing and retain nothing. The gap between those two is where this sits.<br><br>"
                "WebScan never writes anywhere; SPF, DKIM and DMARC belong to MailTrust."),
     ),
     dict(
@@ -279,7 +278,7 @@ PRODUCTS = [
               ("Recurring scheduled assessments", [N, N, N]),
               ("Framework and benchmark catalog", [Y, Y, Y]),
               ("Multi-framework crosswalk — one piece of evidence, many controls", [Y, Y, Y]),
-              ("Automated control probes across the connected planes", [Y, Y, Y]),
+              ("Automated control probes across the connected services", [Y, Y, Y]),
               ("Google Cloud and AWS coverage via read-only connectors", [Y, Y, Y]),
               ("Evidence reuse from SecurityPortal, ShareCare and MailTrust", [Y, Y, Y]),
               ("Assessment workflow and immutable snapshot trail", [Y, Y, Y]),
@@ -296,7 +295,7 @@ PRODUCTS = [
         # panel notes build_legal.py writes; this block used to repeat both.
         after=("<strong>Not called Automation, and not an accident.</strong> On the ladder products that word "
                "is the tier that writes to your tenant. CompliancePortal writes nothing — it maps, scores, "
-               "evidences and attests. Automated evidence <em>capture</em> reads from the estate; it does not "
+               "evidences and attests. Automated evidence <em>capture</em> reads from the environment; it does not "
                "act on it.<br><br>"
                "The scheduled-assessment row is empty in all three bands rather than quietly ticked. And the "
                "scope holds either way — this proves the technical controls on the platforms SeQontrol connects to, not a whole-company "

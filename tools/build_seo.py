@@ -52,7 +52,7 @@ META = {
     "guides/what-copilot-can-reach.html": (
         "What Microsoft 365 Copilot can reach, and how to check",
         "Copilot surfaces anything a user can already open. What that means in practice, and how to "
-        "find your real blast radius before you roll it out.",
+        "find out how widely your data is exposed before you roll it out.",
         "What Copilot can reach"),
     "guides/dmarc-without-breaking-mail.html": (
         "DMARC from p=none to p=reject without breaking email",

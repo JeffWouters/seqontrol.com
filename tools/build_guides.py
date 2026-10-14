@@ -77,15 +77,14 @@ GUIDES = [
         What none of them answers easily is the question you actually need answered: <em>for this person,
         what would Copilot be able to reach, and which of that is sensitive?</em> And each answers it one
         tenant at a time.</p>
-      <p>That requires joining the sharing surface to the permission model to the sensitivity of what sits
+      <p>That requires joining sharing data to the permission model to the sensitivity of what sits
         behind it — across SharePoint, OneDrive, Teams and the groups underpinning all three. It is a
         crawl, not a report.</p>
 
       <h2>What to do before you roll out</h2>
       <ol>
-        <li><strong>Inventory the sharing surface</strong> across every workload, not one at a time.</li>
-        <li><strong>Find the org-wide links and company-wide groups</strong> first. They are the highest
-          blast radius per item and usually the easiest to fix.</li>
+        <li><strong>Inventory sharing</strong> across every workload, not one at a time.</li>
+        <li><strong>Find the org-wide links and company-wide groups</strong> first. They reach the most people per item and are usually the easiest to fix.</li>
         <li><strong>Score by sensitivity, not count.</strong> Four hundred shared lunch menus do not
           matter. One shared HR folder does.</li>
         <li><strong>Fix the top of the list, then re-run.</strong> Sharing sprawl regenerates; a one-off
@@ -94,7 +93,7 @@ GUIDES = [
           your auditor wants next quarter.</li>
       </ol>
       <p><a href="products/sharecare.html">ShareCare</a> runs this crawl across SharePoint, OneDrive, Teams and
-        the groups behind them, scores it by sensitivity and blast radius, and keeps the history.</p>
+        the groups behind them, scores it by sensitivity and reach, and keeps the history.</p>
 
       <h2>The uncomfortable part</h2>
       <p>Restricting Copilot tenant-wide — turning off search scope, delaying the rollout — treats the
@@ -136,7 +135,7 @@ GUIDES = [
         <li><strong>Collect for two to four weeks.</strong> Longer if you have monthly batch processes —
           the payroll run you miss is the one that hurts.</li>
         <li><strong>Authenticate the legitimate senders.</strong> Add them to SPF where the record has
-          room, and prefer DKIM signing — SPF has a hard limit of ten DNS lookups and large estates hit
+          room, and prefer DKIM signing — SPF has a hard limit of ten DNS lookups and large environments hit
           it constantly.</li>
         <li><strong>Move to <code>p=quarantine</code> with a percentage.</strong> Start at
           <code>pct=10</code>. Failures go to junk rather than nowhere, so a mistake is recoverable and
@@ -214,7 +213,7 @@ GUIDES = [
         <li><strong>Never let a gap score as a pass.</strong> A control you could not assess is a control
           you do not have evidence for, and recording it as green is how programmes rot.</li>
         <li><strong>Keep the security finding visible after the waiver.</strong> Waiving a control
-          changes the report; it does not change the estate.</li>
+          changes the report; it does not change the environment.</li>
       </ol>
 
       <h2>The test to apply</h2>
@@ -270,7 +269,7 @@ def page(spec, body_html, offer=None) -> str:
         href, label, line = offer
     else:
         href, label, line = ("spoofing-report.html", "Scan a domain first",
-                             "Try any of it on your own estate")
+                             "Try any of it on your own environment")
     band = (
         '  <section class="cta">\n    <div class="wrap">\n'
         f'      <h2>{line}</h2>\n'

@@ -75,7 +75,7 @@ SIGNUP = 'https://app.seqontrol.com/'
 # A page someone reaches from search used to end with nothing to do next. The comparison pages now
 # close on the same band the product pages use; a page can pass its own heading, line and buttons.
 COMPARE_CLOSING = dict(
-    h2="Try it on your own estate",
+    h2="Try it on your own environment",
     p="Sign up and connect a tenant when you are ready, or check a domain first &mdash; that one needs "
       "nothing from your tenant at all.",
     buttons=[("Sign up", SIGNUP), ("Scan a domain first", "spoofing-report.html")])
@@ -163,7 +163,7 @@ FORM = '''
 
       <div class="note plain" id="cf-thanks" hidden>
         <h2>Request sent</h2>
-        <p class="mb0">It landed. You will get a reply from a person, usually the same working day.</p>
+        <p class="mb0">Message sent. You will get a reply from a person, usually the same working day.</p>
       </div>
 '''
 
@@ -177,9 +177,9 @@ PAGES = {
         lede="Six products have a published price: four that run today and two priced ahead of release. "
              "Dredd will be quoted and PosturePortal is not priced yet. Below is every factor that moves "
              "the number, so you can size it before you ask.",
-        form=dict(topic="Pricing for my estate",
+        form=dict(topic="Pricing for my environment",
                   button="Get a real number",
-                  estate_label="Your estate",
+                  estate_label="Your environment",
                   estate_hint="e.g. 150 users, 2 domains — or 60 managed tenants"),
         body="""
       <h2>What each product counts</h2>
@@ -241,7 +241,7 @@ PAGES = {
           <li><b>Governance</b> — Adds oversharing and advanced detections, policies, access reviews, approvals, waivers, evidence packs, and six-hourly scans.</li>
           <li><b>Automation</b> — Adds hourly scans plus OneDrive permission and sharing-link write-back with undo, requiring a separate connector remediation consent.</li>
         </ul>
-        <p class="after">There is no seat minimum and no platform floor: a twelve-person company pays for twelve people, and nothing is added on top. What each tier unlocks is in the table below.</p>
+        <p class="after">There is no seat minimum and no platform floor: a twelve-person company pays for twelve people, and nothing is added on top. What each tier includes is in the table below.</p>
 <!--CAPS:sharecare-->
         <div class="btn-row">
           <a class="btn btn-primary" href="{signup}">Sign up</a>
@@ -270,7 +270,7 @@ PAGES = {
           <h3>ConditionalAccessPortal</h3>
           <p class="counted">Per user, per month &middot; <strong>not released yet</strong></p>
         </header>
-<p>On the same denominator and the same <strong>€50 monthly tenant minimum</strong> as SecurityPortal, because it answers the same question about the same estate.</p>
+<p>On the same denominator and the same <strong>€50 monthly tenant minimum</strong> as SecurityPortal, because it answers the same question about the same environment.</p>
         <div class="table-wrap table-scroll" tabindex="0">
           <table class="matrix">
             <thead>
@@ -314,7 +314,7 @@ PAGES = {
         </ul>
         <div class="note plain">
           <h3>WebScan is priced on its own</h3>
-          <p class="mb0">An account that arrived through a free scan is one we would not otherwise have, and putting a minimum in front of them would eat the funnel it sits downstream of. Nothing is added when a second product applies from that point.</p>
+          <p class="mb0">WebScan has no minimum charge, so an account that started with a free scan pays only for the sites it keeps. Nothing is added when a second product applies from that point.</p>
         </div>
         <div class="note plain">
           <h3>Discovered subdomains are free, and stay free until you say otherwise</h3>
@@ -375,7 +375,7 @@ PAGES = {
         <p class="small dim">A third of list, rounded to the euro. Minimum ten managed tenants, on a provider agreement &mdash; the same bar as pooled compliance, and for the same reason: below it the arithmetic stops describing wholesale and starts describing a discount. Five parked domains still included with every sending domain, and domains pool across your managed tenants.</p>
         <div class="note plain">
           <h3>What that comes to</h3>
-          <p class="mb0">Sixty clients averaging three sending domains each is 180 domains. On Governance that is <strong>€1,800 a month</strong> against €5,400 at list. Resold at a typical managed-DMARC rate it is the highest-margin line in the stack &mdash; which is the point: you are buying the platform, not the retail price of it.</p>
+          <p class="mb0">Sixty clients averaging three sending domains each is 180 domains. On Governance that is <strong>€1,800 a month</strong> against €5,400 at list. Your resale price is yours to set.</p>
         </div>
         <div class="note honest">
           <h3>What Automation writes, and where it does not</h3>
@@ -414,7 +414,7 @@ PAGES = {
           <p class="mb0"><strong>Evidence</strong> is the catalogue, the crosswalk, automated probes, assessments, the evidence repository and time-boxed auditor access. <strong>Attested</strong> adds attestation and sign-off with four-eyes and expiry, control ownership, and automated evidence capture &mdash; at half again the band price, whichever band you are on.</p>
         </div>
         <h4 style="margin-top:2rem">If you are a provider: pooled framework licences</h4>
-        <p>Per-tenant compliance pricing does not survive a fleet. Sixty clients on the entry band would be €18,000 a month, which is not a price, it is a decline. So for providers the two cost drivers are separated and charged for individually.</p>
+        <p>Per-tenant compliance pricing does not survive a fleet. Sixty clients on the entry band would be €18,000 a month, which providers will not pay. So for providers the two cost drivers are separated and charged for individually.</p>
         <div class="table-wrap table-scroll" tabindex="0">
           <table class="matrix">
             <thead>
@@ -432,7 +432,7 @@ PAGES = {
         <p class="small dim">Minimum ten managed tenants, on a provider agreement. Below that the arithmetic stops describing pooling and starts describing a discount.</p>
         <div class="note plain">
           <h3>What that comes to</h3>
-          <p class="mb0">Sixty tenants on one framework with sign-off: €750 + 60 &times; €75 = <strong>€5,250 a month</strong>, about €88 a client. Thirty tenants on two frameworks without sign-off: €1,500 + 30 &times; €50 = <strong>€3,000</strong>, €100 a client. Compare the first with the €27,000 the same book would cost at per-tenant rates &mdash; that gap is not a discount, it is what happens when you stop charging sixty times for one crosswalk.</p>
+          <p class="mb0">Sixty tenants on one framework with sign-off: €750 + 60 &times; €75 = <strong>€5,250 a month</strong>, about €88 a client. Thirty tenants on two frameworks without sign-off: €1,500 + 30 &times; €50 = <strong>€3,000</strong>, €100 a client. Compare the first with the €27,000 the same book would cost at per-tenant rates.</p>
         </div>
         <div class="note honest">
           <h3>Two things this page will not pretend about</h3>
@@ -449,7 +449,7 @@ PAGES = {
           <h3>Dredd and PosturePortal</h3>
           <p class="counted">One quoted, one not yet priced</p>
         </header>
-        <p><strong><a href="products/dredd.html">Dredd</a> is still in development, and quoted rather than listed when it lands.</strong> Its unit is monitored configuration scope, which is the metric this model understands least, and it is being set against real estates rather than guessed.</p>
+        <p><strong><a href="products/dredd.html">Dredd</a> is still in development, and quoted rather than listed when it lands.</strong> Its unit is monitored configuration scope, which is the metric this model understands least, and it is being set against real environments rather than guessed.</p>
         <p><strong><a href="products/postureportal.html">PosturePortal</a> carries no price at all</strong>, because it is still in development. It will not be a separate line when it arrives &mdash; it connects to nothing and reads the shared findings store &mdash; but exactly how it is packaged is unsettled, and a price against something still being built is how a price list stops being worth reading.</p>
         <p class="after">Everything else on this page is listed in full.</p>
 <!--CAPS:dredd,postureportal-->
@@ -461,8 +461,7 @@ PAGES = {
       <div class="section-head">
         <span class="eyebrow">License flavours</span>
         <h2>See it. Govern it. Act on it.</h2>
-        <p>The three tiers mean the same thing on every product that has them; each tab above lists what they
-           unlock there.</p>
+        <p>The three tiers mean the same thing on every product that has them; each tab above lists what they include there.</p>
         <p class="mb0">Each tier contains the one below. Moving up is an entitlement change, not a migration or a
            reinstall — the capability is already in the product, waiting to be switched on.</p>
       </div>
@@ -473,7 +472,7 @@ PAGES = {
           <h3>See it</h3>
           <div class="verb">Know what is actually there</div>
           <ul class="checklist">
-            <li><strong>Continuous inventory</strong> of the estate the product covers</li>
+            <li><strong>Continuous inventory</strong> of the environment the product covers</li>
             <li><strong>Risk scoring and findings</strong>, deduplicated and tracked over time</li>
             <li><strong>Reporting and export</strong>, including scheduled reports</li>
             <li><strong>Daily scheduled scans</strong>, plus on-demand scans whenever you want one</li>
@@ -503,7 +502,7 @@ PAGES = {
             <li>Everything in <strong>Governance</strong></li>
             <li><strong>Hourly scheduled scans</strong> — the tightest loop between a change and its finding</li>
             <li><strong>Automated remediation and write-back</strong> into the customer's tenant or DNS</li>
-            <li><strong>Simulate, then execute</strong> — with a grace window and undo where the plane supports it</li>
+            <li><strong>Simulate, then execute</strong> — with a grace window and undo where the platform supports it</li>
             <li><strong>Two independent gates:</strong> the license entitlement <em>and</em> the connector's own remediation consent. Either one off means nothing is written</li>
           </ul>
         </div>
@@ -536,7 +535,7 @@ PAGES = {
       <h2>What moves the number</h2>
       <ul>
         <li><strong>Which tier you buy.</strong> Each product tab above lists what its tiers include.</li>
-        <li><strong>How big the estate is</strong>, in the unit that product counts.</li>
+        <li><strong>How big the environment is</strong>, in the unit that product counts.</li>
         <li><strong>Whether you are a provider.</strong> Users, sites and domains pool across managed tenants
           &mdash; so ShareCare&rsquo;s volume bands count the users of your whole book, not of each client &mdash;
           compliance frameworks are licensed once across the book, and the per-tenant floor applies as
@@ -545,15 +544,14 @@ PAGES = {
 
       <h2 id="partner-tenant">Your own tenant, if you are a partner</h2>
       <p><strong>€50 a month, every released product, every tier, on the tenant you run your own business from.</strong>
-        The same estate computes somewhere between €260 and €640 at list; this is deliberately below what a
+        The same tenant computes somewhere between €260 and €640 at list; this is deliberately below what a
         tenant costs us to run.</p>
       <p>A provider who runs this on themselves every day can demonstrate it from a live tenant instead of a
         slide, and will find our mistakes before your clients do.</p>
       <ul>
         <li>Your <strong>own</strong> tenant &mdash; the domain on your provider agreement, checked against it.</li>
         <li>Requires a provider agreement, accepted online when you <a href="{signup}">sign up as a provider</a>. It is a partner benefit, not a tier you can buy on its own.</li>
-        <li>Everything included, up to 50 users. Past that it becomes ordinary pricing, because past that you
-          are not a small business running a tool, you are an estate using one.</li>
+        <li>Everything included, up to 50 users. Above 50 users, normal pricing applies.</li>
         <li>Not for client tenants, and not resellable. Client tenants are priced as client tenants.</li>
       </ul>
 
@@ -561,7 +559,7 @@ PAGES = {
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">How metering works</span>
-        <h2>We meter the estate, never the activity</h2>
+        <h2>We meter the environment, never the activity</h2>
         <p>The rule we hold ourselves to: <strong>never meter the thing we want you to do more of.</strong>
           Metered scanning teaches you to scan less, discover less and get less value — and then to conclude the
           product never found anything.</p>
@@ -576,11 +574,10 @@ PAGES = {
         </article>
         <article class="card">
           <h3>Never per finding</h3>
-          <p>"The worse your posture, the more you pay to learn about it" is the most perverse metric in this
-             category. Findings are never counted, and neither are remediation actions.</p>
+          <p>Charging per finding makes a worse posture cost more to see. Findings are never counted, and neither are remediation actions.</p>
         </article>
         <article class="card">
-          <h3>Estate, not effort</h3>
+          <h3>Environment, not effort</h3>
           <p>Users, domains, tenants or monitored scope — depending on the product. Each one correlates with our
              cost and your value, and each is a number you already know at quote time.</p>
         </article>
@@ -649,7 +646,7 @@ PAGES = {
         subscription ends; when it ends, what we hold for that tenant is deleted.</p>
 
       <h2 id="request">Get a number</h2>
-      <p>Tell us the size of the estate. You will get a real figure back, not a discovery call.</p>
+      <p>Tell us the size of the environment. You will get a real figure back, not a discovery call.</p>
 """),
 
     "spoofing-report.html": dict(
@@ -698,7 +695,7 @@ PAGES = {
     "surface-report.html": dict(
         eyebrow="Free assessment",
         h1="Find out what your attacker sees first",
-        lede="A free grade of your public surface — TLS, HTTP headers, cookies, DNS, content and "
+        lede="A free grade of your public-facing systems — TLS, HTTP headers, cookies, DNS, content and "
              "infrastructure — with the standard behind every failure and the fix next to it. No tenant, "
              "no consent, no onboarding.",
         hero_cta=True,
@@ -731,8 +728,7 @@ PAGES = {
 
       <h2>And it stays free</h2>
       <p>This is not a sample of a paid product. <a href="products/webscan.html">WebScan</a>'s free tier
-        runs the complete check set and shows every result — one URL at a time, for as long as you keep the
-        tenant and with no expiry date on it. Nothing is held back from the check set. What it does not do is
+        runs the complete check set and shows every result — one URL at a time, for as long as you keep the account and with no expiry date on it. Nothing is held back from the check set. What it does not do is
         remember, and remembering is the whole of the paid product.</p>
       <p>What the free tier does not do is <em>remember</em>. Nothing is written down when the scan
         finishes — so there is no history, no trend, no schedule, no alert when a passing check regresses,
@@ -769,7 +765,7 @@ PAGES = {
       <p>That is the recommendation, not a courtesy. <strong>CIPP is free and open source</strong>, and on
         multi-tenant administration it does things
         this platform does not attempt: standards deployment across a book, GDAP management, identity
-        lifecycle, offboarding, licence juggling, the daily operational surface of running Microsoft 365
+        lifecycle, offboarding, licence juggling, the daily operations of running Microsoft 365
         for other people.</p>
       <p>If your problem is "I need to administer sixty tenants without sixty browser tabs", that is
         CIPP, it costs nothing, and nothing here replaces it. Running both is a normal setup, not an
@@ -788,20 +784,20 @@ PAGES = {
         how you know MFA was enforced in March rather than today. A management plane answers "what is it
         now". An assurance layer answers "what was it, and can you prove it".</p>
 
-      <h2>The other two differences, stated plainly</h2>
+      <h2>The other two differences</h2>
       <p><strong>Outside-in.</strong> CIPP works through the tenant. A good deal of what gets a client
         breached is not in the tenant at all &mdash; an expiring certificate, a spoofable domain, a forgotten
         subdomain pointing at a service somebody else now controls. Those need scanning from outside, with
         no credential, and that is a different kind of tool.</p>
       <p class="mb0"><strong>Who carries the risk.</strong> CIPP runs with your credentials in your Azure
         subscription, which is exactly right for a management plane and is also a security engineering job
-        you now own: the app registrations, the secret rotation, the upgrade path, the blast radius. That
+        you now own: the app registrations, the secret rotation, the upgrade path, the impact if it is compromised. That
         is a reasonable trade for free. It is worth being deliberate that you have made it.</p>
 
       <h2>What we ask for, since you will ask</h2>
       <p>You already know what CIPP holds across your book, so what a second tool wants is a fair question.
         Each product has its own Entra application and its own admin consent, scoped to what that product
-        reads. Scanning is app-only and read-first; remediation is a separate consent on top of it, and
+        reads. Scanning is app-only, and a scan only reads; remediation is a separate consent on top of it, and
         every read-only product keeps working without it. Revoking one product's consent revokes exactly
         one product's Graph access. <a href="security.html">The access, in full</a>, and
         <a href="limits.html">what it does not cover yet</a>.</p>
@@ -826,25 +822,22 @@ PAGES = {
         eyebrow="Comparison",
         h1="SeQontrol and the Microsoft 365 governance tools",
         lede="Syskit Point, CoreView, AvePoint and Varonis all report on Microsoft 365 permissions and "
-             "sharing. Here is the honest split, including where they are the better buy.",
+             "sharing. Here is how they compare, including where they are the better buy.",
         body="""
       <h2>What they are better at</h2>
-      <p>Said first, because it is true and because you will find it out anyway. These are mature,
-        focused products with years of work in them, and on the specific job of <em>administering</em>
-        a Microsoft 365 estate they go deeper than we do: workspace lifecycle and provisioning,
+      <p>These are mature,
+        focused products with years of work in them, and on the specific job of <em>administering</em> a Microsoft 365 environment they go deeper than we do: workspace lifecycle and provisioning,
         access reviews as a recurring process, content-level data classification, bulk permission
-        surgery on a large SharePoint estate.</p>
+        surgery on a large SharePoint environment.</p>
       <p><strong>If your problem is "we have one large tenant and need to run permissions as an
         ongoing administrative discipline", buy one of those.</strong> That is what they are for, and
-        the entry price on a per-seat basis is often lower than ours. We would rather say that
-        here than have you discover it after a trial.</p>
+        the entry price on a per-seat basis is often lower than ours.</p>
 
       <h2>What we are better at</h2>
       <p><strong>Small tenants, and a lot of them.</strong> This is the sharpest split. The
         governance specialists often sell with a seat minimum or an enterprise contract; the average
         tenant a provider manages is nowhere near that. If your book is sixty clients of twenty-odd
-        users, most of this category cannot sell to you at all, and the ones that can are priced for a
-        single large estate rather than a fleet of small ones. <a href="for-msps.html">How a book of
+        users, most of this category cannot sell to you at all, and the ones that can are priced for a single large environment rather than a fleet of small ones. <a href="for-msps.html">How a book of
         clients is priced here</a>.</p>
       <p><strong>Producing evidence rather than a report.</strong> A permission report tells you what
         is true today. What an auditor, an insurer or a customer questionnaire wants is that a control
@@ -854,20 +847,19 @@ PAGES = {
       <p class="small dim"><em>Where this stands today:</em> ShareCare and SecurityPortal findings already
         carry control tags and history. <a href="products/complianceportal.html">CompliancePortal</a>, which
         turns them into framework evidence with attestation, is built but not yet released.</p>
-      <p><strong>Breadth in one platform.</strong> Sharing is one surface. The same estate also has
-        Conditional Access coverage, application consents, email authentication and a public web
-        surface — and those live in four different tools, or in one platform with one console, one
+      <p><strong>Breadth in one platform.</strong> Sharing is one area. The same environment also has
+        Conditional Access coverage, application consents, email authentication and public-facing systems — and those live in four different tools, or in one platform with one console, one
         findings store, one audit trail and one bill. Each product connects with its own admin consent.</p>
 
-      <h2>On price, plainly</h2>
+      <h2>On price</h2>
       <p>Per seat, on the permissions job alone, the specialists are cheaper. We are not going to
         pretend the arithmetic says otherwise, and if permissions reporting on one large tenant is the
-        entire requirement, that is the honest recommendation.</p>
-      <p>The comparison changes when the requirement is three or four of those surfaces plus evidence
+        entire requirement, that is our recommendation.</p>
+      <p>The comparison changes when the requirement is three or four of those areas plus evidence
         that survives an audit, or when it is a fleet rather than a tenant. Then you are comparing one
         platform against three products and an integration project, and the per-seat line stops being
         the number that decides it. <a href="pricing.html">The figures are published in full</a>;
-        work it out against your own estate rather than ours.</p>
+        work it out against your own environment rather than ours.</p>
 
       <h2>What we will not claim</h2>
       <p>We do not do content classification, and we do not read your documents — SeQontrol records
@@ -883,10 +875,10 @@ PAGES = {
         eyebrow="Comparison",
         h1="SeQontrol and the GRC platforms",
         lede="Vanta, Drata, Secureframe and their peers do something we deliberately do not. Here is "
-             "the honest split, including the cases where you should pick them.",
+             "how they compare, including the cases where you should pick them.",
         body="""
       <h2>What they are better at</h2>
-      <p>Said first, because it is true. Automated GRC platforms have spent years on the parts of
+      <p>Automated GRC platforms have spent years on the parts of
         compliance that are workflow: policy management, employee onboarding and training records,
         vendor reviews, questionnaire handling, and — importantly — established relationships with
         auditors who already know their evidence format.</p>
@@ -895,7 +887,7 @@ PAGES = {
         your money.</p>
 
       <h2>What we are better at</h2>
-      <p>Proving the technical controls, at control granularity, on a Microsoft 365 estate.</p>
+      <p>Proving the technical controls, at control granularity, on a Microsoft 365 environment.</p>
       <p>A GRC platform generally establishes that a control exists by asking you, or by an
         integration check. SeQontrol establishes it by scanning: external sharing containment,
         Conditional Access coverage, MFA enforcement including the exclusions, application permissions
@@ -940,23 +932,21 @@ PAGES = {
           period.</li>
         <li><strong>Per workload, per tenant.</strong> Sharing sits in one report, identity in
           another, mail flow in a third, each inside one tenant. For a provider that means opening
-          every client in turn: Microsoft 365 Lighthouse rolls up some identity and device signals, but
-          not the sharing surface and not control evidence. <a href="for-msps.html">What a provider
+          every client in turn: Microsoft 365 Lighthouse rolls up some identity and device signals, but not sharing and not control evidence. <a href="for-msps.html">What a provider
           gets instead</a>.</li>
-        <li><strong>No outside-in view.</strong> Nothing in a Microsoft 365 licence scans your public web and domain
-          surface, which is where a good deal of exposure actually lives — that is
+        <li><strong>No outside-in view.</strong> Nothing in a Microsoft 365 licence scans your public-facing web and domain systems, which is where a good deal of exposure actually lives — that is
           <a href="products/webscan.html">WebScan</a>, and running it costs nothing.</li>
         <li><strong>Reporting, not remediation, and no memory.</strong> Native reports show a state.
           They do not stage a fix with a grace window and an undo, and they do not keep a
           tamper-evident record of what changed and who approved it.</li>
       </ul>
 
-      <h2>The honest overlap</h2>
-      <p>Microsoft improves this surface constantly, and some of what SeQontrol does today will be
+      <h2>The overlap</h2>
+      <p>Microsoft improves this area constantly, and some of what SeQontrol does today will be
         native eventually. The parts we expect to keep mattering are the ones native tooling is
         structurally unlikely to build: cross-tenant fleet economics, and turning a security finding
         into portable compliance evidence.</p>
-      <p>We license per estate, so if Microsoft ships something that replaces a piece of this, you
+      <p>We license per product, so if Microsoft ships something that replaces a piece of this, you
         are free to stop paying for that piece.</p>
 """),
 
@@ -981,13 +971,13 @@ PAGES = {
         <li><strong>Risky grants beyond files</strong> — over-permissioned OAuth applications, and
           mail forwarding to domains nobody in your organisation owns.</li>
         <li><strong>A remediation order</strong> — not a CSV of everything, but what to revoke first,
-          ranked by sensitivity and blast radius, with the ones that are safe to automate marked.</li>
+          ranked by sensitivity and how many people can reach it, with the ones that are safe to automate marked.</li>
       </ul>
 
       <h2>What it costs, and what it does not</h2>
       <p>Nothing. No card, no trial that converts into a subscription, no contract. If the report
-        tells you your estate is in good shape, that is a perfectly good outcome and we will say so.</p>
-      <p><strong>The catch, stated plainly:</strong> we do this because a scored list of your own
+        tells you your environment is in good shape, that is a perfectly good outcome and we will say so.</p>
+      <p><strong>The catch:</strong> we do this because a scored list of your own
         exposure is a better argument for the product than any page on this site. If it is not
         compelling, you will not buy, and that is fair.</p>
 
@@ -1009,7 +999,7 @@ PAGES = {
         <li>We agree the scope and a date before anything connects.</li>
         <li>An administrator grants read-only consent to the Entra application for the product being
           assessed — scoped to that product, and nothing else.</li>
-        <li>The crawl runs. Large estates are swept in stages so nothing is throttled.</li>
+        <li>The crawl runs. Large tenants are swept in stages so nothing is throttled.</li>
         <li>You get the report, and a walkthrough of it if you want one.</li>
       </ol>
 
@@ -1024,14 +1014,12 @@ PAGES = {
 """),
 
     "limits.html": dict(
-        eyebrow="Straight answers",
+        eyebrow="Limits",
         h1="What SeQontrol does not do",
-        lede="Every limit worth knowing, in one place — including the ones a sales call would "
-             "normally leave until month two.",
+        lede="Every current limit in one place: consent, remediation coverage, unreleased products, WebScan "
+             "discovery, scope and certifications.",
         body="""
-      <p>Security software is bought on trust, and trust does not survive a discovered exaggeration.
-        So here is the unflattering version, in one place, rather than scattered through the pages
-        that are trying to persuade you.</p>
+      
 
 <div class="note honest">
         <h2 id="consent">Every product asks for its own consent</h2>
@@ -1054,12 +1042,11 @@ PAGES = {
       </div>
 
 <div class="note honest">
-        <h2>Some planes detect but do not (yet?) fix</h2>
-        <p>Where one of our products remediates a plane app-only, it does. Exchange forwarding, SharePoint
+        <h2>Some workloads are detected but not yet fixed</h2>
+        <p>Where one of our products remediates a workload app-only, it does. Exchange forwarding, SharePoint
           site roles, Power Platform and delegated-admin relationships are detected and reported rather than
           written back.</p>
-        <p class="mb0">That is our gap, not Microsoft's, and this page used to say otherwise. Each of those
-          planes has a documented application-only write path &mdash; certificate-based Exchange Online
+        <p class="mb0">That is our gap, not Microsoft's, and this page used to say otherwise. Each of those has a documented application-only write path &mdash; certificate-based Exchange Online
           PowerShell, Sites.FullControl.All on the SharePoint admin APIs, a Power Platform service principal,
           DelegatedAdminRelationship.ReadWrite.All on Graph. In some cases we have not built the connector;
           in others we are unwilling to ask you for permission that broad in order to ship it. Either way the
@@ -1077,15 +1064,12 @@ PAGES = {
           released. <a href="products/postureportal.html">PosturePortal</a> and
           <a href="products/dredd.html">Dredd</a> are still being written.</p>
         <p class="mb0">Two of them have no price. Dredd is quoted rather than listed, because its licence
-          unit is still being set; PosturePortal carries no number at all. And nothing unreleased has a date
-          &mdash; ask, and you get an honest read on where it stands rather than a quarter.</p>
+          unit is still being set; PosturePortal carries no number at all. And nothing unreleased has a date.</p>
       </div>
 
 <div class="note honest">
-        <h2>Subdomain discovery is not a complete estate</h2>
-        <p><strong>In one line:</strong> the list of hostnames WebScan shows is what it has seen so far, not
-          everything you own, and a host it has never seen usually turns up at its next certificate
-          renewal. The detail follows.</p>
+        <h2>Subdomain discovery is not a complete inventory</h2>
+        <p>The list of hostnames WebScan shows is what it has seen so far, not everything you own, and a host it has never seen usually turns up at its next certificate renewal.</p>
         <p>WebScan finds hostnames two ways, and only one of them is immediate. The names carried on the
           certificate your site serves at scan time are read straight away &mdash; though a wildcard
           certificate names a shape rather than hosts and yields nothing to enumerate, and a shared CDN or
@@ -1101,8 +1085,7 @@ PAGES = {
           themselves do &mdash; they are retired and replaced on a schedule the whole industry runs on. More
           to the point: <strong>a log starts counting for us on the day we add it.</strong> Adding one widens
           what we will see from that day forward; we do not go back and replay what it recorded before.</p>
-        <p class="mb0">Which means an empty or short list is a statement about our coverage, not about your
-          estate, and nothing in the product will present it as one. Read it as &ldquo;what we have seen so
+        <p class="mb0">Which means an empty or short list is a statement about our coverage, not about your environment, and nothing in the product will present it as one. Read it as &ldquo;what we have seen so
           far&rdquo; and it is useful. Read it as &ldquo;what exists&rdquo; and it is wrong.</p>
       </div>
 
@@ -1116,7 +1099,7 @@ PAGES = {
 
 <div class="note honest">
         <h2>We are Microsoft-first</h2>
-        <p class="mb0">Microsoft 365 and Entra are the deep estate. Box sharing ships today with app-only
+        <p class="mb0">Microsoft 365 and Entra are covered in depth. Box sharing ships today with app-only
           revoke; Slack Connect is detect-only until the admin APIs exist to act on. Google Cloud and AWS are
           read-only connectors in CompliancePortal, which is built and running but not released yet.
           Everything else is roadmap, and we will not pretend otherwise on a sales call.</p>
@@ -1135,17 +1118,14 @@ PAGES = {
         <h2>What our own assurance rests on today</h2>
         <p class="mb0">Product data lives in <a href="privacy.html">Microsoft Azure, in the EU</a>; the
           subprocessors, and how long data is kept &mdash; as Dutch and European law set it &mdash; are on
-          the same page. <a href="security.html">The security page</a> says plainly that we hold no
-          certifications yet. If your procurement needs one before you can buy, ask early &mdash; we would
-          rather say so here than have you discover it in a security questionnaire.</p>
+          the same page. <a href="security.html">The security page</a> says that we hold no
+          certifications yet. If your procurement needs one before you can buy, ask early.</p>
       </div>
 
       <h2>Why this page exists</h2>
-      <p>Most vendors bury this and let you find out in month two. We would rather you knew before
-        the first call, because every one of these limits is something you would eventually hit —
+      <p>You should know these before the first call, because every one of these limits is something you would eventually hit —
         and finding out late costs you more than it costs us.</p>
-      <p>If one of them is a dealbreaker, tell us and we will say so plainly rather than sell around
-        it. <a href="{awkward_question}">Ask the awkward question</a>.</p>
+      <p>If one of them is a dealbreaker, tell us and we will say so. <a href="{awkward_question}">Ask the awkward question</a>.</p>
 
       <h2>If none of them stopped you</h2>
       <p>The quickest way to find out whether the rest holds up is to point it at something real. Two of
@@ -1160,7 +1140,7 @@ PAGES = {
     "about.html": dict(
         eyebrow="About",
         h1="Why this exists",
-        lede="SeQontrol is built by a small team in the Netherlands, working on the Microsoft 365 estate "
+        lede="SeQontrol is built by a small team in the Netherlands, working on Microsoft 365 "
              "and shipping in public.",
         body="""
       <h2>The problem that started it</h2>
@@ -1173,13 +1153,13 @@ PAGES = {
         on questionnaires. Nothing joined "what is exposed" to "prove it stayed fixed" — and nothing at
         all was built for somebody managing forty tenants rather than one.</p>
 
-      <h2>The bet</h2>
+      <h2>What we built differently</h2>
       <p>That the platform matters more than any single scanner. One findings store, one audit trail, one
         console — so a security finding becomes compliance evidence without a second integration, and so the
         tenth tenant costs no more thought than the first. Each product still asks for its own consent; what
         the platform saves you is everything after that.</p>
       <p>And that security sits above compliance. A waived control turns a report green without
-        changing anything real; we would rather show you the finding that is still there.
+        changing anything real; SeQontrol keeps the finding on screen.
         <a href="index.html#principle">The full argument is on the home page.</a></p>
 
       <h2>Who</h2>
@@ -1189,8 +1169,7 @@ PAGES = {
 
       <h2>What we will not do</h2>
       <ul>
-        <li><strong>Invent proof.</strong> Every claim on this site can be tested against your own
-          tenant &mdash; <a href="exposure-report.html">a free report</a> is the quickest way.</li>
+        <li><strong>Invent proof.</strong> What the product finds can be tested against your own tenant &mdash; <a href="exposure-report.html">a free report</a> is the quickest way.</li>
         <li><strong>Fabricate a pass.</strong> A control we cannot assess is reported as "not
           assessed", never as green.</li>
         <li><strong>Oversell the roadmap.</strong> What is shipped is labelled shipped, and what is
@@ -1203,8 +1182,7 @@ PAGES = {
 
       <h2>Talk to us</h2>
       <p>Ask a hard question — <a href="contact.html">the contact page</a> or
-        <a href="mailto:{contact}">{contact}</a>. If SeQontrol is not a fit for you, we would rather
-        say so early than sell you a year of it.</p>
+        <a href="mailto:{contact}">{contact}</a>. If SeQontrol is not a fit for you, we will say so.</p>
 """),
 
     "privacy.html": dict(
@@ -1311,7 +1289,7 @@ PAGES = {
 
     "terms.html": dict(
         eyebrow="Terms",
-        h1="Terms, in language you can actually check",
+        h1="Terms",
         lede="These cover the website. The service has its own agreement, which you accept when you "
              "sign up; ask and we will send it before you commit to anything.",
         body="""
