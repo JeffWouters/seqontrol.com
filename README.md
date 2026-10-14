@@ -325,12 +325,11 @@ exactly that), every script or stylesheet loaded by absolute URL must carry Subr
 
 ## Brand and theme
 
-- **SeQontrol** is the platform/product brand. **JeffOps** is the company behind it — the footer and
-  copy say so ("Built by JeffOps", "SeQontrol is a JeffOps platform"). Every one of those mentions links
-  to `https://jeffops.com` and is coloured in JeffOps' own cyan `#00d9ff` (its `--cyan` token), not the
-  SeQontrol purple — the two brands stay visually distinct. The rule matches on the href
-  (`a[href^="https://jeffops.com"]`), so a new mention is styled automatically; there is no class to
-  remember. Reserve that cyan for JeffOps links and nothing else.
+- **The site speaks as SeQontrol only (since 2026-10-14).** JeffOps, the registered entity behind
+  it, is named only where the law needs a party: the privacy notice (the controller) and the terms (the
+  other party). Nowhere else: no footer credit, no link to jeffops.com, no parent organisation in the
+  structured data. The contact address is support@seqontrol.com. `verify.py` fails any other page that
+  mentions JeffOps.
 - **Light page, navy chrome (since 2026-10-10).** The body is a cool light grey with white cards;
   the header, the heroes, the closing call-to-action panel and the footer are navy. This replaced the
   dark-only theme, whose neutrals came from the platform shell. The palette is SeQontrol's own:
@@ -345,7 +344,6 @@ exactly that), every script or stylesheet loaded by absolute URL must carry Subr
   | `--dim` | `#565C7C` | `#A9ADC8` | captions, hints |
   | `--brand` | `#6C4FDF` | | **Qontrol Purple** — fills and primary buttons |
   | `--accent` | `#4B33B8` | `#C3B8F5` | links, eyebrows, labels |
-  | `--jeffops` | `#006A80` | `#00D9FF` | JeffOps cyan — links to the parent company only |
 
   **Two token sets, one vocabulary.** `:root` holds the light values; `.on-navy` and everything that is
   always navy (`.site-header`, `.hero`, `.phero`, `.cta > .wrap`, `.site-footer`, `.navy-panel`)
@@ -355,8 +353,7 @@ exactly that), every script or stylesheet loaded by absolute URL must carry Subr
   **Contrast, measured.** On light grounds `--text` is 12.77:1 at worst, `--muted` 7.55, `--dim` 5.20,
   `--accent` 6.79; white on `--brand` is 5.50. In navy chrome `--muted` is 8.44 at worst, `--dim` 5.61,
   `--accent` 6.78. `--brand` *as text* on `--bg-deep` is only 4.38, so links and labels use `--accent` —
-  do not swap them. The JeffOps cyan is darkened to `#006A80` on light grounds (4.96:1 at worst) and
-  keeps its bright `#00d9ff` in the navy chrome (9.44:1).
+  do not swap them.
 
 - **No green, yellow, red or amber.** A SeQontrol brand rule. Status chips use shape instead of traffic
   lights: a filled purple chip for something you can buy, an outlined chip for built-but-not-released, a

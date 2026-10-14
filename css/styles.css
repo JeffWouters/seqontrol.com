@@ -100,11 +100,6 @@
   --warn:   var(--text);
   --danger: var(--text);
 
-  /* JeffOps' brand cyan, darkened for a light ground (#006A80, 4.96:1 worst case, on --bg-deep). The bright
-     #00d9ff is restored inside navy chrome, where it is 9.44:1. Used only for links to the parent
-     company, never for SeQontrol's own chrome. */
-  --jeffops:      #006A80;
-  --jeffops-soft: #004E5E;
 
   /* product tones — no green, yellow, red or amber (brand rule). Each clears 4.5:1 as text on every
      light ground, because .kicker and .arrow-link use the tone as text colour. */
@@ -157,8 +152,6 @@
   --accent-soft:   #E0DAFF;
   --tint:          #252E6E;
   --focus:         #C3B8F5;
-  --jeffops:       #00D9FF;
-  --jeffops-soft:  #6EE9FF;
   --t-sharecare: #B9A8FF; --t-security: #8EC2FF; --t-condaccess: #E7A6D6; --t-webscan: #FF9CD2;
   --t-compliance:#D7A6FF; --t-posture: #A9B2FF;  --t-mailtrust: #7FD6E0;  --t-dredd: #C3C9DB;
   --t-soon:      #A9ADC8;
@@ -1033,20 +1026,6 @@ tbody tr:hover td { background: rgba(108, 79, 223, .03); }
   border-top: 1px solid var(--border-soft); padding-top: 1.4rem;
   display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
   color: var(--dim); font-size: .86rem;
-}
-
-/* ------------------------------------------------------ links to JeffOps */
-/* Every link back to the parent brand wears the JeffOps cyan instead of the SeQontrol purple —
-   matched on the href, so a new mention needs no extra markup. --jeffops is darkened on light
-   grounds and bright inside navy chrome (see the token sets). */
-a[href^="https://jeffops.com"],
-.site-footer a[href^="https://jeffops.com"] {
-  color: var(--jeffops);
-}
-a[href^="https://jeffops.com"]:hover,
-.site-footer a[href^="https://jeffops.com"]:hover {
-  color: var(--jeffops-soft);
-  text-decoration: underline;
 }
 
 /* ---------------------------------------------------------------- forms */

@@ -148,7 +148,7 @@ def check_404_is_depth_proof(rel: str, src: str) -> None:
 
 # Every address the site is allowed to publish. A new one is a deliberate act, not something that
 # appears because a page was copied.
-KNOWN_ADDRESSES = {"jeff@jeffops.com", "support@seqontrol.com"}
+KNOWN_ADDRESSES = {"support@seqontrol.com"}
 
 
 def check_mailto(page: str, src: str) -> None:
@@ -176,6 +176,16 @@ def check_mailto(page: str, src: str) -> None:
             name, value = field.split("=", 1)
             if name in ("cc", "bcc", "to") and "+" in value:
                 fail(page, f"'+' left unencoded in mailto {name}; it decodes to a space, use %2B")
+
+
+# The site speaks as SeQontrol. JeffOps is the registered entity behind it and is named only where the
+# law needs a party: the privacy notice (the controller) and the terms (the other party).
+PARENT_NAME_ALLOWED = {"privacy.html", "terms.html"}
+
+
+def check_parent_name(page: str, src: str) -> None:
+    if page not in PARENT_NAME_ALLOWED and re.search(r"jeffops", src, re.I):
+        fail(page, "mentions JeffOps; only privacy.html and terms.html may name the entity")
 
 
 def check_markup(page: str, src: str) -> None:
@@ -848,6 +858,7 @@ def main() -> int:
         check_links(page, src)
         check_404_is_depth_proof(rel, src)
         check_mailto(rel, src)
+        check_parent_name(rel, src)
         check_markup(page, src)
         # Before the redirect-stub exit: a stub or the 404 page can load a script as easily as any page.
         check_subresource_integrity(page, src)

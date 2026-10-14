@@ -59,7 +59,7 @@ def seo_desc(rel: str) -> str:
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 OPERATOR = 'JeffOps'
-CONTACT = 'jeff@jeffops.com'
+CONTACT = 'support@seqontrol.com'
 
 # The product support address, kept beside CONTACT for the same reason CONTACT exists: an address
 # typed into body copy is an address nobody can grep for when it changes. This one arrived hard-coded
@@ -104,7 +104,6 @@ def mailto(to: str, cc: str = '', subject: str = '', body: str = '') -> str:
 
 AWKWARD_QUESTION = mailto(
     SUPPORT,
-    cc='jeff+seqontrol@jeffops.com',
     subject='Dealbreaker question',
     body="Hello,\r\n\r\nOne of the limits on your site may be a dealbreaker for us. The product and "
          "the limit:\r\n\r\nWhat we need instead:\r\n")
@@ -1161,8 +1160,8 @@ PAGES = {
     "about.html": dict(
         eyebrow="About",
         h1="Why this exists",
-        lede="SeQontrol is built by {operator} — a small team, working on the Microsoft 365 estate, "
-             "shipping in public.",
+        lede="SeQontrol is built by a small team in the Netherlands, working on the Microsoft 365 estate "
+             "and shipping in public.",
         body="""
       <h2>The problem that started it</h2>
       <p>Every Microsoft 365 tenant accumulates access. A link shared with a supplier in 2019, a group
@@ -1184,9 +1183,9 @@ PAGES = {
         <a href="index.html#principle">The full argument is on the home page.</a></p>
 
       <h2>Who</h2>
-      <p>{operator} is Jeff Wouters — writing, speaking and consulting on the Microsoft platform at
-        <a href="https://jeffops.com">jeffops.com</a>, and building SeQontrol. If you email us, the
-        reply comes from a person who worked on the thing you are asking about.</p>
+      <p>SeQontrol is built by Jeff Wouters, who also writes, speaks and consults on the Microsoft
+        platform. If you email us, the reply comes from a person who worked on the thing you are asking
+        about.</p>
 
       <h2>What we will not do</h2>
       <ul>
