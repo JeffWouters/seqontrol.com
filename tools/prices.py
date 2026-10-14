@@ -114,3 +114,37 @@ TIERS = {
     },
 }
 
+
+
+# The pricing calculator on pricing.html. build_legal.py serialises this into a JSON block on that page
+# and js/site.js reads it from there, so the calculator never carries a figure of its own. verify.py's
+# check_calculator fails the build if any money value here is not also printed on pricing.html, which
+# is what keeps the calculator and the tables beneath it from disagreeing.
+#
+# Money is euros per month, excluding VAT. Keys named in CALCULATOR_COUNTS are counts and thresholds,
+# not money; everything else that is a number is money.
+CALCULATOR = {
+    "sharecare": {
+        "tiers": {"vis": 2, "gov": 4, "auto": 6.5},
+        # [users above which, percentage off the whole line], largest first
+        "volume": [[2000, 30], [500, 20], [100, 10]],
+    },
+    "security": {"with_sharecare": 1.5, "standalone": 3.5, "tenant_min": 50},
+    "webscan": {"pro": 20},
+    "mailtrust": {
+        "tiers": {"vis": 15, "gov": 30, "auto": 40},
+        "parked": 3,
+        "parked_included": 5,
+        "partner": {"tiers": {"vis": 5, "gov": 10, "auto": 13}, "parked": 1, "min_tenants": 10},
+    },
+    "own_tenant": {"price": 50, "max_users": 50},
+    "condaccess": {"tiers": {"vis": 0.6, "gov": 1, "auto": 1.5}, "tenant_min": 50},
+    "compliance": {
+        # per tenant: [Evidence, Attested]
+        "bands": {"1": [300, 450], "3": [600, 900], "all": [900, 1350]},
+        "partner": {"framework": 750, "all": 3000,
+                    "per_tenant": {"evidence": 50, "attested": 75}, "min_tenants": 10},
+    },
+}
+
+CALCULATOR_COUNTS = {"volume", "parked_included", "min_tenants", "max_users"}

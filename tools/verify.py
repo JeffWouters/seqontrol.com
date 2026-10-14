@@ -464,6 +464,52 @@ def check_prices() -> None:
                               "change tools/prices.py and build_legal.py together")
 
 
+# The calculator on pricing.html reads its figures from a JSON block (tools/prices.py CALCULATOR) rather
+# than carrying its own. That only helps if the block agrees with the tables a buyer reads under it, so
+# every money value in it must be printed elsewhere on the page, formatted the way the page prints it.
+CALC_DATA_RE = re.compile(r'<script type="application/json" id="calc-data">(.*?)</script>', re.S)
+
+
+def check_calculator() -> None:
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    from prices import CALCULATOR_COUNTS  # noqa: E402
+    page = "pricing.html"
+    src = open(os.path.join(ROOT, page), encoding="utf-8").read()
+    m = CALC_DATA_RE.search(src)
+    if not m:
+        fail(page, "no calculator data block (build_legal.py calculator_html was skipped)")
+        return
+    try:
+        data = json.loads(m.group(1).replace("<\\/", "</"))
+    except ValueError as e:
+        fail(page, f"calculator data block is not valid JSON: {e}")
+        return
+    rest = src[:m.start()] + src[m.end():]
+    rest = re.sub(r'<section class="calc".*?</section>', " ", rest, flags=re.S)
+    text = html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", rest)))
+
+    def money(v):
+        return f"€{int(v):,}" if float(v).is_integer() else f"€{v:,.2f}"
+
+    def walk(node, path):
+        if isinstance(node, dict):
+            for k, v in node.items():
+                if k in CALCULATOR_COUNTS:
+                    continue
+                walk(v, path + [k])
+        elif isinstance(node, list):
+            for i, v in enumerate(node):
+                walk(v, path + [str(i)])
+        elif isinstance(node, (int, float)) and not isinstance(node, bool):
+            if money(node) not in text:
+                fail(page, f"calculator figure {'.'.join(path)} = {money(node)} is not printed on the page")
+
+    walk(data, [])
+    for above, pct in data.get("sharecare", {}).get("volume", []):
+        if f"{pct}%" not in text or f"{above:,}" not in text:
+            fail(page, f"calculator volume band {pct}% above {above:,} is not printed on the page")
+
+
 def check_seo(page: str, src: str) -> None:
     rel = os.path.relpath(page, ROOT).replace(os.sep, "/")
 
@@ -879,6 +925,7 @@ def main() -> int:
     check_sitemap()
     check_security_txt()
     check_prices()
+    check_calculator()
 
     print(f"checked {len(PAGES)} pages")
     if failures:
