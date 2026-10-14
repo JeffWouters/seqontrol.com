@@ -122,13 +122,33 @@
   // Progressive, like the tabs below: the markup ships every slide visible and the controls hidden.
   // Here the slides become one-at-a-time. Inactive slides are hidden with visibility rather than
   // [hidden] so they keep their place in the shared grid cell and the box never changes height.
-  // No autoplay: the slide changes only when somebody asks it to.
+  //
+  // Automatic rotation, with the limits that make it acceptable (WCAG 2.2.2 among them):
+  //  - one slide every INTERVAL ms, only while the carousel is on screen and the tab is visible;
+  //  - one round only: it stops when it is back on the first slide;
+  //  - a visible pause/play button, and a progress line so the change is never a surprise;
+  //  - any click, touch, hover or keyboard focus inside the carousel stops it for good, unless the
+  //    visitor pressed play themselves, in which case only the controls stop it;
+  //  - never starts on its own for visitors who ask their system for reduced motion.
   Array.prototype.forEach.call(document.querySelectorAll('[data-carousel]'), function (root) {
     var tabs = [].slice.call(root.querySelectorAll('[role="tab"]'));
     var slides = [].slice.call(root.querySelectorAll('[role="tabpanel"]'));
     var count = root.querySelector('.carousel-count');
+    var playBtn = root.querySelector('[data-carousel-play]');
+    var progress = root.querySelector('.carousel-progress');
+    var slideBox = root.querySelector('.carousel-slides');
     if (!tabs.length || tabs.length !== slides.length) return;
+
+    var INTERVAL = 10000;
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var current = 0;
+    var playing = !reduced;     // rotation wanted
+    var chosen = false;         // the visitor pressed play themselves
+    var inView = false;
+    var timer = null;
+    var advanced = 0;           // slides moved by the timer in this round
+
+    if (progress) progress.style.setProperty('--carousel-interval', INTERVAL + 'ms');
 
     function show(index, moveFocus) {
       current = (index + slides.length) % slides.length;
@@ -159,8 +179,40 @@
       if (moveFocus) tabs[current].focus();
     }
 
+    function running() { return playing && inView && !document.hidden; }
+
+    // (Re)start the clock for the slide on screen, or stop it. Called after every state change.
+    function schedule() {
+      clearTimeout(timer);
+      timer = null;
+      if (progress) {
+        progress.removeAttribute('data-run');
+        void progress.offsetWidth;   // restart the fill from empty
+      }
+      if (playBtn) {
+        if (playing) playBtn.removeAttribute('data-paused'); else playBtn.setAttribute('data-paused', '');
+        playBtn.setAttribute('aria-label', playing ? 'Pause automatic rotation' : 'Start automatic rotation');
+      }
+      // Screen readers: announce slide changes only when a person caused them.
+      if (slideBox) slideBox.setAttribute('aria-live', playing ? 'off' : 'polite');
+      if (!running()) return;
+      if (progress) progress.setAttribute('data-run', '');
+      timer = setTimeout(function () {
+        show(current + 1);
+        advanced += 1;
+        if (current === 0 && advanced >= slides.length) playing = false;   // one round, then rest
+        schedule();
+      }, INTERVAL);
+    }
+
+    function stop() {
+      if (!playing && !timer) return;
+      playing = false;
+      schedule();
+    }
+
     tabs.forEach(function (tab, i) {
-      tab.addEventListener('click', function () { show(i); });
+      tab.addEventListener('click', function () { show(i); stop(); });
       tab.addEventListener('keydown', function (e) {
         var next = null;
         if (e.key === 'ArrowRight') next = i + 1;
@@ -170,16 +222,49 @@
         if (next === null) return;
         e.preventDefault();
         show(next, true);
+        stop();
       });
     });
     [].forEach.call(root.querySelectorAll('[data-carousel-step]'), function (btn) {
       btn.addEventListener('click', function () {
         show(current + parseInt(btn.getAttribute('data-carousel-step'), 10));
+        stop();
       });
     });
+    if (playBtn) {
+      playBtn.addEventListener('click', function () {
+        if (playing) { stop(); return; }
+        playing = true;
+        chosen = true;
+        advanced = 0;
+        schedule();
+      });
+    }
+
+    // Interest in the carousel ends the rotation, unless the visitor asked for it with play.
+    function interest(e) {
+      if (chosen || !playing) return;
+      if (playBtn && e && e.target && playBtn.contains(e.target)) return;
+      stop();
+    }
+    root.addEventListener('mouseenter', interest);
+    root.addEventListener('focusin', interest);
+    root.addEventListener('touchstart', interest, { passive: true });
+    root.addEventListener('pointerdown', interest);
+
+    document.addEventListener('visibilitychange', schedule);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        inView = entries[0].isIntersecting;
+        schedule();
+      }, { threshold: 0.5 }).observe(root);
+    } else {
+      inView = true;
+    }
 
     root.setAttribute('data-carousel-ready', '');
     show(0);
+    schedule();
   });
 
   // --- tabs -----------------------------------------------------------------
