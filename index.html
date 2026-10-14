@@ -158,28 +158,111 @@
         </div>
       </div>
 
-      <figure class="shot">
-        <div class="shot-pan" tabindex="0">
-        <div class="shot-frame" style="--w:529px">
-          <picture><source srcset="assets/Screenshots/ShareCare/hero-attention.webp" type="image/webp"><img src="assets/Screenshots/ShareCare/hero-attention.png"
-               alt="ShareCare overview: a needs-attention bar showing three anonymous links and 35
-                    privileged grants, above an exposure score of 39 out of 100."
-               width="529" height="501" loading="eager" decoding="async"></picture>
-          <b class="pin" style="--x:66%; --y:22%" aria-hidden="true">1</b>
-          <b class="pin" style="--x:70%; --y:60%" aria-hidden="true">2</b>
+      <!-- Product carousel. Progressive: without JavaScript all four slides show, stacked; site.js adds
+           [data-carousel-ready], which reveals the controls and shows one slide at a time. -->
+      <div class="carousel" data-carousel role="region" aria-roledescription="carousel" aria-label="Product screenshots">
+        <div class="carousel-tabs" role="tablist" aria-label="Choose a product">
+          <button type="button" role="tab" id="ctab-sharecare" aria-controls="cslide-sharecare">ShareCare</button>
+          <button type="button" role="tab" id="ctab-securityportal" aria-controls="cslide-securityportal">SecurityPortal</button>
+          <button type="button" role="tab" id="ctab-webscan" aria-controls="cslide-webscan">WebScan</button>
+          <button type="button" role="tab" id="ctab-mailtrust" aria-controls="cslide-mailtrust">MailTrust</button>
         </div>
+        <div class="carousel-slides">
+
+          <figure class="shot carousel-slide" id="cslide-sharecare" role="tabpanel" aria-labelledby="ctab-sharecare">
+            <div class="shot-pan" tabindex="0">
+            <div class="shot-frame" style="--w:529px">
+              <picture><source srcset="assets/Screenshots/ShareCare/hero-attention.webp" type="image/webp"><img src="assets/Screenshots/ShareCare/hero-attention.png"
+                   alt="ShareCare overview: a needs-attention bar showing three anonymous links and 35
+                        privileged grants, above an exposure score of 39 out of 100."
+                   width="529" height="501" loading="eager" decoding="async"></picture>
+              <b class="pin" style="--x:66%; --y:22%" aria-hidden="true">1</b>
+              <b class="pin" style="--x:70%; --y:60%" aria-hidden="true">2</b>
+            </div>
+            </div>
+            <figcaption>
+              <b>ShareCare, on a real tenant.</b> The first screen answers the question you were asked,
+              before you have chosen a menu.
+              <ol class="notes">
+                <li><b>See the issues that need attention immediately</b>, with direct links to the affected
+                  items.</li>
+                <li><b>A clear exposure score</b>, with the ability to drill down to the affected users, files
+                  and permissions.</li>
+              </ol>
+              <a class="arrow-link carousel-more" href="products/sharecare.html">How ShareCare works</a>
+            </figcaption>
+          </figure>
+
+          <figure class="shot carousel-slide" id="cslide-securityportal" role="tabpanel" aria-labelledby="ctab-securityportal">
+            <div class="shot-pan" tabindex="0">
+            <div class="shot-frame" style="--w:1196px">
+              <picture><source srcset="assets/Screenshots/SecurityPortal/category-rows.webp" type="image/webp"><img src="assets/Screenshots/SecurityPortal/category-rows.png"
+                   alt="Category rows for authentication and identity, devices, data protection, apps and
+                        collaboration, and email and messaging — each with a pass, warning and fail split
+                        and a separate count of critical or high failures and unassessed checks."
+                   width="1196" height="514" loading="lazy" decoding="async"></picture>
+              <b class="pin" style="--x:58%; --y:10%" aria-hidden="true">1</b>
+              <b class="pin" style="--x:58%; --y:91%" aria-hidden="true">2</b>
+            </div>
+            </div>
+            <figcaption>
+              <b>SecurityPortal.</b> Grouped the way you would fix it — by area, worst first, with the
+              unassessed count kept next to the failures rather than buried under them.
+              <ol class="notes">
+                <li><b>Two numbers, not one.</b> What is failing at Critical or High, and what was never
+                  assessed. A row can be quiet because it is clean or because nobody could look.</li>
+                <li><b>A row that is entirely unassessed says so.</b> Nothing failing, nothing passing,
+                  ten checks unread — which is a licensing conversation, not a security win.</li>
+              </ol>
+              <a class="arrow-link carousel-more" href="products/securityportal.html">How SecurityPortal works</a>
+            </figcaption>
+          </figure>
+
+          <figure class="shot carousel-slide" id="cslide-webscan" role="tabpanel" aria-labelledby="ctab-webscan">
+            <div class="shot-pan" tabindex="0">
+            <div class="shot-frame" style="--w:722px">
+              <picture><source srcset="assets/Screenshots/WebScan/result-top.webp" type="image/webp"><img src="assets/Screenshots/WebScan/result-top.png"
+                   alt="A WebScan result: a score of 54 rated D, with 12 passed, 10 failed, 5 not assessed
+                        and 4 not applicable, and a failing check for a missing security.txt with why it
+                        matters, the fix, and a waiver request."
+                   width="722" height="686" loading="lazy" decoding="async"></picture>
+              <b class="pin" style="--x:90%; --y:19.7%" aria-hidden="true">1</b>
+              <b class="pin" style="--x:80%; --y:60.2%" aria-hidden="true">2</b>
+              <b class="pin" style="--x:41%; --y:85.7%" aria-hidden="true">3</b>
+            </div>
+            </div>
+            <figcaption>
+              <b>WebScan.</b> Passed, failed, not assessed and not applicable are kept apart. Domain
+              replaced in the screenshot; the findings are the real ones.
+              <ol class="notes">
+                <li><b>A grade, and what it is made of.</b> The four counts sit next to the score, so a low
+                  number can be read rather than argued with.</li>
+                <li><b>Every failure cites the RFC.</b> The standard is the reason.</li>
+                <li><b>Why it matters, then the fix, then a waiver.</b> The check stays on screen either
+                  way, and the waiver expires.</li>
+              </ol>
+              <a class="arrow-link carousel-more" href="products/webscan.html">How WebScan works</a>
+            </figcaption>
+          </figure>
+
+          <figure class="shot carousel-slide" id="cslide-mailtrust" role="tabpanel" aria-labelledby="ctab-mailtrust">
+            <div class="shot-placeholder" role="img" aria-label="MailTrust screenshot to follow">
+              <span>MailTrust screenshot to follow</span>
+            </div>
+            <figcaption>
+              <b>MailTrust.</b> Takes every domain from DMARC monitoring to safe enforcement, writing the DNS
+              records in-product for supported providers.
+              <a class="arrow-link carousel-more" href="products/mailtrust.html">How MailTrust works</a>
+            </figcaption>
+          </figure>
+
         </div>
-        <figcaption>
-          <b>ShareCare, on a real tenant.</b> The first screen answers the question you were asked,
-          before you have chosen a menu.
-          <ol class="notes">
-            <li><b>See the issues that need attention immediately</b>, with direct links to the affected
-              items.</li>
-            <li><b>A clear exposure score</b>, with the ability to drill down to the affected users, files
-              and permissions.</li>
-          </ol>
-        </figcaption>
-      </figure>
+        <div class="carousel-nav">
+          <button type="button" class="carousel-step" data-carousel-step="-1" aria-label="Previous product">&larr;</button>
+          <span class="carousel-count" aria-hidden="true">1 / 4</span>
+          <button type="button" class="carousel-step" data-carousel-step="1" aria-label="Next product">&rarr;</button>
+        </div>
+      </div>
     </div>
   </section>
 
