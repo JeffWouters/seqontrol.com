@@ -27,7 +27,7 @@ META = {
     "index.html": (
         "Microsoft 365 exposure, posture and DMARC for MSPs | SeQontrol",
         "See what your Microsoft 365 tenants over-share, how their posture scores and who can spoof "
-        "their domains, for one estate or a whole client book.",
+        "their domains, for one environment or a whole client book.",
         None),
     "platform.html": (
         "One platform under every product | SeQontrol",
